@@ -21,6 +21,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form BookRegistryWindow
+     * @param bw la ventana principal de la gestión de libros
      */
     public BookRegistryWindow(BooksWindow bw) {
         initComponents();
