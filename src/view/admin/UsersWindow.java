@@ -433,14 +433,16 @@ public class UsersWindow extends javax.swing.JFrame {
         usersTable.setRowSorter(sorter);
 
         for (User user : users) {
-            model.addRow(new Object[]{
-                user.getId(),
-                user.getFullName(),
-                user.getRole().toString(),
-                user.getMobileNumber(),
-                user.getUsername(),
-                user.getPassword()
-            });
+            if (!user.getId().equals(admin.getId())) {
+                model.addRow(new Object[]{
+                    user.getId(),
+                    user.getFullName(),
+                    user.getRole().toString(),
+                    user.getMobileNumber(),
+                    user.getUsername(),
+                    user.getPassword()
+                });
+            }
         }
     }
 

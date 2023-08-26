@@ -85,7 +85,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
                 txtPasswordKeyReleased(evt);
             }
         });
-        passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 170, -1));
+        passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 180, -1));
 
         jPanel6.setBackground(new java.awt.Color(0, 123, 255));
 
@@ -111,7 +111,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
                 toggleBtnShowPassActionPerformed(evt);
             }
         });
-        passwordPanel.add(toggleBtnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 30, 20));
+        passwordPanel.add(toggleBtnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 30, 20));
 
         btnCancel.setBackground(new java.awt.Color(220, 20, 60));
         btnCancel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
@@ -177,17 +177,17 @@ public class AdminAccountWindow extends javax.swing.JFrame {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(120, 120, 120)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(userWarning))
-                    .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(passWarning)))
-                .addContainerGap(125, Short.MAX_VALUE))
+                        .addComponent(passWarning))
+                    .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(passwordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
