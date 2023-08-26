@@ -54,12 +54,14 @@ public class BooksWindow extends javax.swing.JFrame {
         booksPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         booksTable = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        lblSearch = new javax.swing.JLabel();
         btnDeleteUser = new javax.swing.JButton();
         btnAddBook = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         btnUpdateUser = new javax.swing.JButton();
         txtFilter = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        cbxSearchType = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,8 +174,8 @@ public class BooksWindow extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(booksTable);
 
-        jLabel2.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
-        jLabel2.setText("Buscar:");
+        lblSearch.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        lblSearch.setText("Buscar:");
 
         btnDeleteUser.setBackground(new java.awt.Color(220, 20, 60));
         btnDeleteUser.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
@@ -208,7 +210,21 @@ public class BooksWindow extends javax.swing.JFrame {
         });
 
         txtFilter.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
-        txtFilter.setBorder(null);
+
+        jLabel3.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel3.setText("Tipo de búsqueda:");
+
+        cbxSearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "ISBN", "Nombre", "Autor", "Categoria", "Año de pubicación", "Copias" }));
+        cbxSearchType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxSearchTypeItemStateChanged(evt);
+            }
+        });
+
+        btnSearch.setBackground(new java.awt.Color(0, 123, 255));
+        btnSearch.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnSearch.setText("Buscar");
+        btnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout booksPanelLayout = new javax.swing.GroupLayout(booksPanel);
         booksPanel.setLayout(booksPanelLayout);
@@ -218,39 +234,44 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(booksPanelLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, booksPanelLayout.createSequentialGroup()
                         .addComponent(btnAddBook)
-                        .addGap(48, 48, 48)
-                        .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
+                        .addGap(57, 57, 57)
+                        .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtFilter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(129, 129, 129))
+                        .addComponent(cbxSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblSearch)
+                        .addGap(29, 29, 29)
+                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnUpdateUser, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
         );
         booksPanelLayout.setVerticalGroup(
             booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(booksPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(37, 37, 37)
+                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddBook)
+                    .addComponent(cbxSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblSearch)
+                    .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
                 .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(booksPanelLayout.createSequentialGroup()
-                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, booksPanelLayout.createSequentialGroup()
-                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnAddBook)
-                                .addComponent(btnUpdateUser)
-                                .addComponent(btnDeleteUser))
-                            .addComponent(jLabel2))
-                        .addGap(4, 4, 4)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(booksPanelLayout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addComponent(btnUpdateUser)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeleteUser)))
                 .addContainerGap())
         );
 
@@ -270,7 +291,7 @@ public class BooksWindow extends javax.swing.JFrame {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(96, 96, 96)
                 .addComponent(booksPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -325,6 +346,10 @@ public class BooksWindow extends javax.swing.JFrame {
         new AdminAccountWindow(admin).setVisible(true);
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
+    private void cbxSearchTypeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxSearchTypeItemStateChanged
+        validateComboSelection();
+    }//GEN-LAST:event_cbxSearchTypeItemStateChanged
+
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
@@ -347,7 +372,35 @@ public class BooksWindow extends javax.swing.JFrame {
         }
     }
 
-
+    private void validateComboSelection() {
+        int selectedIndex = cbxSearchType.getSelectedIndex();
+        
+        switch (selectedIndex) {
+            case 0:
+                lblSearch.setText("");
+                break;
+            case 1:
+                lblSearch.setText("ISN:");
+                break;
+            case 2:
+                lblSearch.setText("Título:");
+                break;
+            case 3:
+                lblSearch.setText("Autor:");
+                break;
+            case 4:
+                lblSearch.setText("Género:");
+                break;
+            case 5: 
+                lblSearch.setText("Año publicación:");
+                break;
+            case 6:
+                lblSearch.setText("Número copias:");
+                break;
+            default:
+                break;
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JPanel booksPanel;
@@ -355,16 +408,18 @@ public class BooksWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnAddBook;
     private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnTransactions;
     private javax.swing.JButton btnUpdateUser;
     private javax.swing.JButton btnUsersManagement;
+    private javax.swing.JComboBox<String> cbxSearchType;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAdminAccount;
     private javax.swing.JLabel lblAdminName;
     private javax.swing.JLabel lblBooks;
+    private javax.swing.JLabel lblSearch;
     private javax.swing.JPanel menuBarPanel;
     private javax.swing.JTextField txtFilter;
     // End of variables declaration//GEN-END:variables
