@@ -2,9 +2,12 @@ package view.admin;
 
 import controllers.BookManagementController;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import model.Book;
 import model.User;
 
@@ -16,6 +19,8 @@ public class BooksWindow extends javax.swing.JFrame {
 
     private final User admin;
     private final BookManagementController controller;
+
+    private TableRowSorter<DefaultTableModel> sorter;
 
     /**
      * Creates new form BooksWindow
@@ -212,6 +217,11 @@ public class BooksWindow extends javax.swing.JFrame {
 
         txtFilter.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtFilter.setBorder(null);
+        txtFilter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFilterKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
         jLabel2.setText("Buscar:");
@@ -340,6 +350,10 @@ public class BooksWindow extends javax.swing.JFrame {
         new AdminAccountWindow(admin).setVisible(true);
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
+    private void txtFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyReleased
+        filter();
+    }//GEN-LAST:event_txtFilterKeyReleased
+
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
@@ -349,6 +363,9 @@ public class BooksWindow extends javax.swing.JFrame {
         });
 
         booksTable.setModel(model);
+        booksTable.setAutoCreateRowSorter(true);
+        sorter = new TableRowSorter<>(model);
+        booksTable.setRowSorter(sorter);
 
         for (Book book : books) {
             model.addRow(new Object[]{
@@ -360,7 +377,20 @@ public class BooksWindow extends javax.swing.JFrame {
                 book.getCopiesNumber()
             });
         }
-    
+    }
+
+    private void filter() {
+        String filterText = txtFilter.getText();
+
+        RowFilter<Object, Object> isbn = RowFilter.regexFilter(filterText.trim(), 0);
+        RowFilter<Object, Object> title = RowFilter.regexFilter("(?i)" + filterText, 1);
+        RowFilter<Object, Object> author = RowFilter.regexFilter("(?i)" + filterText, 2);
+        RowFilter<Object, Object> genre = RowFilter.regexFilter("(?i)"  + filterText, 3);
+        RowFilter<Object, Object> publicationYear = RowFilter.regexFilter(filterText.trim(), 4);
+        RowFilter<Object, Object> copiesNumber = RowFilter.regexFilter(filterText.trim(), 5);
+
+        sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(isbn, title, author, genre, publicationYear, copiesNumber)));
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
