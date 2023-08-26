@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import model.User;
 import view.admin.AdminTasksWindow;
+import views.user.SignUpWindow;
 
 /**
  *
@@ -212,7 +213,9 @@ public class LogInWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogInActionPerformed
 
     private void lblCreateAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCreateAccountMouseClicked
-
+        new SignUpWindow().setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_lblCreateAccountMouseClicked
 
     private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
