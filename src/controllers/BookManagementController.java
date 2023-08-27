@@ -137,11 +137,15 @@ public class BookManagementController {
         try {
             PreparedStatement ps;
 
-            String query = "UPDATE books SET copiesNumber = ? WHERE isbn = ?";
+            String query = "UPDATE books SET title = ?, author = ?, genre = ?, publicationYear = ?, copiesNumber = ? WHERE isbn = ?";
 
             ps = con.prepareStatement(query);
-            ps.setInt(1, book.getCopiesNumber());
-            ps.setString(2, book.getIsbn());
+            ps.setString(1, book.getTitle());
+            ps.setString(2, book.getAuthor());
+            ps.setString(3, String.valueOf(book.getGenre()));
+            ps.setInt(4, book.getPublicationYear());
+            ps.setInt(5, book.getCopiesNumber());
+            ps.setString(6, book.getIsbn());
 
             int rowsUpdated = ps.executeUpdate();
 
@@ -170,6 +174,28 @@ public class BookManagementController {
             int rowDeleted = ps.executeUpdate();
 
             return rowDeleted > 0;
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return false;
+    }
+
+    public boolean titleInUse(String title) {
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+
+            String query = "SELECT * FROM books WHERE title = ?";
+
+            ps = con.prepareStatement(query);
+
+            ps.setString(1, title);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }

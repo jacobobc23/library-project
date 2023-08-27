@@ -1,6 +1,5 @@
 package views.user;
 
-import view.admin.*;
 import controllers.UserManagemetController;
 import enums.Role;
 import java.sql.SQLException;
@@ -30,6 +29,7 @@ public class SignUpWindow extends javax.swing.JFrame {
         setTitle("Registro de usuario");
         setResizable(false);
         controller = new UserManagemetController();
+        hideWarnings();
     }
 
     /**
@@ -65,6 +65,9 @@ public class SignUpWindow extends javax.swing.JFrame {
         toggleBtnShowPass = new javax.swing.JToggleButton();
         btnCancel = new javax.swing.JButton();
         btnAddUser = new javax.swing.JButton();
+        IDWarning = new javax.swing.JLabel();
+        mobNumWarning = new javax.swing.JLabel();
+        userWarning = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,11 +83,14 @@ public class SignUpWindow extends javax.swing.JFrame {
         txtID.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtID.setBorder(null);
         txtID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIDKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIDKeyTyped(evt);
             }
         });
-        IDPanel.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 20));
+        IDPanel.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 260, 20));
 
         jPanel2.setBackground(new java.awt.Color(0, 123, 255));
 
@@ -115,7 +121,7 @@ public class SignUpWindow extends javax.swing.JFrame {
                 txtNameKeyTyped(evt);
             }
         });
-        namePanel.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
+        namePanel.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 260, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 123, 255));
 
@@ -163,7 +169,12 @@ public class SignUpWindow extends javax.swing.JFrame {
         txtMobileNumber.setActionCommand("<Not Set>");
         txtMobileNumber.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
         txtMobileNumber.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
-        mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
+        txtMobileNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMobileNumberKeyReleased(evt);
+            }
+        });
+        mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 250, -1));
 
         jLabel5.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
         jLabel5.setText("Usuario *");
@@ -174,7 +185,12 @@ public class SignUpWindow extends javax.swing.JFrame {
         txtUsername.setBackground(new java.awt.Color(245, 245, 245));
         txtUsername.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtUsername.setBorder(null);
-        userPanel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 20));
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyReleased(evt);
+            }
+        });
+        userPanel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 250, 20));
 
         jPanel5.setBackground(new java.awt.Color(0, 123, 255));
 
@@ -201,7 +217,7 @@ public class SignUpWindow extends javax.swing.JFrame {
         txtPassword.setBackground(new java.awt.Color(245, 245, 245));
         txtPassword.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtPassword.setBorder(null);
-        passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 170, -1));
+        passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 230, -1));
 
         jPanel6.setBackground(new java.awt.Color(0, 123, 255));
 
@@ -227,7 +243,7 @@ public class SignUpWindow extends javax.swing.JFrame {
                 toggleBtnShowPassActionPerformed(evt);
             }
         });
-        passwordPanel.add(toggleBtnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 30, 20));
+        passwordPanel.add(toggleBtnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 30, 20));
 
         btnCancel.setBackground(new java.awt.Color(220, 20, 60));
         btnCancel.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
@@ -253,6 +269,18 @@ public class SignUpWindow extends javax.swing.JFrame {
             }
         });
 
+        IDWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        IDWarning.setForeground(new java.awt.Color(255, 0, 0));
+        IDWarning.setText("CÉDULA YA REGISTRADA");
+
+        mobNumWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        mobNumWarning.setForeground(new java.awt.Color(255, 0, 0));
+        mobNumWarning.setText("TELÉFONO EN USO");
+
+        userWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        userWarning.setForeground(new java.awt.Color(255, 0, 0));
+        userWarning.setText("USUARIO EN USO");
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -260,36 +288,40 @@ public class SignUpWindow extends javax.swing.JFrame {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 439, Short.MAX_VALUE)
                 .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49))
             .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(233, 233, 233)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(namePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(backgroundPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(194, 194, 194)))
-                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(mobileNumberPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(backgroundPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(194, 194, 194)))
-                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(userPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(209, 209, 209)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mobNumWarning))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(userWarning))
                     .addComponent(jLabel6)
-                    .addComponent(IDPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(242, Short.MAX_VALUE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(IDWarning))
+                    .addComponent(IDPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(namePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mobileNumberPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jLabel1)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(IDWarning))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(IDPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -297,11 +329,15 @@ public class SignUpWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(namePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(mobNumWarning))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mobileNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(userWarning))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -382,6 +418,18 @@ public class SignUpWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtNameKeyTyped
 
+    private void txtIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtIDKeyReleased
+
+    private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtMobileNumberKeyReleased
+
+    private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtUsernameKeyReleased
+
     private boolean hasEmptyFields() {
         return (txtID.getText().isEmpty() || txtName.getText().isEmpty()
                 || txtMobileNumber.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty());
@@ -392,12 +440,54 @@ public class SignUpWindow extends javax.swing.JFrame {
         this.dispose();
     }
 
+    private void validateFields() {
+        String id = txtID.getText().trim();
+        String mobileNumber = txtMobileNumber.getText();
+        String username = txtUsername.getText().trim();
+
+        User user = controller.searchUser(id);
+        boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
+        boolean userNameInUse = controller.usernameInUse(username);
+
+        boolean enableBtnAddUser = true; // Variable para controlar el estado del botón
+
+        if (!id.isEmpty() && user != null) {
+            IDWarning.setVisible(true);
+            enableBtnAddUser = false;
+        } else {
+            IDWarning.setVisible(false);
+        }
+
+        if (!mobileNumber.isEmpty() && mobNumInUse) {
+            mobNumWarning.setVisible(true);
+            enableBtnAddUser = false;
+        } else {
+            mobNumWarning.setVisible(false);
+        }
+
+        if (!username.isEmpty() && userNameInUse) {
+            userWarning.setVisible(true);
+            enableBtnAddUser = false;
+        } else {
+            userWarning.setVisible(false);
+        }
+
+        btnAddUser.setEnabled(enableBtnAddUser);
+    }
+
+    private void hideWarnings() {
+        IDWarning.setVisible(false);
+        mobNumWarning.setVisible(false);
+        userWarning.setVisible(false);
+    }
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel IDPanel;
+    private javax.swing.JLabel IDWarning;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnCancel;
@@ -411,6 +501,7 @@ public class SignUpWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel mobNumWarning;
     private javax.swing.JPanel mobileNumberPanel;
     private javax.swing.JPanel namePanel;
     private javax.swing.JPanel passwordPanel;
@@ -421,5 +512,6 @@ public class SignUpWindow extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     private javax.swing.JPanel userPanel;
+    private javax.swing.JLabel userWarning;
     // End of variables declaration//GEN-END:variables
 }

@@ -450,7 +450,7 @@ public class UsersWindow extends javax.swing.JFrame {
         String filterText = txtFilter.getText();
 
         RowFilter<Object, Object> idFilter = RowFilter.regexFilter(filterText.trim(), 0);
-        RowFilter<Object, Object> nameFilter = RowFilter.regexFilter("(?i)" + filterText, 1);
+        RowFilter<Object, Object> nameFilter = RowFilter.regexFilter("(?i)" + filterText.trim(), 1);
 
         sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(idFilter, nameFilter)));
     }

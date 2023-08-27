@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Book;
 import model.User;
+import view.logIn.LogInWindow;
 
 /**
  *
@@ -99,6 +100,11 @@ public class BooksWindow extends javax.swing.JFrame {
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("SALIR");
         btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
 
         btnUsersManagement.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnUsersManagement.setForeground(new java.awt.Color(255, 255, 255));
@@ -107,6 +113,11 @@ public class BooksWindow extends javax.swing.JFrame {
         btnUsersManagement.setContentAreaFilled(false);
         btnUsersManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUsersManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnUsersManagement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsersManagementActionPerformed(evt);
+            }
+        });
 
         btnTransactions.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         btnTransactions.setForeground(new java.awt.Color(255, 255, 255));
@@ -211,11 +222,6 @@ public class BooksWindow extends javax.swing.JFrame {
 
         txtFilter.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtFilter.setBorder(null);
-        txtFilter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFilterActionPerformed(evt);
-            }
-        });
         txtFilter.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtFilterKeyReleased(evt);
@@ -233,42 +239,34 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(booksPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE))
-                    .addGroup(booksPanelLayout.createSequentialGroup()
                         .addComponent(btnAddBook)
+                        .addGap(75, 75, 75)
+                        .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)
+                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtFilter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(70, 70, 70)))
-                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnUpdateUser, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-                    .addComponent(btnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
+                        .addGap(31, 31, 31)
+                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtFilter)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(184, 184, 184))
         );
         booksPanelLayout.setVerticalGroup(
             booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(booksPanelLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(booksPanelLayout.createSequentialGroup()
+                    .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAddBook)
-                        .addGap(143, 143, 143)
                         .addComponent(btnUpdateUser)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDeleteUser))
+                        .addComponent(btnDeleteUser)
+                        .addComponent(jLabel2))
                     .addGroup(booksPanelLayout.createSequentialGroup()
-                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(booksPanelLayout.createSequentialGroup()
-                                .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, booksPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(1, 1, 1)))
+                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(21, 21, 21)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -312,7 +310,20 @@ public class BooksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddBookActionPerformed
 
     private void btnUpdateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateUserActionPerformed
-        // TODO add your handling code here:
+        int selected = booksTable.getSelectedRow();
+
+        if (selected >= 0) {
+
+            String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
+            Book book = controller.searchBook(isbn);
+
+            if (book != null) {
+                new BookEdtingWindow(book, this).setVisible(true);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla");
+        }
     }//GEN-LAST:event_btnUpdateUserActionPerformed
 
     private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
@@ -349,9 +360,15 @@ public class BooksWindow extends javax.swing.JFrame {
         filter();
     }//GEN-LAST:event_txtFilterKeyReleased
 
-    private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFilterActionPerformed
+    private void btnUsersManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersManagementActionPerformed
+        new UsersWindow(admin).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnUsersManagementActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        new LogInWindow().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
 
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
@@ -382,9 +399,9 @@ public class BooksWindow extends javax.swing.JFrame {
         String filterText = txtFilter.getText();
 
         RowFilter<Object, Object> isbn = RowFilter.regexFilter(filterText.trim(), 0);
-        RowFilter<Object, Object> title = RowFilter.regexFilter("(?i)" + filterText, 1);
-        RowFilter<Object, Object> author = RowFilter.regexFilter("(?i)" + filterText, 2);
-        RowFilter<Object, Object> genre = RowFilter.regexFilter("(?i)"  + filterText, 3);
+        RowFilter<Object, Object> title = RowFilter.regexFilter("(?i)" + filterText.trim(), 1);
+        RowFilter<Object, Object> author = RowFilter.regexFilter("(?i)" + filterText.trim(), 2);
+        RowFilter<Object, Object> genre = RowFilter.regexFilter("(?i)" + filterText.trim(), 3);
         RowFilter<Object, Object> publicationYear = RowFilter.regexFilter(filterText.trim(), 4);
         RowFilter<Object, Object> copiesNumber = RowFilter.regexFilter(filterText.trim(), 5);
 
