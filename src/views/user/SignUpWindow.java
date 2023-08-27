@@ -1,7 +1,7 @@
 package views.user;
 
 import view.admin.*;
-import controllers.UserMaganemetController;
+import controllers.UserManagemetController;
 import enums.Role;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -14,7 +14,7 @@ import view.logIn.LogInWindow;
  */
 public class SignUpWindow extends javax.swing.JFrame {
 
-    private final UserMaganemetController controller;
+    private final UserManagemetController controller;
 
     private boolean passwordVisible = false;
 
@@ -29,7 +29,7 @@ public class SignUpWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de usuario");
         setResizable(false);
-        controller = new UserMaganemetController();
+        controller = new UserManagemetController();
     }
 
     /**

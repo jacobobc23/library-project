@@ -1,6 +1,6 @@
 package view.admin;
 
-import controllers.UserMaganemetController;
+import controllers.UserManagemetController;
 import enums.Role;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -13,7 +13,7 @@ import model.User;
 public class UserRegistryWindow extends javax.swing.JFrame {
 
     private final UsersWindow uw;
-    private final UserMaganemetController controller;
+    private final UserManagemetController controller;
 
     private boolean passwordVisible = false;
 
@@ -29,8 +29,9 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de usuario");
         setResizable(false);
-        controller = new UserMaganemetController();
+        controller = new UserManagemetController();
         setCbxRole();
+        hideWarnings();
     }
 
     /**
@@ -68,6 +69,9 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         toggleBtnShowPass = new javax.swing.JToggleButton();
         btnCancel = new javax.swing.JButton();
         btnAddUser = new javax.swing.JButton();
+        IDWarning = new javax.swing.JLabel();
+        mobNumWarning = new javax.swing.JLabel();
+        userWarning = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,6 +87,9 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtID.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtID.setBorder(null);
         txtID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIDKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIDKeyTyped(evt);
             }
@@ -174,6 +181,11 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtMobileNumber.setActionCommand("<Not Set>");
         txtMobileNumber.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
         txtMobileNumber.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtMobileNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMobileNumberKeyReleased(evt);
+            }
+        });
         mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
         jLabel5.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
@@ -185,6 +197,11 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtUsername.setBackground(new java.awt.Color(245, 245, 245));
         txtUsername.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtUsername.setBorder(null);
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyReleased(evt);
+            }
+        });
         userPanel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 20));
 
         jPanel5.setBackground(new java.awt.Color(0, 123, 255));
@@ -264,6 +281,18 @@ public class UserRegistryWindow extends javax.swing.JFrame {
             }
         });
 
+        IDWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        IDWarning.setForeground(new java.awt.Color(255, 0, 0));
+        IDWarning.setText("CÉDULA YA REGISTRADA");
+
+        mobNumWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        mobNumWarning.setForeground(new java.awt.Color(255, 0, 0));
+        mobNumWarning.setText("TELÉFONO EN USO");
+
+        userWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        userWarning.setForeground(new java.awt.Color(255, 0, 0));
+        userWarning.setText("USUARIO EN USO");
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -280,8 +309,14 @@ public class UserRegistryWindow extends javax.swing.JFrame {
                                 .addComponent(cbxRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(IDPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(userPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(IDWarning))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(userWarning)))
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,7 +330,8 @@ public class UserRegistryWindow extends javax.swing.JFrame {
                                     .addComponent(mobileNumberPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                                         .addComponent(jLabel4)
-                                        .addGap(92, 92, 92)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(mobNumWarning)))
                                 .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(45, 45, 45))))
         );
@@ -309,7 +345,9 @@ public class UserRegistryWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(namePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(IDWarning))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(IDPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35)
@@ -319,13 +357,17 @@ public class UserRegistryWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxRole, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(mobNumWarning))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mobileNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addGap(53, 53, 53)
-                        .addComponent(jLabel5)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(userWarning))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
@@ -408,6 +450,18 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtNameKeyTyped
 
+    private void txtIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtIDKeyReleased
+
+    private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtMobileNumberKeyReleased
+
+    private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtUsernameKeyReleased
+
     private void setCbxRole() {
         Role[] roles = Role.values();
         String[] rolesStr = new String[roles.length];
@@ -434,12 +488,55 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtUsername.setText("");
         txtPassword.setText("");
     }
+    
+    private void validateFields() {
+        String id = txtID.getText().trim();
+        String mobileNumber = txtMobileNumber.getText();
+        String username = txtUsername.getText().trim();
+        
+        User user = controller.searchUser(id);
+        boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
+        boolean userNameInUse = controller.usernameInUse(username);
+        
+        boolean enableBtnAddUser = true; // Variable para controlar el estado del botón
+        
+        if (!id.isEmpty() && user != null) {
+            IDWarning.setVisible(true);
+            enableBtnAddUser = false;
+        } else {
+            IDWarning.setVisible(false);
+        }
+        
+        if (!mobileNumber.isEmpty() && mobNumInUse) {
+            mobNumWarning.setVisible(true);
+            enableBtnAddUser = false;
+        } else {
+            mobNumWarning.setVisible(false);
+        }
+        
+        if (!username.isEmpty() && userNameInUse) {
+            userWarning.setVisible(true);
+            enableBtnAddUser = false;
+        } else {
+            userWarning.setVisible(false);
+        }
+        
+        btnAddUser.setEnabled(enableBtnAddUser);
+    }    
+    
+    private void hideWarnings() {
+        IDWarning.setVisible(false);
+        mobNumWarning.setVisible(false);
+        userWarning.setVisible(false);
+    }
+    
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel IDPanel;
+    private javax.swing.JLabel IDWarning;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnCancel;
@@ -455,6 +552,7 @@ public class UserRegistryWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel mobNumWarning;
     private javax.swing.JPanel mobileNumberPanel;
     private javax.swing.JPanel namePanel;
     private javax.swing.JPanel passwordPanel;
@@ -465,5 +563,6 @@ public class UserRegistryWindow extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     private javax.swing.JPanel userPanel;
+    private javax.swing.JLabel userWarning;
     // End of variables declaration//GEN-END:variables
 }

@@ -62,7 +62,6 @@ public class BooksWindow extends javax.swing.JFrame {
         btnDeleteUser = new javax.swing.JButton();
         btnAddBook = new javax.swing.JButton();
         btnUpdateUser = new javax.swing.JButton();
-        btnSearch = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         txtFilter = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -210,11 +209,6 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
-        btnSearch.setBackground(new java.awt.Color(0, 123, 255));
-        btnSearch.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
-        btnSearch.setText("Buscar");
-        btnSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
         txtFilter.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtFilter.setBorder(null);
         txtFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -250,11 +244,9 @@ public class BooksWindow extends javax.swing.JFrame {
                             .addComponent(txtFilter, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(70, 70, 70)))
-                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnUpdateUser, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnUpdateUser, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                    .addComponent(btnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
         );
         booksPanelLayout.setVerticalGroup(
@@ -263,9 +255,7 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(booksPanelLayout.createSequentialGroup()
-                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAddBook)
-                            .addComponent(btnSearch))
+                        .addComponent(btnAddBook)
                         .addGap(143, 143, 143)
                         .addComponent(btnUpdateUser)
                         .addGap(18, 18, 18)
@@ -408,7 +398,6 @@ public class BooksWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnAddBook;
     private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnTransactions;
     private javax.swing.JButton btnUpdateUser;
     private javax.swing.JButton btnUsersManagement;

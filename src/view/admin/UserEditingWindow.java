@@ -1,6 +1,6 @@
 package view.admin;
 
-import controllers.UserMaganemetController;
+import controllers.UserManagemetController;
 import enums.Role;
 import javax.swing.JOptionPane;
 import model.User;
@@ -13,7 +13,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
 
     private final User user;
     private final UsersWindow uw;
-    private final UserMaganemetController controller;
+    private final UserManagemetController controller;
 
     private boolean passwordVisible = false;
 
@@ -31,9 +31,10 @@ public class UserEditingWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setTitle(user.getFullName());
-        controller = new UserMaganemetController();
+        controller = new UserManagemetController();
         showUserInformation();
         setCbxRole();
+        hideWarnings();
     }
 
     /**
@@ -74,6 +75,8 @@ public class UserEditingWindow extends javax.swing.JFrame {
         IDWarning = new javax.swing.JLabel();
         nameWarning = new javax.swing.JLabel();
         roleWarning = new javax.swing.JLabel();
+        mobNumWarning = new javax.swing.JLabel();
+        userWarning = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,6 +171,11 @@ public class UserEditingWindow extends javax.swing.JFrame {
         txtMobileNumber.setActionCommand("<Not Set>");
         txtMobileNumber.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
         txtMobileNumber.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtMobileNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMobileNumberKeyReleased(evt);
+            }
+        });
         mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
         jLabel5.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
@@ -179,6 +187,11 @@ public class UserEditingWindow extends javax.swing.JFrame {
         txtUsername.setBackground(new java.awt.Color(245, 245, 245));
         txtUsername.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
         txtUsername.setBorder(null);
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyReleased(evt);
+            }
+        });
         userPanel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 20));
 
         jPanel5.setBackground(new java.awt.Color(0, 123, 255));
@@ -270,6 +283,14 @@ public class UserEditingWindow extends javax.swing.JFrame {
         roleWarning.setForeground(new java.awt.Color(170, 170, 170));
         roleWarning.setText("NO EDITABLE");
 
+        mobNumWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        mobNumWarning.setForeground(new java.awt.Color(255, 0, 0));
+        mobNumWarning.setText("TELÉFONO EN USO");
+
+        userWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        userWarning.setForeground(new java.awt.Color(255, 0, 0));
+        userWarning.setText("USUARIO EN USO");
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -290,7 +311,10 @@ public class UserEditingWindow extends javax.swing.JFrame {
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(IDWarning))
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(userWarning)))
                             .addGroup(backgroundPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -310,7 +334,8 @@ public class UserEditingWindow extends javax.swing.JFrame {
                                     .addComponent(mobileNumberPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                                         .addComponent(jLabel4)
-                                        .addGap(92, 92, 92)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(mobNumWarning)))
                                 .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(45, 45, 45))))
         );
@@ -340,13 +365,17 @@ public class UserEditingWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxRole, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(mobNumWarning))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mobileNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addGap(53, 53, 53)
-                        .addComponent(jLabel5)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(userWarning))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
@@ -389,7 +418,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
 
         User usr = new User(id, fullname, role, mobilenumber, username, password);
         boolean success = controller.updateUser(usr);
-        
+
         if (success) {
             uw.fillTable();
             JOptionPane.showMessageDialog(null, "Usuario acutalizado ");
@@ -411,6 +440,14 @@ public class UserEditingWindow extends javax.swing.JFrame {
             txtPassword.setEchoChar('\u25cf');
         }
     }//GEN-LAST:event_toggleBtnShowPassActionPerformed
+
+    private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtMobileNumberKeyReleased
+
+    private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtUsernameKeyReleased
 
     private void showUserInformation() {
         lblID.setText(user.getId());
@@ -441,6 +478,36 @@ public class UserEditingWindow extends javax.swing.JFrame {
         return (txtMobileNumber.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty());
     }
 
+    private void hideWarnings() {
+        mobNumWarning.setVisible(false);
+        userWarning.setVisible(false);
+    }
+
+    private void validateFields() {
+        String mobileNumber = txtMobileNumber.getText();
+        String username = txtUsername.getText().trim();
+
+        boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
+        boolean userNameInUse = controller.usernameInUse(username);
+
+        boolean enableBtnUpdateUser = true; // Variable para controlar el estado del botón
+
+        if (!mobileNumber.isEmpty() && !mobileNumber.equals(user.getMobileNumber()) && mobNumInUse) {
+            mobNumWarning.setVisible(true);
+            enableBtnUpdateUser = false;
+        } else {
+            mobNumWarning.setVisible(false);
+        }
+
+        if (!username.isEmpty()&& !username.equals(user.getUsername()) && userNameInUse) {
+            userWarning.setVisible(true);
+            enableBtnUpdateUser = false;
+        } else {
+            userWarning.setVisible(false);
+        }
+
+        btnUpdateUser.setEnabled(enableBtnUpdateUser);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel IDPanel;
     private javax.swing.JLabel IDWarning;
@@ -461,6 +528,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblName;
+    private javax.swing.JLabel mobNumWarning;
     private javax.swing.JPanel mobileNumberPanel;
     private javax.swing.JPanel namePanel;
     private javax.swing.JLabel nameWarning;
@@ -471,5 +539,6 @@ public class UserEditingWindow extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     private javax.swing.JPanel userPanel;
+    private javax.swing.JLabel userWarning;
     // End of variables declaration//GEN-END:variables
 }
