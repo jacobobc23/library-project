@@ -133,7 +133,7 @@ public class LogInWindow extends javax.swing.JFrame {
 
         lblCreateAccount.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         lblCreateAccount.setForeground(new java.awt.Color(51, 51, 255));
-        lblCreateAccount.setText("Crear cuenta paciente");
+        lblCreateAccount.setText("Crear cuenta usuario");
         lblCreateAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblCreateAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

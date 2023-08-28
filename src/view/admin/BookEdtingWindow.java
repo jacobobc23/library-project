@@ -2,11 +2,8 @@ package view.admin;
 
 import controllers.BookManagementController;
 import enums.Genre;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import model.Book;
 
@@ -14,26 +11,27 @@ import model.Book;
  *
  * @author Jacobo-bc
  */
-public class BookRegistryWindow extends javax.swing.JFrame {
+public class BookEdtingWindow extends javax.swing.JFrame {
 
+    private final Book book;
     private final BooksWindow bw;
     private final BookManagementController controller;
 
     /**
-     * Creates new form BookRegistryWindow
-     *
-     * @param bw la ventana principal de la gestión de libros
+     * Creates new form BookEdtingWindow
      */
-    public BookRegistryWindow(BooksWindow bw) {
+    public BookEdtingWindow(Book book, BooksWindow bw) {
         initComponents();
+        this.book = book;
         this.bw = bw;
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Registro de libro");
         setResizable(false);
+        setTitle(book.getTitle());
         controller = new BookManagementController();
-        setCbxPublicationYear();
+        showBookInformation();
         setSpnCopiesNumber();
+        setCbxPublicationYear();
         hideWarnings();
     }
 
@@ -50,7 +48,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         IDPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        txtISBN = new javax.swing.JFormattedTextField();
+        lblIsbn = new javax.swing.JLabel();
         namePanel = new javax.swing.JPanel();
         txtTitle = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
@@ -66,9 +64,9 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnCancel = new javax.swing.JButton();
-        btnAddBook = new javax.swing.JButton();
-        isbnWarning = new javax.swing.JLabel();
+        btnUpdateBook = new javax.swing.JButton();
         titleWarning = new javax.swing.JLabel();
+        IDWarning = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,19 +93,9 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
         IDPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        txtISBN.setBackground(new java.awt.Color(245, 245, 245));
-        txtISBN.setBorder(null);
-        try {
-            txtISBN.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-#-##-######-#")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtISBN.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtISBNKeyReleased(evt);
-            }
-        });
-        IDPanel.add(txtISBN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
+        lblIsbn.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        lblIsbn.setText("jLabel7");
+        IDPanel.add(lblIsbn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
 
         namePanel.setBackground(new java.awt.Color(245, 245, 245));
         namePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -190,26 +178,31 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         btnCancel.setText("Cancelar");
         btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.setFocusable(false);
-
-        btnAddBook.setBackground(new java.awt.Color(0, 123, 255));
-        btnAddBook.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
-        btnAddBook.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddBook.setText("Registrar");
-        btnAddBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAddBook.setFocusable(false);
-        btnAddBook.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddBookActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
 
-        isbnWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        isbnWarning.setForeground(new java.awt.Color(255, 0, 0));
-        isbnWarning.setText("ISBN YA REGISTRADO");
+        btnUpdateBook.setBackground(new java.awt.Color(0, 123, 255));
+        btnUpdateBook.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnUpdateBook.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdateBook.setText("Actualizar");
+        btnUpdateBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUpdateBook.setFocusable(false);
+        btnUpdateBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateBookActionPerformed(evt);
+            }
+        });
 
         titleWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         titleWarning.setForeground(new java.awt.Color(255, 0, 0));
         titleWarning.setText("TITULO YA REGISTRADO");
+
+        IDWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        IDWarning.setForeground(new java.awt.Color(170, 170, 170));
+        IDWarning.setText("NO EDITABLE");
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
@@ -230,14 +223,14 @@ public class BookRegistryWindow extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundPanelLayout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(isbnWarning))
+                                    .addComponent(IDWarning))
                                 .addComponent(IDPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUpdateBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(spnCopiesNumber)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,7 +256,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(isbnWarning))
+                            .addComponent(IDWarning))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(IDPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(38, 38, 38)
@@ -284,10 +277,10 @@ public class BookRegistryWindow extends javax.swing.JFrame {
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxPublicationYear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spnCopiesNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
-                    .addComponent(btnAddBook))
+                    .addComponent(btnUpdateBook))
                 .addGap(19, 19, 19))
         );
 
@@ -305,49 +298,40 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBookActionPerformed
+    private void txtTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtTitleKeyReleased
+
+    private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
         if (hasEmptyFields()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos");
             return;
         }
 
-        String isbn = txtISBN.getText();
+        String isbn = lblIsbn.getText();
         String title = txtTitle.getText();
         String author = txtAuthor.getText();
         Genre genre = Genre.valueOf(cbxGenre.getSelectedItem().toString());
         int publicationYear = Integer.parseInt(cbxPublicationYear.getSelectedItem().toString());
         int copiesNumber = (int) spnCopiesNumber.getValue();
 
-        try {
-            Book book = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
-            controller.addBook(book);
-            JOptionPane.showMessageDialog(null, "Libro registrado correctamente");
+        Book updatedBook = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
+        boolean success = controller.updateBook(updatedBook);
+
+        if (success) {
             bw.fillTable();
-            cleanFields();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al registrar el libro");
+            JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al actualizar");
         }
-    }//GEN-LAST:event_btnAddBookActionPerformed
+    }//GEN-LAST:event_btnUpdateBookActionPerformed
 
-    private void txtISBNKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtISBNKeyReleased
-        validateFields();
-    }//GEN-LAST:event_txtISBNKeyReleased
-
-    private void txtTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyReleased
-        validateFields();
-    }//GEN-LAST:event_txtTitleKeyReleased
-
-    private void cleanFields() {
-        txtISBN.setText("");
-        txtTitle.setText("");
-        txtAuthor.setText("");
-        cbxGenre.setSelectedIndex(0);
-        cbxPublicationYear.setSelectedIndex(0);
-        spnCopiesNumber.setValue(0);
-    }
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     private boolean hasEmptyFields() {
-        return (txtISBN.getText().isEmpty() || txtTitle.getText().isEmpty() || txtAuthor.getText().isEmpty()
+        return (txtTitle.getText().isEmpty() || txtAuthor.getText().isEmpty()
                 || cbxGenre.getSelectedIndex() == 0 || cbxPublicationYear.getSelectedIndex() == 0 || spnCopiesNumber.getValue().toString().equals("0"));
     }
 
@@ -360,7 +344,6 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         }
 
         cbxPublicationYear.insertItemAt("Seleccione una opción", 0);
-        cbxPublicationYear.setSelectedIndex(0);
     }
 
     private void setSpnCopiesNumber() {
@@ -368,51 +351,51 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         model.setMinimum(0);
         model.setMaximum(100);
         spnCopiesNumber.setModel(model);
-
-        JComponent editor = spnCopiesNumber.getEditor();
-        JSpinner.DefaultEditor spinnerEditor = (JSpinner.DefaultEditor) editor;
-        spinnerEditor.getTextField().setEditable(false);
+        spnCopiesNumber.setValue(book.getCopiesNumber());
     }
 
     private void validateFields() {
-        String isbn = txtISBN.getText().trim();
         String title = txtTitle.getText().trim();
 
-        Book book = controller.searchBook(isbn);
         boolean titleInUse = controller.titleInUse(title);
 
-        boolean enableBtnAddBook = true; // Variable para controlar el estado del botón
+        boolean enableBtnUpdateBook = true; // Variable para controlar el estado del botón
 
-        if (!isbn.isEmpty() && book != null) {
-            isbnWarning.setVisible(true);
-            enableBtnAddBook = false;
-        } else {
-            isbnWarning.setVisible(false);
-        }
-
-        if (!title.isEmpty() && titleInUse) {
+        if (!title.isEmpty() && !title.equals(book.getTitle()) && titleInUse) {
             titleWarning.setVisible(true);
-            enableBtnAddBook = false;
+            enableBtnUpdateBook = false;
         } else {
             titleWarning.setVisible(false);
         }
 
-        btnAddBook.setEnabled(enableBtnAddBook);
+        btnUpdateBook.setEnabled(enableBtnUpdateBook);
     }
 
     private void hideWarnings() {
-        isbnWarning.setVisible(false);
         titleWarning.setVisible(false);
     }
 
+    private void showBookInformation() {
+        lblIsbn.setText(book.getIsbn());
+        txtTitle.setText(book.getTitle());
+        txtAuthor.setText(book.getAuthor());
+        cbxPublicationYear.setSelectedItem(book.getPublicationYear());
+        cbxGenre.setSelectedItem(book.getGenre().toString());
+        spnCopiesNumber.setValue(book.getCopiesNumber());
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel IDPanel;
+    private javax.swing.JLabel IDWarning;
     private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JButton btnAddBook;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnUpdateBook;
     private javax.swing.JComboBox<String> cbxGenre;
     private javax.swing.JComboBox<String> cbxPublicationYear;
-    private javax.swing.JLabel isbnWarning;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -422,12 +405,12 @@ public class BookRegistryWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblIsbn;
     private javax.swing.JPanel namePanel;
     private javax.swing.JPanel namePanel1;
     private javax.swing.JSpinner spnCopiesNumber;
     private javax.swing.JLabel titleWarning;
     private javax.swing.JTextField txtAuthor;
-    private javax.swing.JFormattedTextField txtISBN;
     private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }

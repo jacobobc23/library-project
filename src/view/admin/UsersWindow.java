@@ -1,6 +1,6 @@
 package view.admin;
 
-import controllers.UserMaganemetController;
+import controllers.UserManagemetController;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import view.logIn.LogInWindow;
 public class UsersWindow extends javax.swing.JFrame {
 
     private final User admin;
-    private final UserMaganemetController controller;
+    private final UserManagemetController controller;
 
     private TableRowSorter<DefaultTableModel> sorter;
 
@@ -35,7 +35,7 @@ public class UsersWindow extends javax.swing.JFrame {
         setTitle("Gestión de usuarios");
         setResizable(false);
         lblAdminName.setText(admin.getFullName());
-        controller = new UserMaganemetController();
+        controller = new UserManagemetController();
         fillTable();
     }
 
@@ -450,7 +450,7 @@ public class UsersWindow extends javax.swing.JFrame {
         String filterText = txtFilter.getText();
 
         RowFilter<Object, Object> idFilter = RowFilter.regexFilter(filterText.trim(), 0);
-        RowFilter<Object, Object> nameFilter = RowFilter.regexFilter("(?i)" + filterText, 1);
+        RowFilter<Object, Object> nameFilter = RowFilter.regexFilter("(?i)" + filterText.trim(), 1);
 
         sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(idFilter, nameFilter)));
     }

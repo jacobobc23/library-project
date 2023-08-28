@@ -13,12 +13,12 @@ import org.mariadb.jdbc.Connection;
  *
  * @author Jacobo-bc
  */
-public class UserMaganemetController {
+public class UserManagemetController {
 
     private final BDConnection conn;
     private final Connection con;
 
-    public UserMaganemetController() {
+    public UserManagemetController() {
         this.conn = new BDConnection();
         this.con = conn.getConnection();
     }
@@ -104,23 +104,22 @@ public class UserMaganemetController {
             throw new SQLException();
         }
     }
-    
+
     public boolean updateUser(User user) {
         try {
             PreparedStatement ps;
-            
+
             String query = "UPDATE users SET mobilenumber = ?, username = ?, password = ? WHERE id = ?";
-            
+
             ps = con.prepareStatement(query);
-            
+
             ps.setString(1, user.getMobileNumber());
             ps.setString(2, user.getUsername());
             ps.setString(3, user.getPassword());
             ps.setString(4, user.getId());
-            
-            
+
             int rowUpdated = ps.executeUpdate();
-            
+
             return rowUpdated > 0;
         } catch (SQLException ex) {
             System.err.println(ex.toString());
@@ -145,4 +144,49 @@ public class UserMaganemetController {
             return false;
         }
     }
+
+    public boolean mobileNumberInUse(String mobileNumber) {
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+
+            String query = "SELECT * FROM users WHERE mobilenumber = ?";
+
+            ps = con.prepareStatement(query);
+
+            ps.setString(1, mobileNumber);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return false;
+    }
+    
+    public boolean usernameInUse(String username) {
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+            
+            String query = "SELECT * FROM users WHERE username = ?";
+            
+            ps = con.prepareStatement(query);
+            
+            ps.setString(1, username);
+            
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return false;
+    }
+
 }
