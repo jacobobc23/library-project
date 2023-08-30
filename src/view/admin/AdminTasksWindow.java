@@ -6,7 +6,9 @@ import model.User;
 import view.logIn.LogInWindow;
 
 /**
- *
+ * Ventana principal para el administrador, en esta encuentra las diferentes
+ * gestiones que tiene disponible.
+ * 
  * @author Jacobo-bc
  */
 public class AdminTasksWindow extends javax.swing.JFrame {
@@ -14,13 +16,12 @@ public class AdminTasksWindow extends javax.swing.JFrame {
     private final User user;
 
     /**
-     * Creates new form AdminTasksWindow
      *
-     * @param user
+     * @param user El administrador que ingresó.
      */
     public AdminTasksWindow(User user) {
         initComponents();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa.
         setResizable(false);
         setTitle("Gestiones administrativas");
         this.user = user;
@@ -56,13 +57,13 @@ public class AdminTasksWindow extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/administrator.png"))); // NOI18N
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        lblAdminName.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        lblAdminName.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         lblAdminName.setForeground(new java.awt.Color(255, 255, 255));
         lblAdminName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAdminName.setText("jLabel2");
         lblAdminName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        lblAdminAccount.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        lblAdminAccount.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblAdminAccount.setForeground(new java.awt.Color(255, 255, 255));
         lblAdminAccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAdminAccount.setText("Gestionar mi cuenta");
@@ -75,7 +76,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
         });
 
         btnExit.setBackground(new java.awt.Color(255, 0, 0));
-        btnExit.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnExit.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("SALIR");
         btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -85,7 +86,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
             }
         });
 
-        btnBooksManagement.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnBooksManagement.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnBooksManagement.setForeground(new java.awt.Color(255, 255, 255));
         btnBooksManagement.setText("    LIBROS");
         btnBooksManagement.setBorderPainted(false);
@@ -106,7 +107,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
             }
         });
 
-        btnUserManagement.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnUserManagement.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnUserManagement.setForeground(new java.awt.Color(255, 255, 255));
         btnUserManagement.setText("    USUARIOS");
         btnUserManagement.setBorderPainted(false);
@@ -127,7 +128,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
             }
         });
 
-        btnTransactions.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnTransactions.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnTransactions.setForeground(new java.awt.Color(255, 255, 255));
         btnTransactions.setText("    TRANSACCIONES");
         btnTransactions.setBorderPainted(false);
@@ -183,7 +184,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
                 .addComponent(btnUserManagement)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTransactions)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -214,17 +215,31 @@ public class AdminTasksWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Abre UserAccountWindow, para asi ver sus datos y poder modificarlos. 
+     * @param evt 
+     */
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
-        new AdminAccountWindow(user).setVisible(true);
+        new UserAccountWindow(user).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
+    /**
+     * Abre BooksWindow, para ver la información de los libros y poder
+     * gestionarlos
+     * @param evt 
+     */
     private void btnBooksManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBooksManagementActionPerformed
         new BooksWindow(user).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBooksManagementActionPerformed
 
+    /**
+     * Abre UsersWindow, para ver la información de los usuarios y poder
+     * gestionarlos.
+     * @param evt 
+     */
     private void btnUserManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserManagementActionPerformed
         new UsersWindow(user).setVisible(true);
         this.dispose();
@@ -264,6 +279,10 @@ public class AdminTasksWindow extends javax.swing.JFrame {
         btnTransactions.setOpaque(false);
     }//GEN-LAST:event_btnTransactionsMouseExited
 
+    /**
+     * Regresa al logIn
+     * @param evt 
+     */
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         new LogInWindow().setVisible(true);
         this.dispose();

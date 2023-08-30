@@ -9,6 +9,7 @@ import model.User;
 import org.mariadb.jdbc.Connection;
 
 /**
+ * Controlador para buscar el usuario que desea ingresar al sistema.
  *
  * @author Jacobo-bc
  */
@@ -21,36 +22,38 @@ public class LogInController {
         this.conn = new BDConnection();
         this.con = conn.getConnection();
     }
-    
+
     /**
      * Busca el usuario que está intentando acceder al sistema.
+     *
      * @param username
      * @param password
-     * @return 
+     * @return el usuario que va a ingresar, null si no se encontró un usuario
+     * con esas credenciales.
      */
     public User searchUser(String username, String password) {
         try {
             PreparedStatement ps;
             ResultSet rs;
-            
+
             String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-            
+
             ps = con.prepareStatement(query);
-            
+
             ps.setString(1, username);
             ps.setString(2, password);
-            
+
             rs = ps.executeQuery();
-            
+
             if (rs.next()) {
-                
+
                 String id = rs.getString("id");
                 String fullName = rs.getString("fullname");
                 Role role = Role.valueOf(rs.getString("role"));
                 String mobileNumber = rs.getString("mobilenumber");
-                
+
                 User user = new User(id, fullName, role, mobileNumber, username, password);
-                
+
                 return user;
             }
         } catch (SQLException ex) {

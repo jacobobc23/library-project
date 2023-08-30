@@ -68,20 +68,18 @@
                           <EmptySpace pref="81" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="btnUpdateBook" alignment="1" min="-2" pref="95" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="spnCopiesNumber" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="titleWarning" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="namePanel" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="cbxGenre" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="spnCopiesNumber" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="titleWarning" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="namePanel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cbxGenre" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="btnUpdateBook" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                       </Group>
@@ -134,7 +132,7 @@
                       <Component id="cbxPublicationYear" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       <Component id="spnCopiesNumber" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="43" max="32767" attributes="0"/>
+                  <EmptySpace pref="55" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnUpdateBook" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -148,7 +146,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="12" style="1"/>
+              <Font name="Century Gothic" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ISBN *"/>
           </Properties>
@@ -192,7 +190,7 @@
             <Component class="javax.swing.JLabel" name="lblIsbn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Helvetica World" size="12" style="0"/>
+                  <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel7"/>
               </Properties>
@@ -221,7 +219,7 @@
                   <Color blue="f5" green="f5" red="f5" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Helvetica World" size="12" style="0"/>
+                  <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -266,7 +264,7 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="12" style="1"/>
+              <Font name="Century Gothic" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="T&#xed;tulo *"/>
           </Properties>
@@ -274,7 +272,7 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="12" style="1"/>
+              <Font name="Century Gothic" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Autor *"/>
           </Properties>
@@ -296,7 +294,7 @@
                   <Color blue="f5" green="f5" red="f5" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Helvetica World" size="12" style="0"/>
+                  <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -341,16 +339,16 @@
               <Color blue="f5" green="f5" red="f5" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="12" style="0"/>
+              <Font name="Century Gothic" size="12" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="8">
                 <StringItem index="0" value="Seleccione una opci&#xf3;n"/>
-                <StringItem index="1" value="FICTION"/>
-                <StringItem index="2" value="NON_FICTION"/>
-                <StringItem index="3" value="MYSTERY"/>
-                <StringItem index="4" value="SCIENCE_FICTION"/>
-                <StringItem index="5" value="FANTASY"/>
+                <StringItem index="1" value="FICCI&#xd3;N"/>
+                <StringItem index="2" value="NO_FICCI&#xd3;N"/>
+                <StringItem index="3" value="MISTERIO"/>
+                <StringItem index="4" value="CIENCIA_FICCI&#xd3;N"/>
+                <StringItem index="5" value="FANTAS&#xcd;A"/>
                 <StringItem index="6" value="ROMANCE"/>
                 <StringItem index="7" value="HORROR"/>
               </StringArray>
@@ -366,12 +364,17 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="12" style="1"/>
+              <Font name="Century Gothic" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="G&#xe9;nero *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="spnCopiesNumber">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Century Gothic" size="12" style="0"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbxPublicationYear">
           <Properties>
@@ -379,7 +382,7 @@
               <Color blue="f5" green="f5" red="f5" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="12" style="0"/>
+              <Font name="Century Gothic" size="12" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
@@ -395,7 +398,7 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="12" style="1"/>
+              <Font name="Century Gothic" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="A&#xf1;o de publicaci&#xf3;n *"/>
           </Properties>
@@ -403,7 +406,7 @@
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="12" style="1"/>
+              <Font name="Century Gothic" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="N&#xfa;mero de copias *"/>
           </Properties>
@@ -414,7 +417,7 @@
               <Color blue="3c" green="14" red="dc" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="14" style="0"/>
+              <Font name="Century Gothic" size="14" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -435,7 +438,7 @@
               <Color blue="ff" green="7b" red="0" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Helvetica World" size="14" style="0"/>
+              <Font name="Century Gothic" size="14" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -453,7 +456,7 @@
         <Component class="javax.swing.JLabel" name="titleWarning">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Roboto" size="10" style="0"/>
+              <Font name="Century Gothic" size="10" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="ff" type="rgb"/>
@@ -464,7 +467,7 @@
         <Component class="javax.swing.JLabel" name="IDWarning">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Roboto" size="10" style="0"/>
+              <Font name="Century Gothic" size="10" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="aa" green="aa" red="aa" type="rgb"/>

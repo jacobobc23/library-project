@@ -10,7 +10,8 @@ import model.User;
 import org.mariadb.jdbc.Connection;
 
 /**
- *
+ * Controlador para gestionar los usuarios.
+ * 
  * @author Jacobo-bc
  */
 public class UserManagemetController {
@@ -23,6 +24,10 @@ public class UserManagemetController {
         this.con = conn.getConnection();
     }
 
+    /**
+     * Devuelve un arraylist que contiene todos los usuarios de la bd
+     * @return Un arraylist que tiene todos los usuarios y su informacion.
+     */
     public ArrayList<User> listUsers() {
         ArrayList<User> users = new ArrayList<>();
 
@@ -52,6 +57,11 @@ public class UserManagemetController {
         return users;
     }
 
+    /**
+     * Busca un usuario por su id
+     * @param id El id del usuario que se esta buscando
+     * @return Un usuario, null en caso de que no se encuentre.
+     */
     public User searchUser(String id) {
         try {
             PreparedStatement ps;
@@ -83,6 +93,11 @@ public class UserManagemetController {
         return null;
     }
 
+    /**
+     * Agrega un nuevo usuario.
+     * @param user
+     * @throws SQLException 
+     */
     public void addUser(User user) throws SQLException {
         try {
             PreparedStatement ps;
@@ -105,6 +120,11 @@ public class UserManagemetController {
         }
     }
 
+    /**
+     * Actualiza un usuario.
+     * @param user
+     * @return 
+     */
     public boolean updateUser(User user) {
         try {
             PreparedStatement ps;
@@ -127,6 +147,11 @@ public class UserManagemetController {
         }
     }
 
+    /**
+     * Elimina un usuario.
+     * @param id
+     * @return 
+     */
     public boolean deleteUser(String id) {
         try {
             PreparedStatement ps;
@@ -145,6 +170,13 @@ public class UserManagemetController {
         }
     }
 
+    /**
+     * Valida si un telefono ya esta en uso. En caso de que si, prohibe
+     * el registro del usuario con ese numero
+     * @param mobileNumber
+     * @return true si existe un registro con ese numero, false en caso 
+     * contrario
+     */
     public boolean mobileNumberInUse(String mobileNumber) {
         try {
             PreparedStatement ps;
@@ -167,6 +199,12 @@ public class UserManagemetController {
         return false;
     }
     
+    /**
+     * Valida si un username esta en uso. En caso de que si, prohibe 
+     * el registro del usuario con ese numero.
+     * @param username
+     * @return 
+     */
     public boolean usernameInUse(String username) {
         try {
             PreparedStatement ps;

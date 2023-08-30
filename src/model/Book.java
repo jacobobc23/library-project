@@ -9,10 +9,10 @@ import enums.Genre;
 public class Book {
     
     private final String isbn;
-    private final String title;
-    private final String author;
-    private final Genre genre;
-    private final int publicationYear;
+    private String title;
+    private String author;
+    private Genre genre;
+    private int publicationYear;
     private int copiesNumber;
     
     public Book(String isbn, String title, String author, Genre genre, int publicationYear, int copiesNumber) {
@@ -32,16 +32,32 @@ public class Book {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getAuthor() {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+    
     public Genre getGenre() {
         return genre;
     }
-    
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
     public int getPublicationYear() {
         return publicationYear;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
     }
 
     public int getCopiesNumber() {

@@ -18,14 +18,16 @@ public class BookEdtingWindow extends javax.swing.JFrame {
     private final BookManagementController controller;
 
     /**
-     * Creates new form BookEdtingWindow
+     * 
+     * @param book el libro que se desea editar.
+     * @param bw la ventana de los libros. 
      */
     public BookEdtingWindow(Book book, BooksWindow bw) {
         initComponents();
         this.book = book;
         this.bw = bw;
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // Cierra la ventana sin cerrar el programa
         setResizable(false);
         setTitle(book.getTitle());
         controller = new BookManagementController();
@@ -72,7 +74,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
 
         backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel1.setText("ISBN *");
 
         IDPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -93,7 +95,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
 
         IDPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        lblIsbn.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        lblIsbn.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblIsbn.setText("jLabel7");
         IDPanel.add(lblIsbn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
 
@@ -101,7 +103,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         namePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtTitle.setBackground(new java.awt.Color(245, 245, 245));
-        txtTitle.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtTitle.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtTitle.setBorder(null);
         txtTitle.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -125,17 +127,17 @@ public class BookEdtingWindow extends javax.swing.JFrame {
 
         namePanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel2.setText("Título *");
 
-        jLabel3.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel3.setText("Autor *");
 
         namePanel1.setBackground(new java.awt.Color(245, 245, 245));
         namePanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtAuthor.setBackground(new java.awt.Color(245, 245, 245));
-        txtAuthor.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtAuthor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtAuthor.setBorder(null);
         namePanel1.add(txtAuthor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
@@ -155,25 +157,27 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         namePanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         cbxGenre.setBackground(new java.awt.Color(245, 245, 245));
-        cbxGenre.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
-        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "FICTION", "NON_FICTION", "MYSTERY", "SCIENCE_FICTION", "FANTASY", "ROMANCE", "HORROR" }));
+        cbxGenre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "FICCIÓN", "NO_FICCIÓN", "MISTERIO", "CIENCIA_FICCIÓN", "FANTASÍA", "ROMANCE", "HORROR" }));
         cbxGenre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel4.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel4.setText("Género *");
 
+        spnCopiesNumber.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
         cbxPublicationYear.setBackground(new java.awt.Color(245, 245, 245));
-        cbxPublicationYear.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        cbxPublicationYear.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cbxPublicationYear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel5.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel5.setText("Año de publicación *");
 
-        jLabel6.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel6.setText("Número de copias *");
 
         btnCancel.setBackground(new java.awt.Color(220, 20, 60));
-        btnCancel.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnCancel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancelar");
         btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -185,7 +189,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         });
 
         btnUpdateBook.setBackground(new java.awt.Color(0, 123, 255));
-        btnUpdateBook.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnUpdateBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnUpdateBook.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateBook.setText("Actualizar");
         btnUpdateBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -196,11 +200,11 @@ public class BookEdtingWindow extends javax.swing.JFrame {
             }
         });
 
-        titleWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        titleWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         titleWarning.setForeground(new java.awt.Color(255, 0, 0));
         titleWarning.setText("TITULO YA REGISTRADO");
 
-        IDWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        IDWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         IDWarning.setForeground(new java.awt.Color(170, 170, 170));
         IDWarning.setText("NO EDITABLE");
 
@@ -229,17 +233,16 @@ public class BookEdtingWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnUpdateBook, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(spnCopiesNumber)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(titleWarning))
-                                    .addComponent(namePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbxGenre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(spnCopiesNumber)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(titleWarning))
+                                .addComponent(namePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbxGenre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnUpdateBook, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(80, 80, 80))))
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -277,7 +280,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxPublicationYear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spnCopiesNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
                     .addComponent(btnUpdateBook))
@@ -302,6 +305,10 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         validateFields();
     }//GEN-LAST:event_txtTitleKeyReleased
 
+    /**
+     * Realiza las modificaciones al libro
+     * @param evt 
+     */
     private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
         if (hasEmptyFields()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos");
@@ -325,16 +332,27 @@ public class BookEdtingWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al actualizar");
         }
     }//GEN-LAST:event_btnUpdateBookActionPerformed
-
+    
+    /**
+     * Cancela el proceso de editar el libro.
+     * @param evt 
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    /**
+     * Verifica si hay algun campo que falta por llenar.
+     * @return 
+     */
     private boolean hasEmptyFields() {
         return (txtTitle.getText().isEmpty() || txtAuthor.getText().isEmpty()
                 || cbxGenre.getSelectedIndex() == 0 || cbxPublicationYear.getSelectedIndex() == 0 || spnCopiesNumber.getValue().toString().equals("0"));
     }
 
+    /**
+     * Modifica la estructura del comboBox que recibe el año de publicación.
+     */
     private void setCbxPublicationYear() {
 
         int currentYear = LocalDate.now().getYear();
@@ -346,6 +364,9 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         cbxPublicationYear.insertItemAt("Seleccione una opción", 0);
     }
 
+    /**
+     * Modifica la estructura del spinner que recibe el número de copias.
+     */
     private void setSpnCopiesNumber() {
         SpinnerNumberModel model = new SpinnerNumberModel();
         model.setMinimum(0);
@@ -354,6 +375,10 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         spnCopiesNumber.setValue(book.getCopiesNumber());
     }
 
+    /**
+     * Valida que el dato ingresado en los campos sea el deseado, en caso
+     * de que no, muestra la advertencia adecuada.
+     */
     private void validateFields() {
         String title = txtTitle.getText().trim();
 
@@ -371,16 +396,22 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         btnUpdateBook.setEnabled(enableBtnUpdateBook);
     }
 
+    /**
+     * Oculta las advertencias que hay ante posibles errores.
+     */
     private void hideWarnings() {
         titleWarning.setVisible(false);
     }
 
+    /**
+     * Muestra la información del libro que se va a editar.
+     */
     private void showBookInformation() {
         lblIsbn.setText(book.getIsbn());
         txtTitle.setText(book.getTitle());
         txtAuthor.setText(book.getAuthor());
         cbxPublicationYear.setSelectedItem(book.getPublicationYear());
-        cbxGenre.setSelectedItem(book.getGenre().toString());
+        cbxGenre.setSelectedItem(book.getGenre().name());
         spnCopiesNumber.setValue(book.getCopiesNumber());
     }
 

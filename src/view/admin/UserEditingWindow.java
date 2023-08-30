@@ -33,7 +33,6 @@ public class UserEditingWindow extends javax.swing.JFrame {
         setTitle(user.getFullName());
         controller = new UserManagemetController();
         showUserInformation();
-        setCbxRole();
         hideWarnings();
     }
 
@@ -82,7 +81,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
 
         backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel1.setText("Cédula *");
 
         IDPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -103,11 +102,11 @@ public class UserEditingWindow extends javax.swing.JFrame {
 
         IDPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        lblID.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        lblID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblID.setText("jLabel7");
         IDPanel.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
 
-        jLabel2.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel2.setText("Nombre *");
 
         namePanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -128,19 +127,19 @@ public class UserEditingWindow extends javax.swing.JFrame {
 
         namePanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        lblName.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        lblName.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblName.setText("jLabel7");
         namePanel.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
 
         cbxRole.setBackground(new java.awt.Color(245, 245, 245));
-        cbxRole.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
-        cbxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxRole.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        cbxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMIN", "USER" }));
         cbxRole.setEnabled(false);
 
-        jLabel3.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel3.setText("Rol *");
 
-        jLabel4.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel4.setText("Teléfono *");
 
         mobileNumberPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -170,7 +169,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
         }
         txtMobileNumber.setActionCommand("<Not Set>");
         txtMobileNumber.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
-        txtMobileNumber.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtMobileNumber.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtMobileNumber.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtMobileNumberKeyReleased(evt);
@@ -178,14 +177,14 @@ public class UserEditingWindow extends javax.swing.JFrame {
         });
         mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
-        jLabel5.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel5.setText("Usuario *");
 
         userPanel.setBackground(new java.awt.Color(245, 245, 245));
         userPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtUsername.setBackground(new java.awt.Color(245, 245, 245));
-        txtUsername.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtUsername.setBorder(null);
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -209,7 +208,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
 
         userPanel.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
 
-        jLabel6.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel6.setText("Contraseña *");
 
         passwordPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -217,7 +216,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
 
         txtPassword.setEchoChar('\u25cf');
         txtPassword.setBackground(new java.awt.Color(245, 245, 245));
-        txtPassword.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtPassword.setBorder(null);
         passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 170, -1));
 
@@ -248,7 +247,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
         passwordPanel.add(toggleBtnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 30, 20));
 
         btnCancel.setBackground(new java.awt.Color(220, 20, 60));
-        btnCancel.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnCancel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancelar");
         btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -260,7 +259,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
         });
 
         btnUpdateUser.setBackground(new java.awt.Color(0, 123, 255));
-        btnUpdateUser.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnUpdateUser.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnUpdateUser.setForeground(new java.awt.Color(255, 255, 255));
         btnUpdateUser.setText("Actualizar");
         btnUpdateUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -271,23 +270,23 @@ public class UserEditingWindow extends javax.swing.JFrame {
             }
         });
 
-        IDWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        IDWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         IDWarning.setForeground(new java.awt.Color(170, 170, 170));
         IDWarning.setText("NO EDITABLE");
 
-        nameWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        nameWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         nameWarning.setForeground(new java.awt.Color(170, 170, 170));
         nameWarning.setText("NO EDITABLE");
 
-        roleWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        roleWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         roleWarning.setForeground(new java.awt.Color(170, 170, 170));
         roleWarning.setText("NO EDITABLE");
 
-        mobNumWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        mobNumWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         mobNumWarning.setForeground(new java.awt.Color(255, 0, 0));
         mobNumWarning.setText("TELÉFONO EN USO");
 
-        userWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        userWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         userWarning.setForeground(new java.awt.Color(255, 0, 0));
         userWarning.setText("USUARIO EN USO");
 
@@ -336,7 +335,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(mobNumWarning)))
-                                .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnUpdateUser)))
                         .addGap(51, 51, 51))))
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -370,19 +369,18 @@ public class UserEditingWindow extends javax.swing.JFrame {
                             .addComponent(mobNumWarning))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mobileNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGap(53, 53, 53)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(userWarning))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(60, 60, 60)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
@@ -455,23 +453,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
         txtMobileNumber.setText(user.getMobileNumber());
         txtUsername.setText(user.getUsername());
         txtPassword.setText(user.getPassword());
-
-        for (int i = 0; i < cbxRole.getItemCount(); i++) {
-            if (cbxRole.getItemAt(i).equals(user.getRole().toString())) {
-                cbxRole.setSelectedIndex(i);
-                break;
-            }
-        }
-    }
-
-    private void setCbxRole() {
-        Role[] role = Role.values();
-        String[] roles = new String[role.length];
-
-        for (int i = 0; i < role.length; i++) {
-            roles[i] = role[i].name();
-        }
-        cbxRole.setModel(new javax.swing.DefaultComboBoxModel<>(roles));
+        cbxRole.setSelectedItem(user.getRole().name());
     }
 
     private boolean hasEmptyFields() {

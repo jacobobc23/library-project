@@ -55,17 +55,18 @@ public class LogInWindow extends javax.swing.JFrame {
 
         backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblTitle.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        lblTitle.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitle.setText("INICIAR SESIÓN");
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel1.setText("Usuario");
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel1.setText("Usuario:");
 
         userPanel.setBackground(new java.awt.Color(235, 235, 235));
         userPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtUser.setBackground(new java.awt.Color(235, 235, 235));
+        txtUser.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         txtUser.setBorder(null);
         txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -89,8 +90,8 @@ public class LogInWindow extends javax.swing.JFrame {
 
         userPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 20, 40));
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabel2.setText("Contraseña");
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel2.setText("Contraseña:");
 
         passwordPanel.setBackground(new java.awt.Color(235, 235, 235));
         passwordPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -112,6 +113,7 @@ public class LogInWindow extends javax.swing.JFrame {
 
         txtPassword.setEchoChar('\u25cf');
         txtPassword.setBackground(new java.awt.Color(235, 235, 235));
+        txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 13)); // NOI18N
         txtPassword.setBorder(null);
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -131,7 +133,7 @@ public class LogInWindow extends javax.swing.JFrame {
         });
         passwordPanel.add(toggleBtnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 20, 20));
 
-        lblCreateAccount.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        lblCreateAccount.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         lblCreateAccount.setForeground(new java.awt.Color(51, 51, 255));
         lblCreateAccount.setText("Crear cuenta usuario");
         lblCreateAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -142,7 +144,7 @@ public class LogInWindow extends javax.swing.JFrame {
         });
 
         btnLogIn.setBackground(new java.awt.Color(0, 123, 255));
-        btnLogIn.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        btnLogIn.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         btnLogIn.setForeground(new java.awt.Color(255, 255, 255));
         btnLogIn.setText("INGRESAR");
         btnLogIn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -170,7 +172,7 @@ public class LogInWindow extends javax.swing.JFrame {
                                 .addComponent(passwordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                                 .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGap(125, 125, 125)
+                        .addGap(124, 124, 124)
                         .addComponent(btnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -189,9 +191,9 @@ public class LogInWindow extends javax.swing.JFrame {
                 .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblCreateAccount)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(btnLogIn)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

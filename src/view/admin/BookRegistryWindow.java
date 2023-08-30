@@ -74,7 +74,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
         backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel1.setText("ISBN *");
 
         IDPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -102,6 +102,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtISBN.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtISBN.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtISBNKeyReleased(evt);
@@ -113,7 +114,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         namePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtTitle.setBackground(new java.awt.Color(245, 245, 245));
-        txtTitle.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtTitle.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtTitle.setBorder(null);
         txtTitle.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -137,17 +138,17 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
         namePanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel2.setText("Título *");
 
-        jLabel3.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel3.setText("Autor *");
 
         namePanel1.setBackground(new java.awt.Color(245, 245, 245));
         namePanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtAuthor.setBackground(new java.awt.Color(245, 245, 245));
-        txtAuthor.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtAuthor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtAuthor.setBorder(null);
         namePanel1.add(txtAuthor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
@@ -167,32 +168,39 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         namePanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         cbxGenre.setBackground(new java.awt.Color(245, 245, 245));
-        cbxGenre.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
-        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "FICTION", "NON_FICTION", "MYSTERY", "SCIENCE_FICTION", "FANTASY", "ROMANCE", "HORROR" }));
+        cbxGenre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "FICCIÓN", "NO_FICCIÓN", "MISTERIO", "CIENCIA_FICCIÓN", "FANTASÍA", "ROMANCE", "HORROR" }));
         cbxGenre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel4.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel4.setText("Género *");
 
+        spnCopiesNumber.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
         cbxPublicationYear.setBackground(new java.awt.Color(245, 245, 245));
-        cbxPublicationYear.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        cbxPublicationYear.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cbxPublicationYear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel5.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel5.setText("Año de publicación *");
 
-        jLabel6.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel6.setText("Número de copias *");
 
         btnCancel.setBackground(new java.awt.Color(220, 20, 60));
-        btnCancel.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnCancel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancelar");
         btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.setFocusable(false);
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         btnAddBook.setBackground(new java.awt.Color(0, 123, 255));
-        btnAddBook.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnAddBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnAddBook.setForeground(new java.awt.Color(255, 255, 255));
         btnAddBook.setText("Registrar");
         btnAddBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -203,11 +211,11 @@ public class BookRegistryWindow extends javax.swing.JFrame {
             }
         });
 
-        isbnWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        isbnWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         isbnWarning.setForeground(new java.awt.Color(255, 0, 0));
         isbnWarning.setText("ISBN YA REGISTRADO");
 
-        titleWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        titleWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         titleWarning.setForeground(new java.awt.Color(255, 0, 0));
         titleWarning.setText("TITULO YA REGISTRADO");
 
@@ -284,7 +292,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxPublicationYear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spnCopiesNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
                     .addComponent(btnAddBook))
@@ -336,6 +344,10 @@ public class BookRegistryWindow extends javax.swing.JFrame {
     private void txtTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyReleased
         validateFields();
     }//GEN-LAST:event_txtTitleKeyReleased
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     private void cleanFields() {
         txtISBN.setText("");

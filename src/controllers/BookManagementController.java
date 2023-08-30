@@ -10,7 +10,8 @@ import model.Book;
 import org.mariadb.jdbc.Connection;
 
 /**
- *
+ * Controlador para gestionar los libros.
+ * 
  * @author Jacobo-bc
  */
 public class BookManagementController {
@@ -62,22 +63,17 @@ public class BookManagementController {
      * Busca un libro por su isbn
      *
      * @param isbn El isbn del libro que se está buscando
-     * @return Un libro. isbn es vacío, se devuelven todos los libros.
+     * @return Un libro, null en caso de que no se encuentre.
      */
     public Book searchBook(String isbn) {
-        String where = "";
-
-        if (!"".equals(isbn)) {
-            where = "WHERE isbn = '" + isbn + "'";
-        }
-
         try {
             PreparedStatement ps;
             ResultSet rs;
 
-            String query = "SELECT * FROM books " + where;
+            String query = "SELECT * FROM books WHERE isbn = ?";
 
             ps = con.prepareStatement(query);
+            ps.setString(1, isbn);
             rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -115,7 +111,7 @@ public class BookManagementController {
             ps.setString(1, book.getIsbn());
             ps.setString(2, book.getTitle());
             ps.setString(3, book.getAuthor());
-            ps.setString(4, book.getGenre().toString());
+            ps.setString(4, book.getGenre().name());
             ps.setInt(5, book.getPublicationYear());
             ps.setInt(6, book.getCopiesNumber());
 
@@ -142,7 +138,7 @@ public class BookManagementController {
             ps = con.prepareStatement(query);
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getAuthor());
-            ps.setString(3, String.valueOf(book.getGenre()));
+            ps.setString(3, book.getGenre().name());
             ps.setInt(4, book.getPublicationYear());
             ps.setInt(5, book.getCopiesNumber());
             ps.setString(6, book.getIsbn());
@@ -180,6 +176,13 @@ public class BookManagementController {
         return false;
     }
 
+    /**
+     * Valida si el titulo de un libro está en uso. En caso de que si, prohibe
+     * el registro con ese nombre.
+     * 
+     * @param title
+     * @return true si existe un libro con ese titulo, false en caso contrario.
+     */
     public boolean titleInUse(String title) {
         try {
             PreparedStatement ps;

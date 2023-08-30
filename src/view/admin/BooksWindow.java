@@ -77,13 +77,13 @@ public class BooksWindow extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/administrator.png"))); // NOI18N
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        lblAdminName.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        lblAdminName.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         lblAdminName.setForeground(new java.awt.Color(255, 255, 255));
         lblAdminName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAdminName.setText("jLabel2");
         lblAdminName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        lblAdminAccount.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        lblAdminAccount.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblAdminAccount.setForeground(new java.awt.Color(255, 255, 255));
         lblAdminAccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAdminAccount.setText("Gestionar mi cuenta");
@@ -96,7 +96,7 @@ public class BooksWindow extends javax.swing.JFrame {
         });
 
         btnExit.setBackground(new java.awt.Color(255, 0, 0));
-        btnExit.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnExit.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("SALIR");
         btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -106,7 +106,7 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
-        btnUsersManagement.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnUsersManagement.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnUsersManagement.setForeground(new java.awt.Color(255, 255, 255));
         btnUsersManagement.setText("    USUARIOS");
         btnUsersManagement.setBorderPainted(false);
@@ -119,7 +119,7 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
-        btnTransactions.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        btnTransactions.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnTransactions.setForeground(new java.awt.Color(255, 255, 255));
         btnTransactions.setText("    TRANSACCIONES");
         btnTransactions.setBorderPainted(false);
@@ -128,9 +128,9 @@ public class BooksWindow extends javax.swing.JFrame {
         btnTransactions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         lblBooks.setBackground(new java.awt.Color(135, 178, 255));
-        lblBooks.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        lblBooks.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         lblBooks.setForeground(new java.awt.Color(255, 255, 255));
-        lblBooks.setText("         LIBROS");
+        lblBooks.setText("        LIBROS");
         lblBooks.setOpaque(true);
 
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
@@ -168,7 +168,7 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addComponent(btnUsersManagement)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTransactions)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -189,7 +189,7 @@ public class BooksWindow extends javax.swing.JFrame {
         jScrollPane1.setViewportView(booksTable);
 
         btnDeleteUser.setBackground(new java.awt.Color(220, 20, 60));
-        btnDeleteUser.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnDeleteUser.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnDeleteUser.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteUser.setText("Eliminar");
         btnDeleteUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -200,7 +200,7 @@ public class BooksWindow extends javax.swing.JFrame {
         });
 
         btnAddBook.setBackground(new java.awt.Color(0, 123, 255));
-        btnAddBook.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnAddBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnAddBook.setForeground(new java.awt.Color(255, 255, 255));
         btnAddBook.setText("Nuevo");
         btnAddBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -211,7 +211,7 @@ public class BooksWindow extends javax.swing.JFrame {
         });
 
         btnUpdateUser.setBackground(new java.awt.Color(255, 215, 0));
-        btnUpdateUser.setFont(new java.awt.Font("Helvetica World", 0, 14)); // NOI18N
+        btnUpdateUser.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnUpdateUser.setText("Editar");
         btnUpdateUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUpdateUser.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +220,7 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
-        txtFilter.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtFilter.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtFilter.setBorder(null);
         txtFilter.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -228,7 +228,7 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel2.setText("Buscar:");
 
         javax.swing.GroupLayout booksPanelLayout = new javax.swing.GroupLayout(booksPanel);
@@ -288,7 +288,7 @@ public class BooksWindow extends javax.swing.JFrame {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(96, 96, 96)
                 .addComponent(booksPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -353,7 +353,7 @@ public class BooksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
-        new AdminAccountWindow(admin).setVisible(true);
+        new UserAccountWindow(admin).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 

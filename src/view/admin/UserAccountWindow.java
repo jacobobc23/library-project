@@ -1,6 +1,5 @@
 package view.admin;
 
-import controllers.AdminAccountController;
 import controllers.UserManagemetController;
 import enums.Role;
 import javax.swing.JOptionPane;
@@ -11,10 +10,9 @@ import view.logIn.LogInWindow;
  *
  * @author Jacobo-bc
  */
-public class AdminAccountWindow extends javax.swing.JFrame {
+public class UserAccountWindow extends javax.swing.JFrame {
 
-    private final AdminAccountController controller;
-    private final UserManagemetController controller2;
+    private final UserManagemetController controller;
     private final User user;
 
     private boolean passwordVisible = false;
@@ -24,11 +22,10 @@ public class AdminAccountWindow extends javax.swing.JFrame {
      *
      * @param user
      */
-    public AdminAccountWindow(User user) {
+    public UserAccountWindow(User user) {
         initComponents();
         this.user = user;
-        controller = new AdminAccountController();
-        controller2 = new UserManagemetController();
+        controller = new UserManagemetController();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -85,18 +82,18 @@ public class AdminAccountWindow extends javax.swing.JFrame {
 
         backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        userWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        userWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         userWarning.setForeground(new java.awt.Color(255, 0, 0));
         userWarning.setText("USUARIO EN USO");
 
-        passWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        passWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         passWarning.setForeground(new java.awt.Color(255, 0, 0));
         passWarning.setText("NO PUEDE TENER ESPACIOS");
 
-        jLabel5.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel5.setText("Usuario *");
 
-        jLabel6.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel6.setText("Contraseña *");
 
         passwordPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -104,6 +101,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
 
         txtPassword.setEchoChar('\u25cf');
         txtPassword.setBackground(new java.awt.Color(245, 245, 245));
+        txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtPassword.setBorder(null);
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -139,7 +137,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         passwordPanel.add(toggleBtnShowPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 30, 20));
 
         btnCancel.setBackground(new java.awt.Color(220, 20, 60));
-        btnCancel.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnCancel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancelar");
         btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -151,7 +149,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         });
 
         btnEditAdmin.setBackground(new java.awt.Color(0, 123, 255));
-        btnEditAdmin.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnEditAdmin.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnEditAdmin.setForeground(new java.awt.Color(255, 255, 255));
         btnEditAdmin.setText("Editar");
         btnEditAdmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -166,6 +164,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         userPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtUser.setBackground(new java.awt.Color(245, 245, 245));
+        txtUser.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtUser.setBorder(null);
         txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -197,18 +196,18 @@ public class AdminAccountWindow extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel2.setText("Nombre *");
 
-        IDWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        IDWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         IDWarning.setForeground(new java.awt.Color(170, 170, 170));
         IDWarning.setText("NO EDITABLE");
 
-        nameWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        nameWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         nameWarning.setForeground(new java.awt.Color(170, 170, 170));
         nameWarning.setText("NO EDITABLE");
 
-        roleWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        roleWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         roleWarning.setForeground(new java.awt.Color(170, 170, 170));
         roleWarning.setText("NO EDITABLE");
 
@@ -230,23 +229,23 @@ public class AdminAccountWindow extends javax.swing.JFrame {
 
         namePanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        lblName.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        lblName.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblName.setText("jLabel7");
         namePanel.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
 
-        numWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        numWarning.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         numWarning.setForeground(new java.awt.Color(255, 0, 0));
         numWarning.setText("TELÉFONO EN USO");
 
         cbxRole.setBackground(new java.awt.Color(245, 245, 245));
-        cbxRole.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        cbxRole.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cbxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxRole.setEnabled(false);
 
-        jLabel1.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel1.setText("Cédula *");
 
-        jLabel3.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel3.setText("Rol *");
 
         IDPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -267,11 +266,11 @@ public class AdminAccountWindow extends javax.swing.JFrame {
 
         IDPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        lblID.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        lblID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         lblID.setText("jLabel7");
         IDPanel.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
 
-        jLabel4.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel4.setText("Teléfono *");
 
         mobileNumberPanel.setBackground(new java.awt.Color(245, 245, 245));
@@ -301,7 +300,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         }
         txtMobileNumber.setActionCommand("<Not Set>");
         txtMobileNumber.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
-        txtMobileNumber.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtMobileNumber.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtMobileNumber.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtMobileNumberKeyReleased(evt);
@@ -400,7 +399,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
                                     .addComponent(numWarning))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(mobileNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                         .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(backgroundPanelLayout.createSequentialGroup()
                                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -442,13 +441,13 @@ public class AdminAccountWindow extends javax.swing.JFrame {
             return;
         }
 
+        String mobileNumber = txtMobileNumber.getText().trim();
         String username = txtUser.getText().trim();
         String pass = txtPassword.getText().trim();
-        String mobileNumber = txtMobileNumber.getText().trim();
 
         User adm = new User(user.getId(), user.getFullName(), user.getRole(), mobileNumber, username, pass);
 
-        boolean success = controller.updateAdmin(adm);
+        boolean success = controller.updateUser(adm);
 
         if (success) {
             JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
@@ -487,7 +486,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         int answer = JOptionPane.showConfirmDialog(null, "Está a punto de eliminar su cuenta, ¿Está seguro?", "Eliminación de cuenta", JOptionPane.INFORMATION_MESSAGE);
 
         if (answer == 0) {
-            boolean success = controller.deleteAdmin(id);
+            boolean success = controller.deleteUser(id);
 
             if (success) {
                 JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
@@ -538,8 +537,8 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         String mobileNumber = txtMobileNumber.getText();
         String username = txtUser.getText().trim();
 
-        boolean mobNumInUse = controller2.mobileNumberInUse(mobileNumber);
-        boolean userNameInUse = controller2.usernameInUse(username);
+        boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
+        boolean userNameInUse = controller.usernameInUse(username);
 
         boolean enableBtnUpdateUser = true; // Variable para controlar el estado del botón
 

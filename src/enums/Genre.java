@@ -6,11 +6,11 @@ package enums;
  */
 public enum Genre {
     
-    FICTION,
-    NON_FICTION,
-    MYSTERY,
-    SCIENCE_FICTION,
-    FANTASY,
+    FICCIÓN,
+    NO_FICCIÓN,
+    MISTERIO,
+    CIENCIA_FICCIÓN,
+    FANTASÍA,
     ROMANCE,
     HORROR
     
