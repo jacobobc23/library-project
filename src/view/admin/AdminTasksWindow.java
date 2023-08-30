@@ -217,6 +217,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
 
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
         new AdminAccountWindow(user).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
     private void btnBooksManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBooksManagementActionPerformed

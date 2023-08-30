@@ -331,6 +331,7 @@ public class UsersWindow extends javax.swing.JFrame {
 
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
         new AdminAccountWindow(admin).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed

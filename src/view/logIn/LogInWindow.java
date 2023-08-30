@@ -10,7 +10,7 @@ import views.user.SignUpWindow;
 
 /**
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class LogInWindow extends javax.swing.JFrame {
 
