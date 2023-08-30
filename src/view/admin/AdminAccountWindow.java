@@ -1,8 +1,11 @@
 package view.admin;
 
 import controllers.AdminAccountController;
+import controllers.UserManagemetController;
+import enums.Role;
 import javax.swing.JOptionPane;
 import model.User;
+import view.logIn.LogInWindow;
 
 /**
  *
@@ -11,6 +14,7 @@ import model.User;
 public class AdminAccountWindow extends javax.swing.JFrame {
 
     private final AdminAccountController controller;
+    private final UserManagemetController controller2;
     private final User user;
 
     private boolean passwordVisible = false;
@@ -24,12 +28,14 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         initComponents();
         this.user = user;
         controller = new AdminAccountController();
+        controller2 = new UserManagemetController();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setTitle("Actualización de datos");
         showAdminInformation();
         hideWarnings();
+        setCbxRole();
     }
 
     /**
@@ -55,6 +61,25 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         userPanel = new javax.swing.JPanel();
         txtUser = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
+        iconDelete = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        IDWarning = new javax.swing.JLabel();
+        nameWarning = new javax.swing.JLabel();
+        roleWarning = new javax.swing.JLabel();
+        namePanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        lblName = new javax.swing.JLabel();
+        numWarning = new javax.swing.JLabel();
+        cbxRole = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        IDPanel = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        lblID = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        mobileNumberPanel = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        txtMobileNumber = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -164,58 +189,244 @@ public class AdminAccountWindow extends javax.swing.JFrame {
 
         userPanel.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 40));
 
+        iconDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-delete-50.png"))); // NOI18N
+        iconDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        iconDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iconDeleteMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel2.setText("Nombre *");
+
+        IDWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        IDWarning.setForeground(new java.awt.Color(170, 170, 170));
+        IDWarning.setText("NO EDITABLE");
+
+        nameWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        nameWarning.setForeground(new java.awt.Color(170, 170, 170));
+        nameWarning.setText("NO EDITABLE");
+
+        roleWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        roleWarning.setForeground(new java.awt.Color(170, 170, 170));
+        roleWarning.setText("NO EDITABLE");
+
+        namePanel.setBackground(new java.awt.Color(245, 245, 245));
+        namePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(0, 123, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        namePanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        lblName.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        lblName.setText("jLabel7");
+        namePanel.add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
+
+        numWarning.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        numWarning.setForeground(new java.awt.Color(255, 0, 0));
+        numWarning.setText("TELÉFONO EN USO");
+
+        cbxRole.setBackground(new java.awt.Color(245, 245, 245));
+        cbxRole.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        cbxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxRole.setEnabled(false);
+
+        jLabel1.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel1.setText("Cédula *");
+
+        jLabel3.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel3.setText("Rol *");
+
+        IDPanel.setBackground(new java.awt.Color(245, 245, 245));
+        IDPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBackground(new java.awt.Color(0, 123, 255));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        IDPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        lblID.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        lblID.setText("jLabel7");
+        IDPanel.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
+
+        jLabel4.setFont(new java.awt.Font("Helvetica World", 1, 12)); // NOI18N
+        jLabel4.setText("Teléfono *");
+
+        mobileNumberPanel.setBackground(new java.awt.Color(245, 245, 245));
+        mobileNumberPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(0, 123, 255));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        mobileNumberPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        txtMobileNumber.setBackground(new java.awt.Color(245, 245, 245));
+        txtMobileNumber.setBorder(null);
+        try {
+            txtMobileNumber.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-###-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtMobileNumber.setActionCommand("<Not Set>");
+        txtMobileNumber.setFocusLostBehavior(javax.swing.JFormattedTextField.COMMIT);
+        txtMobileNumber.setFont(new java.awt.Font("Helvetica World", 0, 12)); // NOI18N
+        txtMobileNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMobileNumberKeyReleased(evt);
+            }
+        });
+        mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEditAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userWarning))
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(passWarning))
-                    .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(passwordPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
-                .addContainerGap(119, Short.MAX_VALUE))
+                        .addComponent(roleWarning))
+                    .addComponent(cbxRole, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                            .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(IDPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(IDWarning)))
+                                    .addGap(106, 106, 106))
+                                .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(iconDelete)
+                                    .addGap(21, 21, 21)))
+                            .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(nameWarning))
+                                .addComponent(namePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(mobileNumberPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(numWarning)))))
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(passWarning)))
+                        .addComponent(btnEditAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(backgroundPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(userWarning))
+                        .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(userWarning))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(31, 31, 31)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(passWarning))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancel)
-                    .addComponent(btnEditAdmin))
-                .addGap(19, 19, 19))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(iconDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(IDWarning))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(IDPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(nameWarning))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(namePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(61, 61, 61)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(roleWarning))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxRole, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(numWarning))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(mobileNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(passWarning))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(userWarning))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(62, 62, 62)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEditAdmin)
+                            .addComponent(btnCancel))
+                        .addGap(19, 19, 19)))
+                .addGap(6, 6, 6))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,8 +444,9 @@ public class AdminAccountWindow extends javax.swing.JFrame {
 
         String username = txtUser.getText().trim();
         String pass = txtPassword.getText().trim();
+        String mobileNumber = txtMobileNumber.getText().trim();
 
-        User adm = new User(user.getId(), user.getFullName(), user.getRole(), user.getMobileNumber(), username, pass);
+        User adm = new User(user.getId(), user.getFullName(), user.getRole(), mobileNumber, username, pass);
 
         boolean success = controller.updateAdmin(adm);
 
@@ -258,44 +470,133 @@ public class AdminAccountWindow extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
+        new AdminTasksWindow(user).setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyReleased
-//        validateFields();
+        validateFields();
     }//GEN-LAST:event_txtUserKeyReleased
 
     private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
-//        validateFields();
+        validateFields();
     }//GEN-LAST:event_txtPasswordKeyReleased
+
+    private void iconDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_iconDeleteMouseClicked
+
+        String id = lblID.getText();
+        int answer = JOptionPane.showConfirmDialog(null, "Está a punto de eliminar su cuenta, ¿Está seguro?", "Eliminación de cuenta", JOptionPane.INFORMATION_MESSAGE);
+
+        if (answer == 0) {
+            boolean success = controller.deleteAdmin(id);
+
+            if (success) {
+                JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
+                new LogInWindow().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo eliminar");
+            }
+        }
+    }//GEN-LAST:event_iconDeleteMouseClicked
+
+    private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtMobileNumberKeyReleased
 
     private void showAdminInformation() {
         txtUser.setText(user.getUsername());
         txtPassword.setText(user.getPassword());
+        txtMobileNumber.setText(user.getMobileNumber());
+        lblID.setText(user.getId());
+        lblName.setText(user.getFullName());
+
+        for (int i = 0; i < cbxRole.getItemCount(); i++) {
+            if (cbxRole.getItemAt(i).equals(user.getRole().toString())) {
+                cbxRole.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+
+    private void setCbxRole() {
+        Role[] role = Role.values();
+        String[] roles = new String[role.length];
+
+        for (int i = 0; i < role.length; i++) {
+            roles[i] = role[i].name();
+        }
+        cbxRole.setModel(new javax.swing.DefaultComboBoxModel<>(roles));
     }
 
     private void hideWarnings() {
         userWarning.setVisible(false);
         passWarning.setVisible(false);
+        numWarning.setVisible(false);
+    }
+
+    private void validateFields() {
+        String mobileNumber = txtMobileNumber.getText();
+        String username = txtUser.getText().trim();
+
+        boolean mobNumInUse = controller2.mobileNumberInUse(mobileNumber);
+        boolean userNameInUse = controller2.usernameInUse(username);
+
+        boolean enableBtnUpdateUser = true; // Variable para controlar el estado del botón
+
+        if (!mobileNumber.isEmpty() && !mobileNumber.equals(user.getMobileNumber()) && mobNumInUse) {
+            numWarning.setVisible(true);
+            enableBtnUpdateUser = false;
+        } else {
+            numWarning.setVisible(false);
+        }
+
+        if (!username.isEmpty() && !username.equals(user.getUsername()) && userNameInUse) {
+            userWarning.setVisible(true);
+            enableBtnUpdateUser = false;
+        } else {
+            userWarning.setVisible(false);
+        }
+
+        btnEditAdmin.setEnabled(enableBtnUpdateUser);
     }
 
     private boolean hasEmptyFields() {
-        return (txtUser.getText().isEmpty() || txtPassword.getText().isEmpty());
+        return (txtUser.getText().isEmpty() || txtPassword.getText().isEmpty() || txtMobileNumber.getText().isEmpty());
     }
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel IDPanel;
+    private javax.swing.JLabel IDWarning;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnEditAdmin;
+    private javax.swing.JComboBox<String> cbxRole;
+    private javax.swing.JLabel iconDelete;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JPanel mobileNumberPanel;
+    private javax.swing.JPanel namePanel;
+    private javax.swing.JLabel nameWarning;
+    private javax.swing.JLabel numWarning;
     private javax.swing.JLabel passWarning;
     private javax.swing.JPanel passwordPanel;
+    private javax.swing.JLabel roleWarning;
     private javax.swing.JToggleButton toggleBtnShowPass;
+    private javax.swing.JFormattedTextField txtMobileNumber;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUser;
     private javax.swing.JPanel userPanel;

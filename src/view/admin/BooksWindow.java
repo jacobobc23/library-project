@@ -354,6 +354,7 @@ public class BooksWindow extends javax.swing.JFrame {
 
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
         new AdminAccountWindow(admin).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
     private void txtFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyReleased
