@@ -107,6 +107,9 @@ public class UserAccountWindow extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPasswordKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
         });
         passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 180, -1));
 
@@ -169,6 +172,9 @@ public class UserAccountWindow extends javax.swing.JFrame {
         txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUserKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUserKeyTyped(evt);
             }
         });
         userPanel.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 20));
@@ -304,6 +310,9 @@ public class UserAccountWindow extends javax.swing.JFrame {
         txtMobileNumber.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtMobileNumberKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMobileNumberKeyTyped(evt);
             }
         });
         mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
@@ -473,10 +482,12 @@ public class UserAccountWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyReleased
+    
         validateFields();
     }//GEN-LAST:event_txtUserKeyReleased
 
     private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
+     
         validateFields();
     }//GEN-LAST:event_txtPasswordKeyReleased
 
@@ -499,8 +510,30 @@ public class UserAccountWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_iconDeleteMouseClicked
 
     private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
+   
         validateFields();
     }//GEN-LAST:event_txtMobileNumberKeyReleased
+
+    private void txtMobileNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMobileNumberKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtUserKeyTyped
 
     private void showAdminInformation() {
         txtUser.setText(user.getUsername());

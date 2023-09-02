@@ -18,9 +18,9 @@ public class BookEdtingWindow extends javax.swing.JFrame {
     private final BookManagementController controller;
 
     /**
-     * 
+     *
      * @param book el libro que se desea editar.
-     * @param bw la ventana de los libros. 
+     * @param bw la ventana de los libros.
      */
     public BookEdtingWindow(Book book, BooksWindow bw) {
         initComponents();
@@ -106,8 +106,8 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         txtTitle.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtTitle.setBorder(null);
         txtTitle.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTitleKeyReleased(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTitleKeyTyped(evt);
             }
         });
         namePanel.add(txtTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
@@ -139,6 +139,11 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         txtAuthor.setBackground(new java.awt.Color(245, 245, 245));
         txtAuthor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtAuthor.setBorder(null);
+        txtAuthor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAuthorKeyTyped(evt);
+            }
+        });
         namePanel1.add(txtAuthor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
         jPanel3.setBackground(new java.awt.Color(0, 123, 255));
@@ -301,13 +306,10 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyReleased
-        validateFields();
-    }//GEN-LAST:event_txtTitleKeyReleased
-
     /**
      * Realiza las modificaciones al libro
-     * @param evt 
+     *
+     * @param evt
      */
     private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
         if (hasEmptyFields()) {
@@ -332,19 +334,35 @@ public class BookEdtingWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al actualizar");
         }
     }//GEN-LAST:event_btnUpdateBookActionPerformed
-    
+
     /**
      * Cancela el proceso de editar el libro.
-     * @param evt 
+     *
+     * @param evt
      */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    private void txtTitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTitleKeyTyped
+
+    private void txtAuthorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAuthorKeyTyped
+       char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAuthorKeyTyped
+
     /**
-     * Verifica si hay algun campo que falta por llenar.
-     * @return 
-     */
+         * Verifica si hay algun campo que falta por llenar.
+         *
+         * @return
+         */
     private boolean hasEmptyFields() {
         return (txtTitle.getText().isEmpty() || txtAuthor.getText().isEmpty()
                 || cbxGenre.getSelectedIndex() == 0 || cbxPublicationYear.getSelectedIndex() == 0 || spnCopiesNumber.getValue().toString().equals("0"));
@@ -376,8 +394,8 @@ public class BookEdtingWindow extends javax.swing.JFrame {
     }
 
     /**
-     * Valida que el dato ingresado en los campos sea el deseado, en caso
-     * de que no, muestra la advertencia adecuada.
+     * Valida que el dato ingresado en los campos sea el deseado, en caso de que
+     * no, muestra la advertencia adecuada.
      */
     private void validateFields() {
         String title = txtTitle.getText().trim();

@@ -121,6 +121,9 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtName.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtName.setBorder(null);
         txtName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNameKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNameKeyTyped(evt);
             }
@@ -185,6 +188,9 @@ public class UserRegistryWindow extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtMobileNumberKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMobileNumberKeyTyped(evt);
+            }
         });
         mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
@@ -200,6 +206,9 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUsernameKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyTyped(evt);
             }
         });
         userPanel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 20));
@@ -229,6 +238,14 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtPassword.setBackground(new java.awt.Color(245, 245, 245));
         txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtPassword.setBorder(null);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
+        });
         passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 170, -1));
 
         jPanel6.setBackground(new java.awt.Color(0, 123, 255));
@@ -400,14 +417,14 @@ public class UserRegistryWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos");
             return;
         }
-        
+
         String id = txtID.getText().trim();
         String fullname = txtName.getText();
         Role role = Role.valueOf(cbxRole.getSelectedItem().toString());
         String mobilenumber = txtMobileNumber.getText();
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
-        
+
         try {
             User user = new User(id, fullname, role, mobilenumber, username, password);
             controller.addUser(user);
@@ -440,11 +457,19 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         if (!Character.isDigit(c) || id.length() == 10) {
             evt.consume();
         }
+        
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtIDKeyTyped
 
     private void txtNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyTyped
         char c = evt.getKeyChar();
         if (Character.isDigit(c)) {
+            evt.consume();
+        }
+        
+        if (!Character.isLetterOrDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNameKeyTyped
@@ -461,6 +486,33 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         validateFields();
     }//GEN-LAST:event_txtUsernameKeyReleased
 
+    private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
+    }//GEN-LAST:event_txtNameKeyReleased
+
+    private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
+    }//GEN-LAST:event_txtPasswordKeyReleased
+
+    private void txtMobileNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMobileNumberKeyTyped
+
+    private void txtUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtUsernameKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
     private void setCbxRole() {
         Role[] roles = Role.values();
         String[] rolesStr = new String[roles.length];
@@ -473,12 +525,12 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         cbxRole.insertItemAt("Seleccione una opción", 0);
         cbxRole.setSelectedIndex(0);
     }
-    
+
     private boolean hasEmptyFields() {
-        return (txtID.getText().isEmpty() || txtName.getText().isEmpty() || cbxRole.getSelectedIndex() == 0 
+        return (txtID.getText().isEmpty() || txtName.getText().isEmpty() || cbxRole.getSelectedIndex() == 0
                 || txtMobileNumber.getText().isEmpty() || txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty());
     }
-    
+
     private void cleanFields() {
         txtID.setText("");
         txtName.setText("");
@@ -487,48 +539,48 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtUsername.setText("");
         txtPassword.setText("");
     }
-    
+
     private void validateFields() {
         String id = txtID.getText().trim();
         String mobileNumber = txtMobileNumber.getText();
         String username = txtUsername.getText().trim();
-        
+
         User user = controller.searchUser(id);
         boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
         boolean userNameInUse = controller.usernameInUse(username);
-        
+
         boolean enableBtnAddUser = true; // Variable para controlar el estado del botón
-        
+
         if (!id.isEmpty() && user != null) {
             IDWarning.setVisible(true);
             enableBtnAddUser = false;
         } else {
             IDWarning.setVisible(false);
         }
-        
+
         if (!mobileNumber.isEmpty() && mobNumInUse) {
             mobNumWarning.setVisible(true);
             enableBtnAddUser = false;
         } else {
             mobNumWarning.setVisible(false);
         }
-        
+
         if (!username.isEmpty() && userNameInUse) {
             userWarning.setVisible(true);
             enableBtnAddUser = false;
         } else {
             userWarning.setVisible(false);
         }
-        
+
         btnAddUser.setEnabled(enableBtnAddUser);
-    }    
-    
+    }
+
     private void hideWarnings() {
         IDWarning.setVisible(false);
         mobNumWarning.setVisible(false);
         userWarning.setVisible(false);
     }
-    
+
     /**
      * @param args the command line arguments
      */

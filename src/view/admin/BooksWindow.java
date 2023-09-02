@@ -226,6 +226,9 @@ public class BooksWindow extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtFilterKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFilterKeyTyped(evt);
+            }
         });
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -320,7 +323,7 @@ public class BooksWindow extends javax.swing.JFrame {
             if (book != null) {
                 new BookEdtingWindow(book, this).setVisible(true);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla");
         }
@@ -358,6 +361,7 @@ public class BooksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
     private void txtFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyReleased
+
         filter();
     }//GEN-LAST:event_txtFilterKeyReleased
 
@@ -370,6 +374,13 @@ public class BooksWindow extends javax.swing.JFrame {
         new LogInWindow().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void txtFilterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtFilterKeyTyped
 
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();

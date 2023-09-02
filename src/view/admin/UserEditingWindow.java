@@ -174,6 +174,9 @@ public class UserEditingWindow extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtMobileNumberKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMobileNumberKeyTyped(evt);
+            }
         });
         mobileNumberPanel.add(txtMobileNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
@@ -189,6 +192,9 @@ public class UserEditingWindow extends javax.swing.JFrame {
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUsernameKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyTyped(evt);
             }
         });
         userPanel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, 20));
@@ -218,6 +224,14 @@ public class UserEditingWindow extends javax.swing.JFrame {
         txtPassword.setBackground(new java.awt.Color(245, 245, 245));
         txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtPassword.setBorder(null);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
+        });
         passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 170, -1));
 
         jPanel6.setBackground(new java.awt.Color(0, 123, 255));
@@ -440,12 +454,39 @@ public class UserEditingWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_toggleBtnShowPassActionPerformed
 
     private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
+       
         validateFields();
     }//GEN-LAST:event_txtMobileNumberKeyReleased
 
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
+        
         validateFields();
     }//GEN-LAST:event_txtUsernameKeyReleased
+
+    private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
+       
+    }//GEN-LAST:event_txtPasswordKeyReleased
+
+    private void txtMobileNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMobileNumberKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtUsernameKeyTyped
 
     private void showUserInformation() {
         lblID.setText(user.getId());
@@ -481,7 +522,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
             mobNumWarning.setVisible(false);
         }
 
-        if (!username.isEmpty()&& !username.equals(user.getUsername()) && userNameInUse) {
+        if (!username.isEmpty() && !username.equals(user.getUsername()) && userNameInUse) {
             userWarning.setVisible(true);
             enableBtnUpdateUser = false;
         } else {

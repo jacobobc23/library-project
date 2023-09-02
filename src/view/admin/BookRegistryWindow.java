@@ -107,6 +107,9 @@ public class BookRegistryWindow extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtISBNKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtISBNKeyTyped(evt);
+            }
         });
         IDPanel.add(txtISBN, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 200, -1));
 
@@ -119,6 +122,9 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         txtTitle.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtTitleKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTitleKeyTyped(evt);
             }
         });
         namePanel.add(txtTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
@@ -150,6 +156,14 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         txtAuthor.setBackground(new java.awt.Color(245, 245, 245));
         txtAuthor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtAuthor.setBorder(null);
+        txtAuthor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAuthorKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAuthorKeyTyped(evt);
+            }
+        });
         namePanel1.add(txtAuthor, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
 
         jPanel3.setBackground(new java.awt.Color(0, 123, 255));
@@ -337,17 +351,43 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddBookActionPerformed
 
-    private void txtISBNKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtISBNKeyReleased
-        validateFields();
-    }//GEN-LAST:event_txtISBNKeyReleased
-
     private void txtTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyReleased
+        
         validateFields();
     }//GEN-LAST:event_txtTitleKeyReleased
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void txtAuthorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAuthorKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtAuthorKeyReleased
+
+    private void txtISBNKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtISBNKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtISBNKeyReleased
+
+    private void txtISBNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtISBNKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtISBNKeyTyped
+
+    private void txtTitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTitleKeyTyped
+
+    private void txtAuthorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAuthorKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAuthorKeyTyped
 
     private void cleanFields() {
         txtISBN.setText("");
