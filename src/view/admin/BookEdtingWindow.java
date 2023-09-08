@@ -2,6 +2,7 @@ package view.admin;
 
 import controllers.BookManagementController;
 import enums.Genre;
+import exceptions.TitleAlreadyInUseException;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
@@ -106,6 +107,9 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         txtTitle.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtTitle.setBorder(null);
         txtTitle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTitleKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtTitleKeyTyped(evt);
             }
@@ -324,14 +328,13 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         int publicationYear = Integer.parseInt(cbxPublicationYear.getSelectedItem().toString());
         int copiesNumber = (int) spnCopiesNumber.getValue();
 
-        Book updatedBook = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
-        boolean success = controller.updateBook(updatedBook);
-
-        if (success) {
+        try {
+            Book updatedBook = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
+            controller.updateBook(updatedBook);
             bw.fillTable();
             JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al actualizar");
+        } catch (TitleAlreadyInUseException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnUpdateBookActionPerformed
 
@@ -352,17 +355,21 @@ public class BookEdtingWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTitleKeyTyped
 
     private void txtAuthorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAuthorKeyTyped
-       char c = evt.getKeyChar();
+        char c = evt.getKeyChar();
         if (!Character.isLetterOrDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtAuthorKeyTyped
 
+    private void txtTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtTitleKeyReleased
+
     /**
-         * Verifica si hay algun campo que falta por llenar.
-         *
-         * @return
-         */
+     * Verifica si hay algun campo que falta por llenar.
+     *
+     * @return
+     */
     private boolean hasEmptyFields() {
         return (txtTitle.getText().isEmpty() || txtAuthor.getText().isEmpty()
                 || cbxGenre.getSelectedIndex() == 0 || cbxPublicationYear.getSelectedIndex() == 0 || spnCopiesNumber.getValue().toString().equals("0"));
@@ -400,7 +407,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
     private void validateFields() {
         String title = txtTitle.getText().trim();
 
-        boolean titleInUse = controller.titleInUse(title);
+        boolean titleInUse = controller.isTitleInUse(title);
 
         boolean enableBtnUpdateBook = true; // Variable para controlar el estado del botón
 

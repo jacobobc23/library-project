@@ -13,12 +13,12 @@ import org.mariadb.jdbc.Connection;
  *
  * @author Jacobo-bc
  */
-public class LogInDAO {
+public class LogInDao {
 
     private final BDConnection conn;
     private final Connection con;
 
-    public LogInDAO() {
+    public LogInDao() {
         this.conn = new BDConnection();
         this.con = conn.getConnection();
     }

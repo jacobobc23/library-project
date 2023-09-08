@@ -2,7 +2,9 @@ package view.admin;
 
 import controllers.UserManagemetController;
 import enums.Role;
-import java.sql.SQLException;
+import exceptions.MobileNumberAlreadyInUseException;
+import exceptions.UserAlreadyRegisteredException;
+import exceptions.UserNameAlreadyInUseException;
 import javax.swing.JOptionPane;
 import model.User;
 
@@ -431,8 +433,8 @@ public class UserRegistryWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
             uw.fillTable();
             cleanFields();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar");
+        } catch (UserAlreadyRegisteredException | UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnAddUserActionPerformed
 
@@ -545,13 +547,13 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         String mobileNumber = txtMobileNumber.getText();
         String username = txtUsername.getText().trim();
 
-        User user = controller.searchUser(id);
-        boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
-        boolean userNameInUse = controller.usernameInUse(username);
+        boolean isUserRegistered = controller.isUserRegistered(id);
+        boolean mobNumInUse = controller.isMobileNumberInUse(mobileNumber);
+        boolean userNameInUse = controller.isUsernameInUse(username);
 
         boolean enableBtnAddUser = true; // Variable para controlar el estado del botón
 
-        if (!id.isEmpty() && user != null) {
+        if (!id.isEmpty() && isUserRegistered) {
             IDWarning.setVisible(true);
             enableBtnAddUser = false;
         } else {

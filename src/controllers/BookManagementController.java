@@ -1,7 +1,6 @@
 package controllers;
 
-import dao.BookDAO;
-import java.sql.SQLException;
+import dao.BookDao;
 import java.util.ArrayList;
 import model.Book;
 
@@ -12,34 +11,38 @@ import model.Book;
  */
 public class BookManagementController {
 
-    private final BookDAO bookDAO;
+    private final BookDao bookDao;
 
     public BookManagementController() {
-        bookDAO = new BookDAO();
+        bookDao = new BookDao();
     }
 
     public ArrayList<Book> listBooks() {
-        return bookDAO.listBooks();
+        return bookDao.listBooks();
     }
 
     public Book searchBook(String isbn) {
-        return bookDAO.searchBook(isbn);
+        return bookDao.searchBook(isbn);
     }
 
-    public void addBook(Book book) throws SQLException {
-        bookDAO.addBook(book);
+    public void addBook(Book book) {
+        bookDao.addBook(book);
     }
 
-    public boolean updateBook(Book book) {
-        return bookDAO.updateBook(book);
+    public void updateBook(Book book) {
+        bookDao.updateBook(book);
     }
 
-    public boolean deleteBook(String isbn) {
-        return bookDAO.deleteBook(isbn);
+    public void deleteBook(String isbn) {
+        bookDao.deleteBook(isbn);
     }
 
-    public boolean titleInUse(String title) {
-        return bookDAO.titleInUse(title);
+    public boolean isTitleInUse(String title) {
+        return bookDao.isTitleInUse(title);
+    }
+
+    public boolean isBookRegistered(String isbn) {
+        return bookDao.isBookRegistered(isbn);
     }
 
 }

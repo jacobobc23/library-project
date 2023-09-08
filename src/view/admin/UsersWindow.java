@@ -404,14 +404,10 @@ public class UsersWindow extends javax.swing.JFrame {
 
             if (answer == 0) {
 
-                boolean success = controller.deleteUser(id);
+                controller.deleteUser(id);
 
-                if (success) {
-                    fillTable();
-                    JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo eliminar");
-                }
+                fillTable();
+                JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un usuario de la tabla");

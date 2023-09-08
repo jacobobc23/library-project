@@ -1,6 +1,6 @@
 package controllers;
 
-import dao.LogInDAO;
+import dao.LogInDao;
 import model.User;
 
 /**
@@ -10,10 +10,10 @@ import model.User;
  */
 public class LogInController {
     
-    private final LogInDAO logInDAO;
+    private final LogInDao logInDAO;
 
     public LogInController() {
-        logInDAO = new LogInDAO();
+        logInDAO = new LogInDao();
     }
 
     public User searchUser(String username, String password) {

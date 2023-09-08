@@ -2,6 +2,8 @@ package view.admin;
 
 import controllers.UserManagemetController;
 import enums.Role;
+import exceptions.MobileNumberAlreadyInUseException;
+import exceptions.UserNameAlreadyInUseException;
 import javax.swing.JOptionPane;
 import model.User;
 import view.logIn.LogInWindow;
@@ -454,14 +456,12 @@ public class UserAccountWindow extends javax.swing.JFrame {
         String username = txtUser.getText().trim();
         String pass = txtPassword.getText().trim();
 
-        User adm = new User(user.getId(), user.getFullName(), user.getRole(), mobileNumber, username, pass);
-
-        boolean success = controller.updateUser(adm);
-
-        if (success) {
+        try {
+            User adm = new User(user.getId(), user.getFullName(), user.getRole(), mobileNumber, username, pass);
+            controller.updateUser(adm);
             JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo editar");
+        } catch (UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
 
     }//GEN-LAST:event_btnEditAdminActionPerformed
@@ -482,12 +482,12 @@ public class UserAccountWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyReleased
-    
+
         validateFields();
     }//GEN-LAST:event_txtUserKeyReleased
 
     private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
-     
+
         validateFields();
     }//GEN-LAST:event_txtPasswordKeyReleased
 
@@ -497,20 +497,16 @@ public class UserAccountWindow extends javax.swing.JFrame {
         int answer = JOptionPane.showConfirmDialog(null, "Está a punto de eliminar su cuenta, ¿Está seguro?", "Eliminación de cuenta", JOptionPane.INFORMATION_MESSAGE);
 
         if (answer == 0) {
-            boolean success = controller.deleteUser(id);
+            controller.deleteUser(id);
 
-            if (success) {
-                JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
-                new LogInWindow().setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo eliminar");
-            }
+            JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
+            new LogInWindow().setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_iconDeleteMouseClicked
 
     private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
-   
+
         validateFields();
     }//GEN-LAST:event_txtMobileNumberKeyReleased
 
@@ -570,8 +566,8 @@ public class UserAccountWindow extends javax.swing.JFrame {
         String mobileNumber = txtMobileNumber.getText();
         String username = txtUser.getText().trim();
 
-        boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
-        boolean userNameInUse = controller.usernameInUse(username);
+        boolean mobNumInUse = controller.isMobileNumberInUse(mobileNumber);
+        boolean userNameInUse = controller.isUsernameInUse(username);
 
         boolean enableBtnUpdateUser = true; // Variable para controlar el estado del botón
 

@@ -2,7 +2,9 @@ package views.user;
 
 import controllers.UserManagemetController;
 import enums.Role;
-import java.sql.SQLException;
+import exceptions.MobileNumberAlreadyInUseException;
+import exceptions.UserAlreadyRegisteredException;
+import exceptions.UserNameAlreadyInUseException;
 import javax.swing.JOptionPane;
 import model.User;
 import view.logIn.LogInWindow;
@@ -19,7 +21,6 @@ public class SignUpWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form UserRegistryWindow
-     *
      *
      */
     public SignUpWindow() {
@@ -383,8 +384,8 @@ public class SignUpWindow extends javax.swing.JFrame {
             controller.addUser(user);
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
             returnWindow();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo registrar");
+        } catch (UserAlreadyRegisteredException | UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
+            JOptionPane.showMessageDialog(null,ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddUserActionPerformed
 
@@ -445,27 +446,27 @@ public class SignUpWindow extends javax.swing.JFrame {
         String mobileNumber = txtMobileNumber.getText();
         String username = txtUsername.getText().trim();
 
-        User user = controller.searchUser(id);
-        boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
-        boolean userNameInUse = controller.usernameInUse(username);
+        boolean isUserRegistered = controller.isUserRegistered(id);
+        boolean isMobNumInUse = controller.isMobileNumberInUse(mobileNumber);
+        boolean isUsernameInUse = controller.isUsernameInUse(username);
 
         boolean enableBtnAddUser = true; // Variable para controlar el estado del botón
 
-        if (!id.isEmpty() && user != null) {
+        if (!id.isEmpty() && isUserRegistered) {
             IDWarning.setVisible(true);
             enableBtnAddUser = false;
         } else {
             IDWarning.setVisible(false);
         }
 
-        if (!mobileNumber.isEmpty() && mobNumInUse) {
+        if (!mobileNumber.isEmpty() && isMobNumInUse) {
             mobNumWarning.setVisible(true);
             enableBtnAddUser = false;
         } else {
             mobNumWarning.setVisible(false);
         }
 
-        if (!username.isEmpty() && userNameInUse) {
+        if (!username.isEmpty() && isUsernameInUse) {
             userWarning.setVisible(true);
             enableBtnAddUser = false;
         } else {

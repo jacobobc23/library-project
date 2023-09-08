@@ -341,14 +341,10 @@ public class BooksWindow extends javax.swing.JFrame {
 
             if (answer == 0) {
 
-                boolean success = controller.deleteBook(isbn);
+                controller.deleteBook(isbn);
+                fillTable();
+                JOptionPane.showMessageDialog(null, "Libro eliminado correctamente");
 
-                if (success) {
-                    fillTable();
-                    JOptionPane.showMessageDialog(null, "Libro eliminado correctamente");
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo eliminar");
-                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla");

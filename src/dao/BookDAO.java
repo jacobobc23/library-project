@@ -2,6 +2,8 @@ package dao;
 
 import connection.BDConnection;
 import enums.Genre;
+import exceptions.BookAlreadyRegisteredException;
+import exceptions.TitleAlreadyInUseException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +15,12 @@ import org.mariadb.jdbc.Connection;
  *
  * @author Jacobo-bc
  */
-public class BookDAO {
+public class BookDao {
 
     private final BDConnection conn;
     private final Connection con;
 
-    public BookDAO() {
+    public BookDao() {
         this.conn = new BDConnection();
         this.con = conn.getConnection();
     }
@@ -94,8 +96,17 @@ public class BookDAO {
      * @param book
      * @throws SQLException
      */
-    public void addBook(Book book) throws SQLException {
+    public void addBook(Book book) {
         try {
+
+            if (isBookRegistered(book.getIsbn())) {
+                throw new BookAlreadyRegisteredException();
+            }
+
+            if (isTitleInUse(book.getTitle())) {
+                throw new TitleAlreadyInUseException();
+            }
+
             PreparedStatement ps;
 
             String query = "INSERT INTO books (isbn, title, author, genre, publicationYear, copiesNumber) VALUES (?, ?, ?, ?, ?, ?)";
@@ -113,7 +124,6 @@ public class BookDAO {
 
         } catch (SQLException ex) {
             System.err.println(ex.toString());
-            throw new SQLException();
         }
     }
 
@@ -123,8 +133,13 @@ public class BookDAO {
      * @param book
      * @return
      */
-    public boolean updateBook(Book book) {
+    public void updateBook(Book book) {
         try {
+
+            if (isTitleInUse(book.getTitle())) {
+                throw new TitleAlreadyInUseException();
+            }
+
             PreparedStatement ps;
 
             String query = "UPDATE books SET title = ?, author = ?, genre = ?, publicationYear = ?, copiesNumber = ? WHERE isbn = ?";
@@ -137,12 +152,10 @@ public class BookDAO {
             ps.setInt(5, book.getCopiesNumber());
             ps.setString(6, book.getIsbn());
 
-            int rowsUpdated = ps.executeUpdate();
+            ps.executeUpdate();
 
-            return rowsUpdated > 0;
         } catch (SQLException ex) {
             System.err.println(ex.toString());
-            return false;
         }
     }
 
@@ -152,7 +165,7 @@ public class BookDAO {
      * @param isbn El isbn del libro que se desea eliminar
      * @return true si se pudo eliminar, false en caso contrario.
      */
-    public boolean deleteBook(String isbn) {
+    public void deleteBook(String isbn) {
         try {
             PreparedStatement ps;
 
@@ -161,13 +174,11 @@ public class BookDAO {
             ps = con.prepareStatement(query);
             ps.setString(1, isbn);
 
-            int rowDeleted = ps.executeUpdate();
+            ps.executeUpdate();
 
-            return rowDeleted > 0;
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
-        return false;
     }
 
     /**
@@ -177,21 +188,47 @@ public class BookDAO {
      * @param title
      * @return true si existe un libro con ese titulo, false en caso contrario.
      */
-    public boolean titleInUse(String title) {
+    public boolean isTitleInUse(String title) {
         try {
             PreparedStatement ps;
             ResultSet rs;
 
-            String query = "SELECT * FROM books WHERE title = ?";
+            String query = "SELECT COUNT(*) FROM books WHERE title = ?";
 
             ps = con.prepareStatement(query);
-
             ps.setString(1, title);
-
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                return true;
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return false;
+    }
+
+    /**
+     * Valida si un libro ya se encuentra registrado.
+     *
+     * @param isbn
+     * @return
+     */
+    public boolean isBookRegistered(String isbn) {
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+
+            String query = "SELECT COUNT(*) FROM books WHERE isbn = ?";
+
+            ps = con.prepareStatement(query);
+            ps.setString(1, isbn);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
