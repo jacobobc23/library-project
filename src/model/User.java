@@ -12,7 +12,7 @@ public class User {
     private final String id;
     private final String fullName;
     private final Role role;
-    private final ArrayList<Transaction> transactions;
+    private final ArrayList<Loan> loans;
 
     private String mobileNumber;
     private String username;
@@ -25,7 +25,7 @@ public class User {
         this.mobileNumber = mobileNumber;
         this.username = username;
         this.password = password;
-        transactions = new ArrayList<>();
+        loans = new ArrayList<>();
     }
 
     public String getId() {
@@ -64,8 +64,8 @@ public class User {
         this.password = password;
     }
 
-    public ArrayList<Transaction> getTransactions() {
-        return transactions;
+    public ArrayList<Loan> getLoans() {
+        return loans;
     }
 
 }
