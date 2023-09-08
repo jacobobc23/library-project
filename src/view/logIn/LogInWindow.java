@@ -2,6 +2,7 @@ package view.logIn;
 
 import controllers.LogInController;
 import enums.Role;
+import exceptions.CredentialsException;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import model.User;
@@ -217,7 +218,7 @@ public class LogInWindow extends javax.swing.JFrame {
     private void lblCreateAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCreateAccountMouseClicked
         new SignUpWindow().setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_lblCreateAccountMouseClicked
 
     private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
@@ -251,29 +252,29 @@ public class LogInWindow extends javax.swing.JFrame {
         String username = txtUser.getText().trim();
         String password = txtPassword.getText().trim();
 
-        User user = controller.searchUser(username, password);
+        try {
+            User user = controller.searchUser(username, password);
 
-        if (user != null) {
             Role role = user.getRole();
             String name = user.getFullName();
-            
+
             JOptionPane.showMessageDialog(null, "Bienvenido " + name);
-            
+
             switch (role) {
                 case ADMIN:
                     new AdminTasksWindow(user).setVisible(true);
                     this.dispose();
                     break;
-                
+
                 case USER:
                     System.out.println("Hola usuario");
                     break;
-                
+
                 default:
                     break;
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+        } catch (CredentialsException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
