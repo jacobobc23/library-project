@@ -2,6 +2,8 @@ package view.admin;
 
 import controllers.UserManagemetController;
 import enums.Role;
+import exceptions.MobileNumberAlreadyInUseException;
+import exceptions.UserNameAlreadyInUseException;
 import javax.swing.JOptionPane;
 import model.User;
 
@@ -428,14 +430,13 @@ public class UserEditingWindow extends javax.swing.JFrame {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
 
-        User usr = new User(id, fullname, role, mobilenumber, username, password);
-        boolean success = controller.updateUser(usr);
-
-        if (success) {
+        try {
+            User usr = new User(id, fullname, role, mobilenumber, username, password);
+            controller.updateUser(usr);
             uw.fillTable();
             JOptionPane.showMessageDialog(null, "Usuario acutalizado ");
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al actualizar");
+        } catch (UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnUpdateUserActionPerformed
 
@@ -454,17 +455,17 @@ public class UserEditingWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_toggleBtnShowPassActionPerformed
 
     private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
-       
+
         validateFields();
     }//GEN-LAST:event_txtMobileNumberKeyReleased
 
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
-        
+
         validateFields();
     }//GEN-LAST:event_txtUsernameKeyReleased
 
     private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
-       
+
     }//GEN-LAST:event_txtPasswordKeyReleased
 
     private void txtMobileNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyTyped
@@ -510,8 +511,8 @@ public class UserEditingWindow extends javax.swing.JFrame {
         String mobileNumber = txtMobileNumber.getText();
         String username = txtUsername.getText().trim();
 
-        boolean mobNumInUse = controller.mobileNumberInUse(mobileNumber);
-        boolean userNameInUse = controller.usernameInUse(username);
+        boolean mobNumInUse = controller.isMobileNumberInUse(mobileNumber);
+        boolean userNameInUse = controller.isUsernameInUse(username);
 
         boolean enableBtnUpdateUser = true; // Variable para controlar el estado del botón
 

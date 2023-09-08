@@ -2,7 +2,8 @@ package view.admin;
 
 import controllers.BookManagementController;
 import enums.Genre;
-import java.sql.SQLException;
+import exceptions.BookAlreadyRegisteredException;
+import exceptions.TitleAlreadyInUseException;
 import java.time.LocalDate;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -346,8 +347,8 @@ public class BookRegistryWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Libro registrado correctamente");
             bw.fillTable();
             cleanFields();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al registrar el libro");
+        } catch (BookAlreadyRegisteredException | TitleAlreadyInUseException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnAddBookActionPerformed
 
@@ -430,12 +431,12 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         String isbn = txtISBN.getText().trim();
         String title = txtTitle.getText().trim();
 
-        Book book = controller.searchBook(isbn);
-        boolean titleInUse = controller.titleInUse(title);
+        boolean isBookRegistered = controller.isBookRegistered(isbn);
+        boolean titleInUse = controller.isTitleInUse(title);
 
         boolean enableBtnAddBook = true; // Variable para controlar el estado del botón
 
-        if (!isbn.isEmpty() && book != null) {
+        if (!isbn.isEmpty() && isBookRegistered) {
             isbnWarning.setVisible(true);
             enableBtnAddBook = false;
         } else {

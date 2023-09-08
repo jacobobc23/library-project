@@ -12,38 +12,42 @@ import model.User;
  */
 public class UserManagemetController {
 
-    private final UserDAO userDAO;
+    private final UserDAO userDao;
 
     public UserManagemetController() {
-        userDAO = new UserDAO();
+        userDao = new UserDAO();
     }
 
     public ArrayList<User> listUsers() {
-        return userDAO.listUsers();
+        return userDao.listUsers();
     }
 
     public User searchUser(String id) {
-        return userDAO.searchUser(id);
+        return userDao.searchUser(id);
     }
 
-    public void addUser(User user) throws SQLException {
-        userDAO.addUser(user);
+    public void addUser(User user) {
+        userDao.addUser(user);
     }
 
-    public boolean updateUser(User user) {
-        return userDAO.updateUser(user);
+    public void updateUser(User user) {
+        userDao.updateUser(user);
     }
 
-    public boolean deleteUser(String id) {
-        return userDAO.deleteUser(id);
+    public void deleteUser(String id) {
+        userDao.deleteUser(id);
     }
 
-    public boolean mobileNumberInUse(String mobileNumber) {
-        return userDAO.mobileNumberInUse(mobileNumber);
+    public boolean isUserRegistered(String id) {
+        return userDao.isUserRegistered(id);
     }
 
-    public boolean usernameInUse(String username) {
-       return userDAO.usernameInUse(username);
+    public boolean isMobileNumberInUse(String mobileNumber) {
+        return userDao.isMobileNumberInUse(mobileNumber);
+    }
+
+    public boolean isUsernameInUse(String username) {
+        return userDao.isUsernameInUse(username);
     }
 
 }

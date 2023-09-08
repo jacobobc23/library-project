@@ -2,6 +2,9 @@ package dao;
 
 import connection.BDConnection;
 import enums.Role;
+import exceptions.MobileNumberAlreadyInUseException;
+import exceptions.UserAlreadyRegisteredException;
+import exceptions.UserNameAlreadyInUseException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -83,8 +86,21 @@ public class UserDAO {
         return null;
     }
 
-    public void addUser(User user) throws SQLException {
+    public void addUser(User user) {
         try {
+
+            if (isUserRegistered(user.getId())) {
+                throw new UserAlreadyRegisteredException();
+            }
+
+            if (isMobileNumberInUse(user.getMobileNumber())) {
+                throw new MobileNumberAlreadyInUseException();
+            }
+
+            if (isUsernameInUse(user.getUsername())) {
+                throw new UserNameAlreadyInUseException();
+            }
+
             PreparedStatement ps;
 
             String query = "INSERT INTO users (id, fullname, role, mobilenumber, username, password) VALUES (?, ?, ?, ?, ?, ?)";
@@ -101,12 +117,20 @@ public class UserDAO {
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.toString());
-            throw new SQLException();
         }
     }
 
-    public boolean updateUser(User user) {
+    public void updateUser(User user) {
         try {
+
+            if (isMobileNumberInUse(user.getMobileNumber())) {
+                throw new MobileNumberAlreadyInUseException();
+            }
+
+            if (isUsernameInUse(user.getUsername())) {
+                throw new UserNameAlreadyInUseException();
+            }
+
             PreparedStatement ps;
 
             String query = "UPDATE users SET mobilenumber = ?, username = ?, password = ? WHERE id = ?";
@@ -118,16 +142,14 @@ public class UserDAO {
             ps.setString(3, user.getPassword());
             ps.setString(4, user.getId());
 
-            int rowUpdated = ps.executeUpdate();
+            ps.executeUpdate();
 
-            return rowUpdated > 0;
         } catch (SQLException ex) {
             System.err.println(ex.toString());
-            return false;
         }
     }
 
-    public boolean deleteUser(String id) {
+    public void deleteUser(String id) {
         try {
             PreparedStatement ps;
 
@@ -136,30 +158,27 @@ public class UserDAO {
             ps = con.prepareStatement(query);
             ps.setString(1, id);
 
-            int rowDeleted = ps.executeUpdate();
+            ps.executeUpdate();
 
-            return rowDeleted > 0;
         } catch (SQLException ex) {
             System.err.println(ex.toString());
-            return false;
         }
     }
 
-    public boolean mobileNumberInUse(String mobileNumber) {
+    public boolean isMobileNumberInUse(String mobileNumber) {
         try {
             PreparedStatement ps;
             ResultSet rs;
 
-            String query = "SELECT * FROM users WHERE mobilenumber = ?";
+            String query = "SELECT COUNT(*) FROM users WHERE mobilenumber = ?";
 
             ps = con.prepareStatement(query);
-
             ps.setString(1, mobileNumber);
-
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                return true;
+                int count = rs.getInt(1);
+                return count > 0;
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
@@ -167,21 +186,41 @@ public class UserDAO {
         return false;
     }
 
-    public boolean usernameInUse(String username) {
+    public boolean isUserRegistered(String id) {
         try {
             PreparedStatement ps;
             ResultSet rs;
 
-            String query = "SELECT * FROM users WHERE username = ?";
+            String query = "SELECT COUNT(*) FROM users WHERE id = ?";
 
             ps = con.prepareStatement(query);
-
-            ps.setString(1, username);
-
+            ps.setString(1, id);
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                return true;
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return false;
+    }
+
+    public boolean isUsernameInUse(String username) {
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+
+            String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
