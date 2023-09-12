@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import model.User;
 import view.admin.AdminTasksWindow;
 import views.user.SignUpWindow;
+import views.user.UserTasksWindow;
 
 /**
  *
@@ -267,7 +268,8 @@ public class LogInWindow extends javax.swing.JFrame {
                     break;
 
                 case USER:
-                    System.out.println("Hola usuario");
+                    new UserTasksWindow(user).setVisible(true);
+                    this.dispose();
                     break;
 
                 default:

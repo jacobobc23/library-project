@@ -1,10 +1,9 @@
-package view.admin;
+package views.user;
 
 import controllers.BookManagementController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -18,23 +17,20 @@ import view.logIn.LogInWindow;
  */
 public class BooksWindow extends javax.swing.JFrame {
 
-    private final User admin;
+    private final User user;
     private final BookManagementController controller;
 
     private TableRowSorter<DefaultTableModel> sorter;
 
     /**
      * Creates new form BooksWindow
-     *
-     * @param admin
      */
-    public BooksWindow(User admin) {
+    public BooksWindow(User user) {
         initComponents();
-        this.admin = admin;
+        this.user = user;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setTitle("Gestión de libros");
+        setTitle("Libros");
         setResizable(false);
-        lblAdminName.setText(admin.getFullName());
         controller = new BookManagementController();
         fillTable();
     }
@@ -51,21 +47,19 @@ public class BooksWindow extends javax.swing.JFrame {
         backgroundPanel = new javax.swing.JPanel();
         menuBarPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        lblAdminName = new javax.swing.JLabel();
-        lblAdminAccount = new javax.swing.JLabel();
+        lblUserName = new javax.swing.JLabel();
+        lblUserAccount = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
-        btnUsersManagement = new javax.swing.JButton();
+        btnLoans = new javax.swing.JButton();
         btnTransactions = new javax.swing.JButton();
         lblBooks = new javax.swing.JLabel();
         booksPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         booksTable = new javax.swing.JTable();
-        btnDeleteUser = new javax.swing.JButton();
-        btnAddBook = new javax.swing.JButton();
-        btnUpdateUser = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         txtFilter = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        btnApplyLoan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,21 +71,21 @@ public class BooksWindow extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/administrator.png"))); // NOI18N
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        lblAdminName.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        lblAdminName.setForeground(new java.awt.Color(255, 255, 255));
-        lblAdminName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAdminName.setText("jLabel2");
-        lblAdminName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblUserName.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(255, 255, 255));
+        lblUserName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUserName.setText("jLabel2");
+        lblUserName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        lblAdminAccount.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        lblAdminAccount.setForeground(new java.awt.Color(255, 255, 255));
-        lblAdminAccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAdminAccount.setText("Gestionar mi cuenta");
-        lblAdminAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblAdminAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblAdminAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblUserAccount.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        lblUserAccount.setForeground(new java.awt.Color(255, 255, 255));
+        lblUserAccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUserAccount.setText("Gestionar mi cuenta");
+        lblUserAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblUserAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblUserAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblAdminAccountMouseClicked(evt);
+                lblUserAccountMouseClicked(evt);
             }
         });
 
@@ -106,16 +100,16 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
-        btnUsersManagement.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        btnUsersManagement.setForeground(new java.awt.Color(255, 255, 255));
-        btnUsersManagement.setText("    USUARIOS");
-        btnUsersManagement.setBorderPainted(false);
-        btnUsersManagement.setContentAreaFilled(false);
-        btnUsersManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUsersManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnUsersManagement.addActionListener(new java.awt.event.ActionListener() {
+        btnLoans.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnLoans.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoans.setText("    PRÉSTAMOS");
+        btnLoans.setBorderPainted(false);
+        btnLoans.setContentAreaFilled(false);
+        btnLoans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLoans.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLoans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsersManagementActionPerformed(evt);
+                btnLoansActionPerformed(evt);
             }
         });
 
@@ -138,14 +132,14 @@ public class BooksWindow extends javax.swing.JFrame {
         menuBarPanelLayout.setHorizontalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblAdminName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnUsersManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblUserName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuBarPanelLayout.createSequentialGroup()
                 .addGroup(menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuBarPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblAdminAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
+                        .addComponent(lblUserAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
                     .addGroup(menuBarPanelLayout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,16 +153,16 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblAdminName)
+                .addComponent(lblUserName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblAdminAccount)
+                .addComponent(lblUserAccount)
                 .addGap(88, 88, 88)
                 .addComponent(lblBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUsersManagement)
+                .addComponent(btnLoans)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTransactions)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -188,38 +182,6 @@ public class BooksWindow extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(booksTable);
 
-        btnDeleteUser.setBackground(new java.awt.Color(220, 20, 60));
-        btnDeleteUser.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnDeleteUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeleteUser.setText("Eliminar");
-        btnDeleteUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteUserActionPerformed(evt);
-            }
-        });
-
-        btnAddBook.setBackground(new java.awt.Color(0, 123, 255));
-        btnAddBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnAddBook.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddBook.setText("Nuevo");
-        btnAddBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAddBook.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddBookActionPerformed(evt);
-            }
-        });
-
-        btnUpdateUser.setBackground(new java.awt.Color(255, 215, 0));
-        btnUpdateUser.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnUpdateUser.setText("Editar");
-        btnUpdateUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUpdateUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateUserActionPerformed(evt);
-            }
-        });
-
         txtFilter.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtFilter.setBorder(null);
         txtFilter.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -234,19 +196,26 @@ public class BooksWindow extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel2.setText("Buscar:");
 
+        btnApplyLoan.setBackground(new java.awt.Color(0, 123, 255));
+        btnApplyLoan.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnApplyLoan.setForeground(new java.awt.Color(255, 255, 255));
+        btnApplyLoan.setText("Solicitar préstamo");
+        btnApplyLoan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnApplyLoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApplyLoanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout booksPanelLayout = new javax.swing.GroupLayout(booksPanel);
         booksPanel.setLayout(booksPanelLayout);
         booksPanelLayout.setHorizontalGroup(
             booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(booksPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(booksPanelLayout.createSequentialGroup()
-                        .addComponent(btnAddBook)
-                        .addGap(75, 75, 75)
-                        .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)
-                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnApplyLoan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(31, 31, 31)
@@ -261,16 +230,17 @@ public class BooksWindow extends javax.swing.JFrame {
             .addGroup(booksPanelLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAddBook)
-                        .addComponent(btnUpdateUser)
-                        .addComponent(btnDeleteUser)
-                        .addComponent(jLabel2))
+                    .addComponent(jLabel2)
                     .addGroup(booksPanelLayout.createSequentialGroup()
-                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)
+                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(booksPanelLayout.createSequentialGroup()
+                                .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, booksPanelLayout.createSequentialGroup()
+                                .addComponent(btnApplyLoan)
+                                .addGap(18, 18, 18)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -291,7 +261,7 @@ public class BooksWindow extends javax.swing.JFrame {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(96, 96, 96)
                 .addComponent(booksPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -308,67 +278,23 @@ public class BooksWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBookActionPerformed
-        new BookRegistryWindow(this).setVisible(true);
-    }//GEN-LAST:event_btnAddBookActionPerformed
-
-    private void btnUpdateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateUserActionPerformed
-        int selected = booksTable.getSelectedRow();
-
-        if (selected >= 0) {
-
-            String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-            Book book = controller.searchBook(isbn);
-
-            if (book != null) {
-                new BookEdtingWindow(book, this).setVisible(true);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla");
-        }
-    }//GEN-LAST:event_btnUpdateUserActionPerformed
-
-    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
-        int selected = booksTable.getSelectedRow();
-
-        if (selected >= 0) {
-
-            String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-
-            int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el libro?",
-                    "Confirmación", JOptionPane.YES_NO_OPTION);
-
-            if (answer == 0) {
-
-                controller.deleteBook(isbn);
-                fillTable();
-                JOptionPane.showMessageDialog(null, "Libro eliminado correctamente");
-
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla");
-        }
-    }//GEN-LAST:event_btnDeleteUserActionPerformed
-
-    private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
-        new AdminAccountWindow(admin).setVisible(true);
+    private void lblUserAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUserAccountMouseClicked
+        new UserAccountWindow(user).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_lblAdminAccountMouseClicked
-
-    private void txtFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyReleased
-        filter();
-    }//GEN-LAST:event_txtFilterKeyReleased
-
-    private void btnUsersManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersManagementActionPerformed
-        new UsersWindow(admin).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnUsersManagementActionPerformed
+    }//GEN-LAST:event_lblUserAccountMouseClicked
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         new LogInWindow().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnLoansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoansActionPerformed
+
+    }//GEN-LAST:event_btnLoansActionPerformed
+
+    private void txtFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyReleased
+        filter();
+    }//GEN-LAST:event_txtFilterKeyReleased
 
     private void txtFilterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyTyped
         char c = evt.getKeyChar();
@@ -376,6 +302,10 @@ public class BooksWindow extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtFilterKeyTyped
+
+    private void btnApplyLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyLoanActionPerformed
+        
+    }//GEN-LAST:event_btnApplyLoanActionPerformed
 
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
@@ -415,23 +345,25 @@ public class BooksWindow extends javax.swing.JFrame {
         sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(isbn, title, author, genre, publicationYear, copiesNumber)));
 
     }
+    /**
+     * @param args the command line arguments
+     */
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JPanel booksPanel;
     private javax.swing.JTable booksTable;
-    private javax.swing.JButton btnAddBook;
-    private javax.swing.JButton btnDeleteUser;
+    private javax.swing.JButton btnApplyLoan;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnLoans;
     private javax.swing.JButton btnTransactions;
-    private javax.swing.JButton btnUpdateUser;
-    private javax.swing.JButton btnUsersManagement;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblAdminAccount;
-    private javax.swing.JLabel lblAdminName;
     private javax.swing.JLabel lblBooks;
+    private javax.swing.JLabel lblUserAccount;
+    private javax.swing.JLabel lblUserName;
     private javax.swing.JPanel menuBarPanel;
     private javax.swing.JTextField txtFilter;
     // End of variables declaration//GEN-END:variables

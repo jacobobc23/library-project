@@ -333,7 +333,7 @@ public class UsersWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
-        new UserAccountWindow(admin).setVisible(true);
+        new AdminAccountWindow(admin).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
