@@ -4,6 +4,7 @@ import controllers.BookManagementController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -304,7 +305,20 @@ public class BooksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFilterKeyTyped
 
     private void btnApplyLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyLoanActionPerformed
-        
+        int selected = booksTable.getSelectedRow();
+
+        if (selected >= 0) {
+            
+            String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
+            Book book = controller.searchBook(isbn);
+            
+            if (book != null) {
+                new LoanConfirmationWindow(user, book).setVisible(true);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla.");
+        }
     }//GEN-LAST:event_btnApplyLoanActionPerformed
 
     public final void fillTable() {

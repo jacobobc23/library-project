@@ -246,7 +246,8 @@ public class AdminTasksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUserManagementActionPerformed
 
     private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
-        // TODO add your handling code here:
+        new LoansWindow(user).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTransactionsActionPerformed
 
     private void btnBooksManagementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBooksManagementMouseEntered
