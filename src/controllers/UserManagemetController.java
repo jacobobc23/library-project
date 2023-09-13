@@ -1,7 +1,6 @@
 package controllers;
 
-import dao.UserDAO;
-import java.sql.SQLException;
+import dao.UserDao;
 import java.util.ArrayList;
 import model.User;
 
@@ -12,10 +11,10 @@ import model.User;
  */
 public class UserManagemetController {
 
-    private final UserDAO userDao;
+    private final UserDao userDao;
 
     public UserManagemetController() {
-        userDao = new UserDAO();
+        userDao = new UserDao();
     }
 
     public ArrayList<User> listUsers() {

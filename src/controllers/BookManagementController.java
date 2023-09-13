@@ -1,6 +1,6 @@
 package controllers;
 
-import dao.BookDAO;
+import dao.BookDao;
 import java.util.ArrayList;
 import model.Book;
 
@@ -11,10 +11,10 @@ import model.Book;
  */
 public class BookManagementController {
 
-    private final BookDAO bookDao;
+    private final BookDao bookDao;
 
     public BookManagementController() {
-        bookDao = new BookDAO();
+        bookDao = new BookDao();
     }
 
     public ArrayList<Book> listBooks() {

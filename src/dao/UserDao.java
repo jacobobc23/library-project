@@ -16,12 +16,12 @@ import org.mariadb.jdbc.Connection;
  *
  * @author Jacobo-bc
  */
-public class UserDAO {
+public class UserDao {
 
     private final BDConnection conn;
     private final Connection con;
 
-    public UserDAO() {
+    public UserDao() {
         this.conn = new BDConnection();
         this.con = conn.getConnection();
     }

@@ -15,12 +15,12 @@ import org.mariadb.jdbc.Connection;
  *
  * @author Jacobo-bc
  */
-public class BookDAO {
+public class BookDao {
 
     private final BDConnection conn;
     private final Connection con;
 
-    public BookDAO() {
+    public BookDao() {
         this.conn = new BDConnection();
         this.con = conn.getConnection();
     }
