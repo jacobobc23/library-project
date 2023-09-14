@@ -1,4 +1,4 @@
-package view.admin;
+package views.user;
 
 import controllers.UserManagemetController;
 import enums.Role;
@@ -32,9 +32,9 @@ public class UserAccountWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         setTitle("Actualización de datos");
+        setCbxRole();
         showAdminInformation();
         hideWarnings();
-        setCbxRole();
     }
 
     /**
@@ -478,7 +478,7 @@ public class UserAccountWindow extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.dispose();
-        new AdminTasksWindow(user).setVisible(true);
+        new UserTasksWindow(user).setVisible(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyReleased
@@ -537,13 +537,15 @@ public class UserAccountWindow extends javax.swing.JFrame {
         txtMobileNumber.setText(user.getMobileNumber());
         lblID.setText(user.getId());
         lblName.setText(user.getFullName());
-
+        Role role = user.getRole();
+        
         for (int i = 0; i < cbxRole.getItemCount(); i++) {
-            if (cbxRole.getItemAt(i).equals(user.getRole().toString())) {
+            if (cbxRole.getItemAt(i).equals(role.toString())) {
                 cbxRole.setSelectedIndex(i);
                 break;
             }
         }
+        
     }
 
     private void setCbxRole() {

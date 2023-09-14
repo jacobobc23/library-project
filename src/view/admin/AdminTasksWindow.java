@@ -217,11 +217,11 @@ public class AdminTasksWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     /**
-     * Abre UserAccountWindow, para asi ver sus datos y poder modificarlos. 
+     * Abre AdminAccountWindow, para asi ver sus datos y poder modificarlos. 
      * @param evt 
      */
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
-        new UserAccountWindow(user).setVisible(true);
+        new AdminAccountWindow(user).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
@@ -246,7 +246,8 @@ public class AdminTasksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUserManagementActionPerformed
 
     private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
-        // TODO add your handling code here:
+        new LoansWindow(user).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTransactionsActionPerformed
 
     private void btnBooksManagementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBooksManagementMouseEntered

@@ -2,6 +2,7 @@ package dao;
 
 import connection.BDConnection;
 import enums.Role;
+import exceptions.LoanPastDueException;
 import exceptions.MobileNumberAlreadyInUseException;
 import exceptions.UserAlreadyRegisteredException;
 import exceptions.UserNameAlreadyInUseException;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.Loan;
 import model.User;
 import org.mariadb.jdbc.Connection;
 
@@ -165,6 +167,36 @@ public class UserDao {
         }
     }
 
+    public void applyLoan(Loan loan) {
+        try {
+            User user = searchUser(loan.getUser().getId());
+
+            if (user != null && user.hasPastDueLoans()) {
+                throw new LoanPastDueException();
+            }
+
+            PreparedStatement ps;
+
+            String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, returned, return_date) VALUES "
+                    + "(?, ?, ?, ?, ?, ?)";
+
+            ps = con.prepareStatement(query);
+
+            ps.setString(1, loan.getUser().getId());
+            ps.setString(2, loan.getBook().getIsbn());
+            ps.setDate(3, java.sql.Date.valueOf(loan.getDate()));
+            ps.setDate(4, java.sql.Date.valueOf(loan.getDueDate()));
+            ps.setBoolean(5, false);
+            ps.setDate(6, null);
+
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        
+        subtractAvailableCopy(loan.getBook().getIsbn());
+    }
+
     public boolean isMobileNumberInUse(String mobileNumber) {
         try {
             PreparedStatement ps;
@@ -226,5 +258,20 @@ public class UserDao {
             System.err.println(ex.toString());
         }
         return false;
+    }
+
+    private void subtractAvailableCopy(String isbn) {
+        try {
+            PreparedStatement ps;
+
+            String query = "UPDATE books SET copiesNumber = copiesNumber - 1 WHERE isbn = ?";
+
+            ps = con.prepareStatement(query);
+
+            ps.setString(1, isbn);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
     }
 }
