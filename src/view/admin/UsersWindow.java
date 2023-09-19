@@ -368,7 +368,8 @@ public class UsersWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTransactionsMouseExited
 
     private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
-        // TODO add your handling code here:
+        new LoansWindow(admin).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTransactionsActionPerformed
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed

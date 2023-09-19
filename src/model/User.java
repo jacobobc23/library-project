@@ -70,13 +70,6 @@ public class User {
         return loans;
     }
 
-    public void applyLoan(Loan loan) {
-        if (hasPastDueLoans()) {
-            throw new LoanPastDueException();
-        }
-        loans.add(loan);
-    }
-
     public boolean hasPastDueLoans() {
         for (Loan loan : loans) {
             if (!loan.isReturned()) {

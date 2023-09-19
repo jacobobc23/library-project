@@ -1,7 +1,6 @@
 package dao;
 
 import connection.BDConnection;
-import enums.Genre;
 import exceptions.BookAlreadyRegisteredException;
 import exceptions.TitleAlreadyInUseException;
 import java.sql.PreparedStatement;
@@ -9,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Book;
+import model.Genre;
 import org.mariadb.jdbc.Connection;
 
 /**
@@ -32,7 +32,8 @@ public class BookDao {
             PreparedStatement ps;
             ResultSet rs;
 
-            String query = "SELECT * FROM books";
+            String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
+                    + " books.genre_id, genres.name FROM books JOIN genres ON books.genre_id = genres.id";
 
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
@@ -41,7 +42,9 @@ public class BookDao {
                 String isbn = rs.getString("isbn");
                 String title = rs.getString("title");
                 String author = rs.getString("author");
-                Genre genre = Genre.valueOf(rs.getString("genre"));
+                int genreId = rs.getInt("genre_id");
+                String genreName = rs.getString("name");
+                Genre genre = new Genre(genreId, genreName);
                 int publicationYear = rs.getInt("publicationYear");
                 int copiesNumber = rs.getInt("copiesNumber");
 
@@ -55,18 +58,13 @@ public class BookDao {
         return books;
     }
 
-    /**
-     * Busca un libro por su isbn
-     *
-     * @param isbn El isbn del libro que se está buscando
-     * @return Un libro, null en caso de que no se encuentre.
-     */
     public Book searchBook(String isbn) {
         try {
             PreparedStatement ps;
             ResultSet rs;
 
-            String query = "SELECT * FROM books WHERE isbn = ?";
+            String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
+                    + " genres.name FROM books JOIN genres ON books.genre_id = genres.id WHERE books.isbn = ?";
 
             ps = con.prepareStatement(query);
             ps.setString(1, isbn);
@@ -75,15 +73,14 @@ public class BookDao {
             if (rs.next()) {
                 String title = rs.getString("title");
                 String author = rs.getString("author");
-                Genre genre = Genre.valueOf(rs.getString("genre"));
+                int genreId = rs.getInt("genre_id");
+                String genreName = rs.getString("name");
+                Genre genre = new Genre(genreId, genreName);
                 int publicationYear = rs.getInt("publicationYear");
                 int copiesNumber = rs.getInt("copiesNumber");
 
-                Book book = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
-
-                return book;
+                return new Book(isbn, title, author, genre, publicationYear, copiesNumber);
             }
-
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
@@ -116,7 +113,7 @@ public class BookDao {
             ps.setString(1, book.getIsbn());
             ps.setString(2, book.getTitle());
             ps.setString(3, book.getAuthor());
-            ps.setString(4, book.getGenre().name());
+            ps.setString(4, book.getGenre().getName());
             ps.setInt(5, book.getPublicationYear());
             ps.setInt(6, book.getCopiesNumber());
 
@@ -147,7 +144,7 @@ public class BookDao {
             ps = con.prepareStatement(query);
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getAuthor());
-            ps.setString(3, book.getGenre().name());
+            ps.setString(3, book.getGenre().getName());
             ps.setInt(4, book.getPublicationYear());
             ps.setInt(5, book.getCopiesNumber());
             ps.setString(6, book.getIsbn());
@@ -236,4 +233,27 @@ public class BookDao {
         return false;
     }
 
+    public ArrayList<Genre> getAllGenres() {
+        ArrayList<Genre> genres = new ArrayList<>();
+
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+
+            String query = "SELECT * FROM genres";
+
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String genreName = rs.getString("name");
+                Genre genre = new Genre(id, genreName);
+                genres.add(genre);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return genres;
+    }
 }

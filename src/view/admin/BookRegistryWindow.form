@@ -361,16 +361,7 @@
               <Font name="Century Gothic" size="12" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="8">
-                <StringItem index="0" value="Seleccione una opci&#xf3;n"/>
-                <StringItem index="1" value="FICCI&#xd3;N"/>
-                <StringItem index="2" value="NO_FICCI&#xd3;N"/>
-                <StringItem index="3" value="MISTERIO"/>
-                <StringItem index="4" value="CIENCIA_FICCI&#xd3;N"/>
-                <StringItem index="5" value="FANTAS&#xcd;A"/>
-                <StringItem index="6" value="ROMANCE"/>
-                <StringItem index="7" value="HORROR"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>

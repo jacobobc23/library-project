@@ -126,6 +126,11 @@ public class BooksWindow extends javax.swing.JFrame {
         btnTransactions.setContentAreaFilled(false);
         btnTransactions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTransactions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnTransactions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransactionsActionPerformed(evt);
+            }
+        });
 
         lblBooks.setBackground(new java.awt.Color(135, 178, 255));
         lblBooks.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -377,6 +382,11 @@ public class BooksWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtFilterKeyTyped
 
+    private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
+        new LoansWindow(admin).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnTransactionsActionPerformed
+
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
@@ -395,7 +405,7 @@ public class BooksWindow extends javax.swing.JFrame {
                 book.getIsbn(),
                 book.getTitle(),
                 book.getAuthor(),
-                book.getGenre(),
+                book.getGenre().getName(),
                 book.getPublicationYear(),
                 book.getCopiesNumber()
             });

@@ -47,7 +47,7 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
         lblAuthor.setText(book.getAuthor());
         lblTitle.setText(book.getTitle());
         cbxPublicationYear.setSelectedItem(book.getPublicationYear());
-        cbxGenre.setSelectedItem(book.getGenre().name());
+        cbxGenre.setSelectedItem(book.getGenre().getName());
     }
 
     private void setCbxPublicationYear() {

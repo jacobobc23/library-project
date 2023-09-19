@@ -1,12 +1,14 @@
 package view.admin;
 
 import controllers.BookManagementController;
-import enums.Genre;
 import exceptions.TitleAlreadyInUseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import model.Book;
+import model.Genre;
 
 /**
  *
@@ -34,6 +36,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         controller = new BookManagementController();
         showBookInformation();
         setSpnCopiesNumber();
+        setCbxGenre();
         setCbxPublicationYear();
         hideWarnings();
     }
@@ -324,12 +327,21 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         String isbn = lblIsbn.getText();
         String title = txtTitle.getText();
         String author = txtAuthor.getText();
-        Genre genre = Genre.valueOf(cbxGenre.getSelectedItem().toString());
+        String genreName = cbxGenre.getSelectedItem().toString();
+        Genre selectedGenre = null;
+
+        for (Genre genre : controller.getAllGenres()) {
+            if (genre.getName().equals(genreName)) {
+                selectedGenre = genre;
+                break;
+            }
+        }
+
         int publicationYear = Integer.parseInt(cbxPublicationYear.getSelectedItem().toString());
         int copiesNumber = (int) spnCopiesNumber.getValue();
 
         try {
-            Book updatedBook = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
+            Book updatedBook = new Book(isbn, title, author, selectedGenre, publicationYear, copiesNumber);
             controller.updateBook(updatedBook);
             bw.fillTable();
             JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
@@ -436,10 +448,21 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         txtTitle.setText(book.getTitle());
         txtAuthor.setText(book.getAuthor());
         cbxPublicationYear.setSelectedItem(book.getPublicationYear());
-        cbxGenre.setSelectedItem(book.getGenre().name());
+        cbxGenre.setSelectedItem(book.getGenre().getName());
         spnCopiesNumber.setValue(book.getCopiesNumber());
     }
 
+    private void setCbxGenre() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        cbxGenre.setModel(model);
+
+        ArrayList<Genre> genres = controller.getAllGenres();
+        model.addElement("Seleccione una categoría"); // Agrega la opción predeterminada
+
+        for (Genre genre : genres) {
+            model.addElement(genre.getName()); // Agrega los nombres de las categorías al ComboBoxModel
+        }
+    }
     /**
      * @param args the command line arguments
      */

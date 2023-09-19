@@ -1,7 +1,6 @@
 package controllers;
 
 import dao.UserDao;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import model.User;
 
