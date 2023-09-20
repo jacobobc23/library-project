@@ -87,6 +87,38 @@ public class BookDao {
         return null;
     }
 
+    public ArrayList<Book> searchBooksByGenre(int id) {
+        ArrayList<Book> books = new ArrayList<>();
+
+        try {
+            PreparedStatement ps;
+            ResultSet rs;
+
+            String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
+                    + " genres.name FROM books JOIN genres ON books.genre_id = genres.id WHERE books.genre_id = ?";
+
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String isbn = rs.getString("isbn");
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String genreName = rs.getString("name");
+                Genre genre = new Genre(id, genreName);
+                int publicationYear = rs.getInt("publicationYear");
+                int copiesNumber = rs.getInt("copiesNumber");
+
+                Book book = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
+                books.add(book);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return books;
+    }
+
     /**
      * Agrega un nuevo libro
      *

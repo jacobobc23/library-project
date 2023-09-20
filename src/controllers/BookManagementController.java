@@ -25,6 +25,10 @@ public class BookManagementController {
     public Book searchBook(String isbn) {
         return bookDao.searchBook(isbn);
     }
+    
+    public ArrayList<Book> searchBooksByGenre(int id) {
+        return bookDao.searchBooksByGenre(id);
+    }
 
     public void addBook(Book book) {
         bookDao.addBook(book);
