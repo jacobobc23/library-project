@@ -67,6 +67,7 @@ public class BooksWindow extends javax.swing.JFrame {
         txtFilter = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         cbxGenre = new javax.swing.JComboBox<>();
+        lblGenresManagement = new javax.swing.JLabel();
         btnDeleteUser = new javax.swing.JButton();
         btnAddBook = new javax.swing.JButton();
         btnUpdateUser = new javax.swing.JButton();
@@ -220,6 +221,15 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
+        lblGenresManagement.setForeground(new java.awt.Color(153, 153, 153));
+        lblGenresManagement.setText("Gestionar");
+        lblGenresManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblGenresManagement.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGenresManagementMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout booksPanelLayout = new javax.swing.GroupLayout(booksPanel);
         booksPanel.setLayout(booksPanelLayout);
         booksPanelLayout.setHorizontalGroup(
@@ -235,23 +245,27 @@ public class BooksWindow extends javax.swing.JFrame {
                             .addComponent(txtFilter)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbxGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbxGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGenresManagement))))
                 .addContainerGap(184, Short.MAX_VALUE))
         );
         booksPanelLayout.setVerticalGroup(
             booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(booksPanelLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(booksPanelLayout.createSequentialGroup()
                         .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(booksPanelLayout.createSequentialGroup()
                                 .addComponent(txtFilter)
                                 .addGap(3, 3, 3))
                             .addComponent(cbxGenre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                        .addGroup(booksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblGenresManagement))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -319,7 +333,7 @@ public class BooksWindow extends javax.swing.JFrame {
                     .addComponent(btnAddBook)
                     .addComponent(btnUpdateUser)
                     .addComponent(btnDeleteUser))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -444,6 +458,10 @@ public class BooksWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbxGenreItemStateChanged
 
+    private void lblGenresManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGenresManagementMouseClicked
+        new GenreCrudWindow(this).setVisible(true);
+    }//GEN-LAST:event_lblGenresManagementMouseClicked
+
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
@@ -483,7 +501,7 @@ public class BooksWindow extends javax.swing.JFrame {
 
     }
 
-    private void setCbxGenre() {
+    public void setCbxGenre() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
 
@@ -518,6 +536,7 @@ public class BooksWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblAdminAccount;
     private javax.swing.JLabel lblAdminName;
     private javax.swing.JLabel lblBooks;
+    private javax.swing.JLabel lblGenresManagement;
     private javax.swing.JPanel menuBarPanel;
     private javax.swing.JTextField txtFilter;
     // End of variables declaration//GEN-END:variables
