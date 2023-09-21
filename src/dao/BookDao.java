@@ -138,16 +138,16 @@ public class BookDao {
 
             PreparedStatement ps;
 
-            String query = "INSERT INTO books (isbn, title, author, genre, publicationYear, copiesNumber) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO books (isbn, title, author, publicationYear, copiesNumber, genre_id) VALUES (?, ?, ?, ?, ?, ?)";
 
             ps = con.prepareStatement(query);
 
             ps.setString(1, book.getIsbn());
             ps.setString(2, book.getTitle());
             ps.setString(3, book.getAuthor());
-            ps.setString(4, book.getGenre().getName());
-            ps.setInt(5, book.getPublicationYear());
-            ps.setInt(6, book.getCopiesNumber());
+            ps.setInt(4, book.getPublicationYear());
+            ps.setInt(5, book.getCopiesNumber());
+            ps.setInt(6, book.getGenre().getId());
 
             ps.executeUpdate();
 
