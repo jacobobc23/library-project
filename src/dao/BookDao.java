@@ -64,7 +64,7 @@ public class BookDao {
             ResultSet rs;
 
             String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
-                    + " genres.name FROM books JOIN genres ON books.genre_id = genres.id WHERE books.isbn = ?";
+                    + " genres.id AS genre_id, genres.name AS genre_name FROM books JOIN genres ON books.genre_id = genres.id WHERE books.isbn = ?";
 
             ps = con.prepareStatement(query);
             ps.setString(1, isbn);
@@ -74,7 +74,7 @@ public class BookDao {
                 String title = rs.getString("title");
                 String author = rs.getString("author");
                 int genreId = rs.getInt("genre_id");
-                String genreName = rs.getString("name");
+                String genreName = rs.getString("genre_name");
                 Genre genre = new Genre(genreId, genreName);
                 int publicationYear = rs.getInt("publicationYear");
                 int copiesNumber = rs.getInt("copiesNumber");
@@ -165,20 +165,20 @@ public class BookDao {
     public void updateBook(Book book) {
         try {
 
-            if (isTitleInUse(book.getTitle())) {
-                throw new TitleAlreadyInUseException();
-            }
+//            if (isTitleInUse(book.getTitle())) {
+//                throw new TitleAlreadyInUseException();
+//            }
 
             PreparedStatement ps;
 
-            String query = "UPDATE books SET title = ?, author = ?, genre = ?, publicationYear = ?, copiesNumber = ? WHERE isbn = ?";
+            String query = "UPDATE books SET title = ?, author = ?, publicationYear = ?, copiesNumber = ?, genre_id = ? WHERE isbn = ?";
 
             ps = con.prepareStatement(query);
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getAuthor());
-            ps.setString(3, book.getGenre().getName());
-            ps.setInt(4, book.getPublicationYear());
-            ps.setInt(5, book.getCopiesNumber());
+            ps.setInt(3, book.getPublicationYear());
+            ps.setInt(4, book.getCopiesNumber());
+            ps.setInt(5, book.getGenre().getId());
             ps.setString(6, book.getIsbn());
 
             ps.executeUpdate();

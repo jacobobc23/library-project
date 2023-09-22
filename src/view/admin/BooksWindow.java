@@ -204,9 +204,6 @@ public class BooksWindow extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtFilterKeyReleased(evt);
             }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtFilterKeyTyped(evt);
-            }
         });
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -412,13 +409,6 @@ public class BooksWindow extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
-    private void txtFilterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtFilterKeyTyped
-
     private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
         new LoansWindow(admin).setVisible(true);
         this.dispose();
@@ -488,15 +478,17 @@ public class BooksWindow extends javax.swing.JFrame {
     }
 
     private void filter() {
-        String filterText = txtFilter.getText();
+        String filterText = txtFilter.getText().trim();
 
-        RowFilter<Object, Object> isbn = RowFilter.regexFilter(filterText.trim(), 0);
-        RowFilter<Object, Object> title = RowFilter.regexFilter("(?i)" + filterText.trim(), 1);
-        RowFilter<Object, Object> author = RowFilter.regexFilter("(?i)" + filterText.trim(), 2);
-        RowFilter<Object, Object> genre = RowFilter.regexFilter("(?i)" + filterText.trim(), 3);
-        RowFilter<Object, Object> publicationYear = RowFilter.regexFilter(filterText.trim(), 4);
-        RowFilter<Object, Object> copiesNumber = RowFilter.regexFilter(filterText.trim(), 5);
-
+        RowFilter<Object, Object> isbn = RowFilter.regexFilter(filterText, 0);
+        RowFilter<Object, Object> title = RowFilter.regexFilter("(?i)" + filterText, 1);
+        RowFilter<Object, Object> author = RowFilter.regexFilter("(?i)" + filterText, 2);
+        RowFilter<Object, Object> genre = RowFilter.regexFilter("(?i)" + filterText, 3);
+        RowFilter<Object, Object> publicationYear = RowFilter.regexFilter(filterText, 4);
+        RowFilter<Object, Object> copiesNumber = RowFilter.regexFilter(filterText, 5);
+        
+        // Se combinan todos los filtros.
+        // Una fila será visible si al menos uno de los filtros devuelve true para esa fila
         sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(isbn, title, author, genre, publicationYear, copiesNumber)));
 
     }

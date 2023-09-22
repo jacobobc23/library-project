@@ -34,9 +34,9 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         setResizable(false);
         setTitle(book.getTitle());
         controller = new BookManagementController();
+        setCbxGenre();
         showBookInformation();
         setSpnCopiesNumber();
-        setCbxGenre();
         setCbxPublicationYear();
         hideWarnings();
     }
@@ -170,7 +170,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
 
         cbxGenre.setBackground(new java.awt.Color(245, 245, 245));
         cbxGenre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "FICCIÓN", "NO_FICCIÓN", "MISTERIO", "CIENCIA_FICCIÓN", "FANTASÍA", "ROMANCE", "HORROR" }));
+        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Misterio", "Fantasía", "Aventura", "Ciencia ficción", "Drama" }));
         cbxGenre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -448,7 +448,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         txtTitle.setText(book.getTitle());
         txtAuthor.setText(book.getAuthor());
         cbxPublicationYear.setSelectedItem(book.getPublicationYear());
-        cbxGenre.setSelectedItem(book.getGenre().getName());
+        cbxGenre.setSelectedIndex(book.getGenre().getId());
         spnCopiesNumber.setValue(book.getCopiesNumber());
     }
 
@@ -457,7 +457,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         cbxGenre.setModel(model);
 
         ArrayList<Genre> genres = controller.getAllGenres();
-        model.addElement("Seleccione una categoría"); // Agrega la opción predeterminada
+        model.addElement("Seleccione un género"); // Agrega la opción predeterminada
 
         for (Genre genre : genres) {
             model.addElement(genre.getName()); // Agrega los nombres de las categorías al ComboBoxModel

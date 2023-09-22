@@ -364,7 +364,6 @@ public class BookRegistryWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddBookActionPerformed
 
     private void txtTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyReleased
-
         validateFields();
     }//GEN-LAST:event_txtTitleKeyReleased
 
@@ -382,21 +381,21 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
     private void txtISBNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtISBNKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (Character.isLetter(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtISBNKeyTyped
 
     private void txtTitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (Character.isDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTitleKeyTyped
 
     private void txtAuthorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAuthorKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (Character.isDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtAuthorKeyTyped
