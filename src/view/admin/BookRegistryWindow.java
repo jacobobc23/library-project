@@ -1,15 +1,17 @@
 package view.admin;
 
 import controllers.BookManagementController;
-import enums.Genre;
 import exceptions.BookAlreadyRegisteredException;
 import exceptions.TitleAlreadyInUseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import model.Book;
+import model.Genre;
 
 /**
  *
@@ -34,6 +36,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         setResizable(false);
         controller = new BookManagementController();
         setCbxPublicationYear();
+        setCbxGenre();
         setSpnCopiesNumber();
         hideWarnings();
     }
@@ -184,7 +187,6 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
         cbxGenre.setBackground(new java.awt.Color(245, 245, 245));
         cbxGenre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "FICCIÓN", "NO_FICCIÓN", "MISTERIO", "CIENCIA_FICCIÓN", "FANTASÍA", "ROMANCE", "HORROR" }));
         cbxGenre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -337,12 +339,21 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         String isbn = txtISBN.getText();
         String title = txtTitle.getText();
         String author = txtAuthor.getText();
-        Genre genre = Genre.valueOf(cbxGenre.getSelectedItem().toString());
+        String genreName = cbxGenre.getSelectedItem().toString();
+        Genre selectedGenre = null;
+        
+        for (Genre genre: controller.getAllGenres()) {
+            if (genre.getName().equals(genreName)) {
+                selectedGenre = genre;
+                break;
+            }
+        }
+        
         int publicationYear = Integer.parseInt(cbxPublicationYear.getSelectedItem().toString());
         int copiesNumber = (int) spnCopiesNumber.getValue();
 
         try {
-            Book book = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
+            Book book = new Book(isbn, title, author, selectedGenre, publicationYear, copiesNumber);
             controller.addBook(book);
             JOptionPane.showMessageDialog(null, "Libro registrado correctamente");
             bw.fillTable();
@@ -353,7 +364,6 @@ public class BookRegistryWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddBookActionPerformed
 
     private void txtTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyReleased
-        
         validateFields();
     }//GEN-LAST:event_txtTitleKeyReleased
 
@@ -371,21 +381,21 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
     private void txtISBNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtISBNKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (Character.isLetter(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtISBNKeyTyped
 
     private void txtTitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (Character.isDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTitleKeyTyped
 
     private void txtAuthorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAuthorKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (Character.isDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtAuthorKeyTyped
@@ -458,6 +468,17 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         titleWarning.setVisible(false);
     }
 
+    private void setCbxGenre() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        cbxGenre.setModel(model);
+
+        ArrayList<Genre> genres = controller.getAllGenres();
+        model.addElement("Seleccione una categoría"); // Agrega la opción predeterminada
+
+        for (Genre genre : genres) {
+            model.addElement(genre.getName()); // Agrega los nombres de las categorías al ComboBoxModel
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel IDPanel;
     private javax.swing.JPanel backgroundPanel;

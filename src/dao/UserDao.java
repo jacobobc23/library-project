@@ -41,15 +41,7 @@ public class UserDao {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                String id = rs.getString("id");
-                String fullname = rs.getString("fullname");
-                Role role = Role.valueOf(rs.getString("role"));
-                String mobilenumber = rs.getString("mobilenumber");
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-
-                User user = new User(id, fullname, role, mobilenumber, username, password);
-                users.add(user);
+                users.add(getUser(rs));
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
@@ -71,16 +63,7 @@ public class UserDao {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-
-                String fullName = rs.getString("fullname");
-                Role role = Role.valueOf(rs.getString("role"));
-                String mobileNumber = rs.getString("mobilenumber");
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-
-                User user = new User(id, fullName, role, mobileNumber, username, password);
-
-                return user;
+                return getUser(rs);
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
@@ -167,7 +150,7 @@ public class UserDao {
         }
     }
 
-    public void applyLoan(Loan loan) {
+    public void applyLoan(Loan loan) throws LoanPastDueException {
         try {
             User user = searchUser(loan.getUser().getId());
 
@@ -193,7 +176,7 @@ public class UserDao {
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
-        
+
         subtractAvailableCopy(loan.getBook().getIsbn());
     }
 
@@ -273,5 +256,17 @@ public class UserDao {
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
+    }
+
+    private User getUser(ResultSet rs) throws SQLException {
+        String id = rs.getString("id");
+        String fullname = rs.getString("fullname");
+        Role role = Role.valueOf(rs.getString("role"));
+        String mobilenumber = rs.getString("mobilenumber");
+        String username = rs.getString("username");
+        String password = rs.getString("password");
+
+        return new User(id, fullname, role, mobilenumber, username, password);
+        
     }
 }

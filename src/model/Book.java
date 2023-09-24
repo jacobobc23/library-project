@@ -1,7 +1,5 @@
 package model;
 
-import enums.Genre;
-
 /**
  *
  * @author Jacobo-bc

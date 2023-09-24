@@ -3,6 +3,7 @@ package controllers;
 import dao.BookDao;
 import java.util.ArrayList;
 import model.Book;
+import model.Genre;
 
 /**
  * Controlador para gestionar los libros.
@@ -24,6 +25,10 @@ public class BookManagementController {
     public Book searchBook(String isbn) {
         return bookDao.searchBook(isbn);
     }
+    
+    public ArrayList<Book> searchBooksByGenre(int id) {
+        return bookDao.searchBooksByGenre(id);
+    }
 
     public void addBook(Book book) {
         bookDao.addBook(book);
@@ -43,6 +48,10 @@ public class BookManagementController {
 
     public boolean isBookRegistered(String isbn) {
         return bookDao.isBookRegistered(isbn);
+    }
+    
+    public ArrayList<Genre> getAllGenres() {
+        return bookDao.getAllGenres();
     }
 
 }

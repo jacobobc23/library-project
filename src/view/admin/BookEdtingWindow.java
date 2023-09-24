@@ -1,12 +1,14 @@
 package view.admin;
 
 import controllers.BookManagementController;
-import enums.Genre;
 import exceptions.TitleAlreadyInUseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import model.Book;
+import model.Genre;
 
 /**
  *
@@ -32,6 +34,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         setResizable(false);
         setTitle(book.getTitle());
         controller = new BookManagementController();
+        setCbxGenre();
         showBookInformation();
         setSpnCopiesNumber();
         setCbxPublicationYear();
@@ -167,7 +170,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
 
         cbxGenre.setBackground(new java.awt.Color(245, 245, 245));
         cbxGenre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "FICCIÓN", "NO_FICCIÓN", "MISTERIO", "CIENCIA_FICCIÓN", "FANTASÍA", "ROMANCE", "HORROR" }));
+        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Misterio", "Fantasía", "Aventura", "Ciencia ficción", "Drama" }));
         cbxGenre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -324,12 +327,21 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         String isbn = lblIsbn.getText();
         String title = txtTitle.getText();
         String author = txtAuthor.getText();
-        Genre genre = Genre.valueOf(cbxGenre.getSelectedItem().toString());
+        String genreName = cbxGenre.getSelectedItem().toString();
+        Genre selectedGenre = null;
+
+        for (Genre genre : controller.getAllGenres()) {
+            if (genre.getName().equals(genreName)) {
+                selectedGenre = genre;
+                break;
+            }
+        }
+
         int publicationYear = Integer.parseInt(cbxPublicationYear.getSelectedItem().toString());
         int copiesNumber = (int) spnCopiesNumber.getValue();
 
         try {
-            Book updatedBook = new Book(isbn, title, author, genre, publicationYear, copiesNumber);
+            Book updatedBook = new Book(isbn, title, author, selectedGenre, publicationYear, copiesNumber);
             controller.updateBook(updatedBook);
             bw.fillTable();
             JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
@@ -436,10 +448,21 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         txtTitle.setText(book.getTitle());
         txtAuthor.setText(book.getAuthor());
         cbxPublicationYear.setSelectedItem(book.getPublicationYear());
-        cbxGenre.setSelectedItem(book.getGenre().name());
+        cbxGenre.setSelectedIndex(book.getGenre().getId());
         spnCopiesNumber.setValue(book.getCopiesNumber());
     }
 
+    private void setCbxGenre() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        cbxGenre.setModel(model);
+
+        ArrayList<Genre> genres = controller.getAllGenres();
+        model.addElement("Seleccione un género"); // Agrega la opción predeterminada
+
+        for (Genre genre : genres) {
+            model.addElement(genre.getName()); // Agrega los nombres de las categorías al ComboBoxModel
+        }
+    }
     /**
      * @param args the command line arguments
      */
