@@ -89,9 +89,6 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtID.setBorder(null);
         txtID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtIDKeyReleased(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIDKeyTyped(evt);
             }
@@ -241,9 +238,6 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtPassword.setBorder(null);
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtPasswordKeyReleased(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPasswordKeyTyped(evt);
             }
@@ -459,26 +453,16 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         if (!Character.isDigit(c) || id.length() == 10) {
             evt.consume();
         }
-        
-        if (!Character.isLetterOrDigit(c)) {
-            evt.consume();
-        }
+    
     }//GEN-LAST:event_txtIDKeyTyped
 
     private void txtNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyTyped
+        String name = txtName.getText().trim();
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
-            evt.consume();
-        }
-        
-        if (!Character.isLetterOrDigit(c)) {
+        if (Character.isDigit(c) || name.length() == 100) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNameKeyTyped
-
-    private void txtIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyReleased
-        validateFields();
-    }//GEN-LAST:event_txtIDKeyReleased
 
     private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
         validateFields();
@@ -491,26 +475,26 @@ public class UserRegistryWindow extends javax.swing.JFrame {
     private void txtNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyReleased
     }//GEN-LAST:event_txtNameKeyReleased
 
-    private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
-    }//GEN-LAST:event_txtPasswordKeyReleased
-
     private void txtMobileNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyTyped
+        String mn = txtMobileNumber.getText().trim();
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (!Character.isDigit(c) || mn.length() == 20) {
             evt.consume();
         }
     }//GEN-LAST:event_txtMobileNumberKeyTyped
 
     private void txtUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyTyped
+        String userName = txtUsername.getText().trim();
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (!Character.isLetterOrDigit(c) || userName.length() == 20) {
             evt.consume();
         }
     }//GEN-LAST:event_txtUsernameKeyTyped
 
     private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        String pass = txtPassword.getText().trim();
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (!Character.isLetterOrDigit(c) || pass.length() == 20) {
             evt.consume();
         }
     }//GEN-LAST:event_txtPasswordKeyTyped

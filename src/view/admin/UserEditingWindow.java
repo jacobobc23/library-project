@@ -455,12 +455,10 @@ public class UserEditingWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_toggleBtnShowPassActionPerformed
 
     private void txtMobileNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMobileNumberKeyReleased
-
         validateFields();
     }//GEN-LAST:event_txtMobileNumberKeyReleased
 
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
-
         validateFields();
     }//GEN-LAST:event_txtUsernameKeyReleased
 
@@ -476,15 +474,17 @@ public class UserEditingWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMobileNumberKeyTyped
 
     private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        String pass = txtPassword.getText().trim();
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (!Character.isLetterOrDigit(c) || pass.length() == 20) {
             evt.consume();
         }
     }//GEN-LAST:event_txtPasswordKeyTyped
 
     private void txtUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyTyped
+        String userName = txtUsername.getText().trim();
         char c = evt.getKeyChar();
-        if (!Character.isLetterOrDigit(c)) {
+        if (!Character.isLetterOrDigit(c) || userName.length() == 20) {
             evt.consume();
         }
     }//GEN-LAST:event_txtUsernameKeyTyped

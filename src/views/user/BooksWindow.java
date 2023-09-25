@@ -326,7 +326,7 @@ public class BooksWindow extends javax.swing.JFrame {
 
         ArrayList<Book> books = controller.listBooks();
         model.setColumnIdentifiers(new Object[]{
-            "ISBN", "Título", "Autor", "Género", "Año de publicación", "Número de copias"
+            "ISBN", "Título", "Autor", "Género", "Año de publicación"
         });
 
         booksTable.setModel(model);
@@ -340,8 +340,7 @@ public class BooksWindow extends javax.swing.JFrame {
                 book.getTitle(),
                 book.getAuthor(),
                 book.getGenre(),
-                book.getPublicationYear(),
-                book.getCopiesNumber()
+                book.getPublicationYear()
             });
         }
     }

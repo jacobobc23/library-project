@@ -387,15 +387,17 @@ public class BookRegistryWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_txtISBNKeyTyped
 
     private void txtTitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyTyped
+        String title = txtTitle.getText().trim();
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isDigit(c) || title.length() == 100) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTitleKeyTyped
 
     private void txtAuthorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAuthorKeyTyped
+        String author = txtAuthor.getText().trim();
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isDigit(c) || author.length() == 50) {
             evt.consume();
         }
     }//GEN-LAST:event_txtAuthorKeyTyped
