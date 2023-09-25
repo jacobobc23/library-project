@@ -190,6 +190,9 @@ public class SignUpWindow extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUsernameKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyTyped(evt);
+            }
         });
         userPanel.add(txtUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 250, 20));
 
@@ -218,6 +221,11 @@ public class SignUpWindow extends javax.swing.JFrame {
         txtPassword.setBackground(new java.awt.Color(245, 245, 245));
         txtPassword.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtPassword.setBorder(null);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
+        });
         passwordPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 230, -1));
 
         jPanel6.setBackground(new java.awt.Color(0, 123, 255));
@@ -385,7 +393,7 @@ public class SignUpWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
             returnWindow();
         } catch (UserAlreadyRegisteredException | UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
-            JOptionPane.showMessageDialog(null,ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddUserActionPerformed
 
@@ -413,8 +421,9 @@ public class SignUpWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIDKeyTyped
 
     private void txtNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNameKeyTyped
+        String name = txtName.getText().trim();
         char c = evt.getKeyChar();
-        if (Character.isDigit(c)) {
+        if (Character.isDigit(c) || name.length() == 100) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNameKeyTyped
@@ -430,6 +439,22 @@ public class SignUpWindow extends javax.swing.JFrame {
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
         validateFields();
     }//GEN-LAST:event_txtUsernameKeyReleased
+
+    private void txtUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyTyped
+        String userName = txtUsername.getText().trim();
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c) || userName.length() == 20) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtUsernameKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        String pass = txtPassword.getText().trim();
+        char c = evt.getKeyChar();
+        if (!Character.isLetterOrDigit(c) || pass.length() == 20) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPasswordKeyTyped
 
     private boolean hasEmptyFields() {
         return (txtID.getText().isEmpty() || txtName.getText().isEmpty()
