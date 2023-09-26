@@ -1,6 +1,5 @@
 package dao;
 
-import connection.BDConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,36 +9,35 @@ import model.Book;
 import model.Loan;
 import model.User;
 import org.mariadb.jdbc.Connection;
+import singleton.Singleton;
+import singleton.dao.SingletonBookDAO;
+import singleton.dao.SingletonUserDAO;
 
 /**
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class LoanDao {
 
-    private final BDConnection conn;
-    private final Connection con;
+    private final Connection connection;
 
     private final UserDao userDao;
     private final BookDao bookDao;
 
     public LoanDao() {
-        this.conn = new BDConnection();
-        this.con = conn.getConnection();
-        userDao = new UserDao();
-        bookDao = new BookDao();
+        connection = Singleton.getINSTANCE().getConnection();
+        userDao = SingletonUserDAO.getINSTANCE().getUserdao();
+        bookDao = SingletonBookDAO.getINSTANCE().getBookdao();
     }
 
     public ArrayList<Loan> listLoans() {
         ArrayList<Loan> loans = new ArrayList<>();
 
-        try {
-            PreparedStatement ps;
+        String query = "SELECT * FROM loans";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
 
-            String query = "SELECT * FROM loans";
-
-            ps = con.prepareStatement(query);
             rs = ps.executeQuery();
 
             while (rs.next()) {

@@ -1,6 +1,5 @@
 package dao;
 
-import connection.BDConnection;
 import exceptions.BookAlreadyRegisteredException;
 import exceptions.TitleAlreadyInUseException;
 import java.sql.PreparedStatement;
@@ -10,32 +9,29 @@ import java.util.ArrayList;
 import model.Book;
 import model.Genre;
 import org.mariadb.jdbc.Connection;
+import singleton.Singleton;
 
 /**
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class BookDao {
 
-    private final BDConnection conn;
-    private final Connection con;
+    private final Connection connection;
 
     public BookDao() {
-        this.conn = new BDConnection();
-        this.con = conn.getConnection();
+        connection = Singleton.getINSTANCE().getConnection();
     }
 
     public ArrayList<Book> listBooks() {
         ArrayList<Book> books = new ArrayList<>();
+        String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
+                + " books.genre_id, genres.name FROM books JOIN genres ON books.genre_id = genres.id";
 
-        try {
-            PreparedStatement ps;
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
 
-            String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
-                    + " books.genre_id, genres.name FROM books JOIN genres ON books.genre_id = genres.id";
-
-            ps = con.prepareStatement(query);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -59,14 +55,13 @@ public class BookDao {
     }
 
     public Book searchBook(String isbn) {
-        try {
-            PreparedStatement ps;
+
+        String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
+                + " genres.id AS genre_id, genres.name AS genre_name FROM books JOIN genres ON books.genre_id = genres.id WHERE books.isbn = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
 
-            String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
-                    + " genres.id AS genre_id, genres.name AS genre_name FROM books JOIN genres ON books.genre_id = genres.id WHERE books.isbn = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, isbn);
             rs = ps.executeQuery();
 
@@ -90,14 +85,12 @@ public class BookDao {
     public ArrayList<Book> searchBooksByGenre(int id) {
         ArrayList<Book> books = new ArrayList<>();
 
-        try {
-            PreparedStatement ps;
+        String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
+                + " genres.name FROM books JOIN genres ON books.genre_id = genres.id WHERE books.genre_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
 
-            String query = "SELECT books.isbn, books.title, books.author, books.publicationYear, books.copiesNumber,"
-                    + " genres.name FROM books JOIN genres ON books.genre_id = genres.id WHERE books.genre_id = ?";
-
-            ps = con.prepareStatement(query);
             ps.setInt(1, id);
             rs = ps.executeQuery();
 
@@ -126,7 +119,8 @@ public class BookDao {
      * @throws SQLException
      */
     public void addBook(Book book) {
-        try {
+        String query = "INSERT INTO books (isbn, title, author, publicationYear, copiesNumber, genre_id) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             if (isBookRegistered(book.getIsbn())) {
                 throw new BookAlreadyRegisteredException();
@@ -135,12 +129,6 @@ public class BookDao {
             if (isTitleInUse(book.getTitle())) {
                 throw new TitleAlreadyInUseException();
             }
-
-            PreparedStatement ps;
-
-            String query = "INSERT INTO books (isbn, title, author, publicationYear, copiesNumber, genre_id) VALUES (?, ?, ?, ?, ?, ?)";
-
-            ps = con.prepareStatement(query);
 
             ps.setString(1, book.getIsbn());
             ps.setString(2, book.getTitle());
@@ -163,17 +151,9 @@ public class BookDao {
      * @return
      */
     public void updateBook(Book book) {
-        try {
+        String query = "UPDATE books SET title = ?, author = ?, publicationYear = ?, copiesNumber = ?, genre_id = ? WHERE isbn = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
-//            if (isTitleInUse(book.getTitle())) {
-//                throw new TitleAlreadyInUseException();
-//            }
-
-            PreparedStatement ps;
-
-            String query = "UPDATE books SET title = ?, author = ?, publicationYear = ?, copiesNumber = ?, genre_id = ? WHERE isbn = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, book.getTitle());
             ps.setString(2, book.getAuthor());
             ps.setInt(3, book.getPublicationYear());
@@ -195,12 +175,9 @@ public class BookDao {
      * @return true si se pudo eliminar, false en caso contrario.
      */
     public void deleteBook(String isbn) {
-        try {
-            PreparedStatement ps;
+        String query = "DELETE FROM books WHERE isbn = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
-            String query = "DELETE FROM books WHERE isbn = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, isbn);
 
             ps.executeUpdate();
@@ -218,13 +195,11 @@ public class BookDao {
      * @return true si existe un libro con ese titulo, false en caso contrario.
      */
     public boolean isTitleInUse(String title) {
-        try {
-            PreparedStatement ps;
+        String query = "SELECT COUNT(*) FROM books WHERE title = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
 
-            String query = "SELECT COUNT(*) FROM books WHERE title = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, title);
             rs = ps.executeQuery();
 
@@ -245,13 +220,11 @@ public class BookDao {
      * @return
      */
     public boolean isBookRegistered(String isbn) {
-        try {
-            PreparedStatement ps;
+        String query = "SELECT COUNT(*) FROM books WHERE isbn = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
 
-            String query = "SELECT COUNT(*) FROM books WHERE isbn = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, isbn);
             rs = ps.executeQuery();
 
@@ -267,14 +240,11 @@ public class BookDao {
 
     public ArrayList<Genre> getAllGenres() {
         ArrayList<Genre> genres = new ArrayList<>();
+        String query = "SELECT * FROM genres";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
-        try {
-            PreparedStatement ps;
             ResultSet rs;
 
-            String query = "SELECT * FROM genres";
-
-            ps = con.prepareStatement(query);
             rs = ps.executeQuery();
 
             while (rs.next()) {

@@ -427,6 +427,7 @@ public class UserRegistryWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
             uw.fillTable();
             cleanFields();
+            this.dispose();
         } catch (UserAlreadyRegisteredException | UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

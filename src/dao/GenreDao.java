@@ -2,37 +2,33 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import connection.BDConnection;
 import exceptions.BookGenreException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Genre;
 import org.mariadb.jdbc.Connection;
+import singleton.Singleton;
 
 /**
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class GenreDao {
 
-    private final BDConnection conn;
-    private final Connection con;
+    private final Connection connection;
 
     public GenreDao() {
-        this.conn = new BDConnection();
-        this.con = conn.getConnection();
+        connection = Singleton.getINSTANCE().getConnection();
     }
 
     public ArrayList<Genre> listGenres() {
         ArrayList<Genre> genres = new ArrayList<>();
 
-        try {
-            PreparedStatement ps;
+        String query = "SELECT * FROM genres";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
 
-            String query = "SELECT * FROM genres";
-
-            ps = con.prepareStatement(query);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -49,13 +45,11 @@ public class GenreDao {
     }
 
     public Genre searchGenre(String name) {
-        try {
-            PreparedStatement ps;
+        String query = "SELECT id, name FROM genres WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
 
-            String query = "SELECT id, name FROM genres WHERE id = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, name);
             rs = ps.executeQuery();
 
@@ -71,13 +65,8 @@ public class GenreDao {
     }
 
     public void addGenre(Genre genre) throws SQLException {
-        try {
-
-            PreparedStatement ps;
-
-            String query = "INSERT INTO genres (id, name) VALUES (?, ?)";
-
-            ps = con.prepareStatement(query);
+        String query = "INSERT INTO genres (id, name) VALUES (?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setInt(1, genre.getId());
             ps.setString(2, genre.getName());
@@ -89,12 +78,9 @@ public class GenreDao {
     }
 
     public void updateGenre(int id, String name) throws SQLException {
-        try {
-            PreparedStatement ps;
+        String query = "UPDATE genres SET name = ? WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
-            String query = "UPDATE genres SET name = ? WHERE id = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, name);
             ps.setInt(2, id);
 
@@ -105,12 +91,9 @@ public class GenreDao {
     }
 
     public void deleteGenre(int id) {
-        try {
-            PreparedStatement ps;
+        String query = "DELETE FROM genres WHERE id = ? AND NOT EXISTS (SELECT 1 FROM books WHERE genre_id = ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
-            String query = "DELETE FROM genres WHERE id = ? AND NOT EXISTS (SELECT 1 FROM books WHERE genre_id = ?)";
-
-            ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.setInt(2, id);
 

@@ -4,10 +4,12 @@ import dao.LoanDao;
 import dao.UserDao;
 import java.util.ArrayList;
 import model.Loan;
+import singleton.dao.SingletonLoanDAO;
+import singleton.dao.SingletonUserDAO;
 
 /**
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class LoanManagementController {
     
@@ -15,8 +17,8 @@ public class LoanManagementController {
     private final LoanDao loanDao;
 
     public LoanManagementController() {
-        userDao = new UserDao();
-        loanDao = new LoanDao();
+        userDao = SingletonUserDAO.getINSTANCE().getUserdao();
+        loanDao = SingletonLoanDAO.getINSTANCE().getLoanDao();
     }
     
     public void applyLoan(Loan loan) {

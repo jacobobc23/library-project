@@ -4,17 +4,18 @@ import dao.GenreDao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Genre;
+import singleton.dao.SingletonGenreDAO;
 
 /**
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class GenreManagementController {
     
     private final GenreDao genreDao;
 
     public GenreManagementController() {
-        this.genreDao = new GenreDao();
+        this.genreDao = SingletonGenreDAO.getINSTANCE().getGenreDao();
     }
     
     public ArrayList<Genre> listGenres() {

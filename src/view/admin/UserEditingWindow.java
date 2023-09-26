@@ -435,6 +435,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
             controller.updateUser(usr);
             uw.fillTable();
             JOptionPane.showMessageDialog(null, "Usuario acutalizado ");
+            this.dispose();
         } catch (UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

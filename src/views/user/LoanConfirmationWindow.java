@@ -1,12 +1,16 @@
 package views.user;
 
+import controllers.BookManagementController;
 import controllers.LoanManagementController;
 import exceptions.LoanPastDueException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Book;
+import model.Genre;
 import model.Loan;
 import model.User;
 
@@ -18,7 +22,9 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
     private final User user;
     private final Book book;
-    private final LoanManagementController controller;
+    private final LoanManagementController controller;    
+    private final BookManagementController controllerbook;
+
 
     /**
      * Creates new form LoanWindow
@@ -33,7 +39,9 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
         this.user = user;
         this.book = book;
         controller = new LoanManagementController();
+        controllerbook = new BookManagementController();
         setCbxPublicationYear();
+        setCbxGenre();
         showBookInformation();
     }
 
@@ -59,6 +67,18 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
         }
 
         cbxPublicationYear.insertItemAt("Seleccione una opción", 0);
+    }
+    
+    private void setCbxGenre() {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        cbxGenre.setModel(model);
+
+        ArrayList<Genre> genres = controllerbook.getAllGenres();
+        model.addElement("Seleccione una categoría"); // Agrega la opción predeterminada
+
+        for (Genre genre : genres) {
+            model.addElement(genre.getName()); // Agrega los nombres de las categorías al ComboBoxModel
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -94,7 +114,6 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
         cbxGenre.setBackground(new java.awt.Color(245, 245, 245));
         cbxGenre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cbxGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "FICCIÓN", "NO_FICCIÓN", "MISTERIO", "CIENCIA_FICCIÓN", "FANTASÍA", "ROMANCE", "HORROR" }));
         cbxGenre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbxGenre.setEnabled(false);
 

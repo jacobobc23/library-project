@@ -1,6 +1,5 @@
 package dao;
 
-import connection.BDConnection;
 import enums.Role;
 import exceptions.LoanPastDueException;
 import exceptions.MobileNumberAlreadyInUseException;
@@ -13,31 +12,26 @@ import java.util.ArrayList;
 import model.Loan;
 import model.User;
 import org.mariadb.jdbc.Connection;
+import singleton.Singleton;
 
 /**
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class UserDao {
 
-    private final BDConnection conn;
-    private final Connection con;
+    private final Connection connection;
 
     public UserDao() {
-        this.conn = new BDConnection();
-        this.con = conn.getConnection();
+        connection = Singleton.getINSTANCE().getConnection();
     }
 
     public ArrayList<User> listUsers() {
         ArrayList<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users";
 
-        try {
-            PreparedStatement ps;
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs;
-
-            String query = "SELECT * FROM users";
-
-            ps = con.prepareStatement(query);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -50,13 +44,9 @@ public class UserDao {
     }
 
     public User searchUser(String id) {
-        try {
-            PreparedStatement ps;
+        String query = "SELECT * FROM users WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs;
-
-            String query = "SELECT * FROM users WHERE id = ?";
-
-            ps = con.prepareStatement(query);
 
             ps.setString(1, id);
 
@@ -72,7 +62,8 @@ public class UserDao {
     }
 
     public void addUser(User user) {
-        try {
+        String query = "INSERT INTO users (id, fullname, role, mobilenumber, username, password) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             if (isUserRegistered(user.getId())) {
                 throw new UserAlreadyRegisteredException();
@@ -85,12 +76,6 @@ public class UserDao {
             if (isUsernameInUse(user.getUsername())) {
                 throw new UserNameAlreadyInUseException();
             }
-
-            PreparedStatement ps;
-
-            String query = "INSERT INTO users (id, fullname, role, mobilenumber, username, password) VALUES (?, ?, ?, ?, ?, ?)";
-
-            ps = con.prepareStatement(query);
 
             ps.setString(1, user.getId());
             ps.setString(2, user.getFullName());
@@ -106,21 +91,16 @@ public class UserDao {
     }
 
     public void updateUser(User user) {
-        try {
+        String query = "UPDATE users SET mobilenumber = ?, username = ?, password = ? WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             if (isMobileNumberInUse(user.getMobileNumber())) {
                 throw new MobileNumberAlreadyInUseException();
             }
 
-            if (isUsernameInUse(user.getUsername())) {
-                throw new UserNameAlreadyInUseException();
-            }
-
-            PreparedStatement ps;
-
-            String query = "UPDATE users SET mobilenumber = ?, username = ?, password = ? WHERE id = ?";
-
-            ps = con.prepareStatement(query);
+//            if (isUsernameInUse(user.getUsername())) {
+//                throw new UserNameAlreadyInUseException();
+//            }
 
             ps.setString(1, user.getMobileNumber());
             ps.setString(2, user.getUsername());
@@ -135,12 +115,9 @@ public class UserDao {
     }
 
     public void deleteUser(String id) {
-        try {
-            PreparedStatement ps;
+        String query = "DELETE FROM users WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
-            String query = "DELETE FROM users WHERE id = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, id);
 
             ps.executeUpdate();
@@ -151,19 +128,14 @@ public class UserDao {
     }
 
     public void applyLoan(Loan loan) throws LoanPastDueException {
-        try {
+        String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, returned, return_date) VALUES "
+                + "(?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             User user = searchUser(loan.getUser().getId());
 
             if (user != null && user.hasPastDueLoans()) {
                 throw new LoanPastDueException();
             }
-
-            PreparedStatement ps;
-
-            String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, returned, return_date) VALUES "
-                    + "(?, ?, ?, ?, ?, ?)";
-
-            ps = con.prepareStatement(query);
 
             ps.setString(1, loan.getUser().getId());
             ps.setString(2, loan.getBook().getIsbn());
@@ -181,13 +153,10 @@ public class UserDao {
     }
 
     public boolean isMobileNumberInUse(String mobileNumber) {
-        try {
-            PreparedStatement ps;
+        String query = "SELECT COUNT(*) FROM users WHERE mobilenumber = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs;
 
-            String query = "SELECT COUNT(*) FROM users WHERE mobilenumber = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, mobileNumber);
             rs = ps.executeQuery();
 
@@ -202,13 +171,10 @@ public class UserDao {
     }
 
     public boolean isUserRegistered(String id) {
-        try {
-            PreparedStatement ps;
+        String query = "SELECT COUNT(*) FROM users WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs;
 
-            String query = "SELECT COUNT(*) FROM users WHERE id = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, id);
             rs = ps.executeQuery();
 
@@ -223,13 +189,10 @@ public class UserDao {
     }
 
     public boolean isUsernameInUse(String username) {
-        try {
-            PreparedStatement ps;
+        String query = "SELECT COUNT(*) FROM users WHERE username = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs;
 
-            String query = "SELECT COUNT(*) FROM users WHERE username = ?";
-
-            ps = con.prepareStatement(query);
             ps.setString(1, username);
             rs = ps.executeQuery();
 
@@ -244,12 +207,8 @@ public class UserDao {
     }
 
     private void subtractAvailableCopy(String isbn) {
-        try {
-            PreparedStatement ps;
-
-            String query = "UPDATE books SET copiesNumber = copiesNumber - 1 WHERE isbn = ?";
-
-            ps = con.prepareStatement(query);
+        String query = "UPDATE books SET copiesNumber = copiesNumber - 1 WHERE isbn = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setString(1, isbn);
             ps.executeUpdate();
@@ -267,6 +226,6 @@ public class UserDao {
         String password = rs.getString("password");
 
         return new User(id, fullname, role, mobilenumber, username, password);
-        
+
     }
 }

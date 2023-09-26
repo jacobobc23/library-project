@@ -4,18 +4,19 @@ import dao.BookDao;
 import java.util.ArrayList;
 import model.Book;
 import model.Genre;
+import singleton.dao.SingletonBookDAO;
 
 /**
  * Controlador para gestionar los libros.
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class BookManagementController {
 
     private final BookDao bookDao;
 
     public BookManagementController() {
-        bookDao = new BookDao();
+        bookDao = SingletonBookDAO.getINSTANCE().getBookdao();
     }
 
     public ArrayList<Book> listBooks() {

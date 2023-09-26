@@ -3,18 +3,19 @@ package controllers;
 import dao.UserDao;
 import java.util.ArrayList;
 import model.User;
+import singleton.dao.SingletonUserDAO;
 
 /**
  * Controlador para gestionar los usuarios.
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class UserManagemetController {
 
     private final UserDao userDao;
 
     public UserManagemetController() {
-        userDao = new UserDao();
+        userDao = SingletonUserDAO.getINSTANCE().getUserdao();
     }
 
     public ArrayList<User> listUsers() {

@@ -1,6 +1,5 @@
 package dao;
 
-import connection.BDConnection;
 import enums.Role;
 import exceptions.CredentialsException;
 import java.sql.PreparedStatement;
@@ -8,19 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.User;
 import org.mariadb.jdbc.Connection;
+import singleton.Singleton;
 
 /**
  *
- * @author Jacobo-bc
+ * @author joanp
  */
 public class LogInDao {
 
-    private final BDConnection conn;
-    private final Connection con;
+    private final Connection connection;
 
     public LogInDao() {
-        this.conn = new BDConnection();
-        this.con = conn.getConnection();
+        connection = Singleton.getINSTANCE().getConnection();
     }
 
     /**
@@ -32,13 +30,10 @@ public class LogInDao {
      * con esas credenciales.
      */
     public User searchUser(String username, String password) {
-        try {
-            PreparedStatement ps;
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
             ResultSet rs;
-
-            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-
-            ps = con.prepareStatement(query);
 
             ps.setString(1, username);
             ps.setString(2, password);
@@ -55,11 +50,11 @@ public class LogInDao {
                 User user = new User(id, fullName, role, mobileNumber, username, password);
 
                 return user;
-                
+
             } else {
                 throw new CredentialsException();
             }
-            
+
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
