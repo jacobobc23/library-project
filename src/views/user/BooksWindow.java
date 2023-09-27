@@ -31,6 +31,7 @@ public class BooksWindow extends javax.swing.JFrame {
         this.user = user;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Libros");
+        lblUserName.setText(user.getFullName());
         setResizable(false);
         controller = new BookManagementController();
         fillTable();
@@ -290,7 +291,8 @@ public class BooksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnLoansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoansActionPerformed
-
+        new LoansWindow(user).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnLoansActionPerformed
 
     private void txtFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyReleased
@@ -308,14 +310,14 @@ public class BooksWindow extends javax.swing.JFrame {
         int selected = booksTable.getSelectedRow();
 
         if (selected >= 0) {
-            
+
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
             Book book = controller.searchBook(isbn);
-            
+
             if (book != null) {
                 new LoanConfirmationWindow(user, book).setVisible(true);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla.");
         }
@@ -339,7 +341,7 @@ public class BooksWindow extends javax.swing.JFrame {
                 book.getIsbn(),
                 book.getTitle(),
                 book.getAuthor(),
-                book.getGenre(),
+                book.getGenre().getName(),
                 book.getPublicationYear()
             });
         }

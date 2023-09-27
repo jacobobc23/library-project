@@ -11,6 +11,7 @@ public class Loan {
     private final User user;
     private final Book book;
     private final LocalDate returnDate;
+    private int id;
     private LocalDate date;
     private LocalDate dueDate;
     private boolean returned;
@@ -22,6 +23,20 @@ public class Loan {
         this.dueDate = dueDate;
         returnDate = null;
         returned = false;
+    }
+
+    public Loan(User user, Book book, LocalDate returnDate, int id, LocalDate date, LocalDate dueDate, boolean returned) {
+        this.user = user;
+        this.book = book;
+        this.returnDate = returnDate;
+        this.id = id;
+        this.date = date;
+        this.dueDate = dueDate;
+        this.returned = returned;
+    }
+    
+    public int getId() {
+        return id;
     }
 
     public User getUser() {

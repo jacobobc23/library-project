@@ -22,9 +22,8 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
     private final User user;
     private final Book book;
-    private final LoanManagementController controller;    
+    private final LoanManagementController controller;
     private final BookManagementController controllerbook;
-
 
     /**
      * Creates new form LoanWindow
@@ -68,7 +67,7 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
         cbxPublicationYear.insertItemAt("Seleccione una opción", 0);
     }
-    
+
     private void setCbxGenre() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
@@ -326,6 +325,11 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
         LocalDate loanDate = LocalDate.now();
         LocalDate dueDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if (controller.hasPastDueLoan(user)) {
+            JOptionPane.showMessageDialog(null, "No puedes solicitar un nuevo préstamo porque tienes un préstamo vencido.");
+            return;
+        }
 
         try {
             Loan loan = new Loan(user, book, loanDate, dueDate);
