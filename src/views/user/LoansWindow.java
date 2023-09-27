@@ -142,7 +142,7 @@ public class LoansWindow extends javax.swing.JFrame {
         lblLoans.setBackground(new java.awt.Color(135, 178, 255));
         lblLoans.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         lblLoans.setForeground(new java.awt.Color(255, 255, 255));
-        lblLoans.setText("        PRÉSTAMOS");
+        lblLoans.setText("       PRÉSTAMOS");
         lblLoans.setOpaque(true);
 
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
@@ -196,11 +196,6 @@ public class LoansWindow extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        loansTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loansTableMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(loansTable);
 
         btnRepayLoan.setBackground(new java.awt.Color(0, 123, 255));
@@ -310,24 +305,12 @@ public class LoansWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRepayLoanActionPerformed
 
-    private void loansTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loansTableMouseClicked
-        int seleccion = loansTable.getSelectedRow();
-
-        String status = (String) loansTable.getValueAt(seleccion, 5);
-
-        if (status.equals("Devuelto")) {
-            btnRepayLoan.setEnabled(false);
-        } else {
-            btnRepayLoan.setEnabled(true);
-        }
-    }//GEN-LAST:event_loansTableMouseClicked
-
     private void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
         ArrayList<Loan> loans = controller.listLoans(user);
         model.setColumnIdentifiers(new Object[]{
-            "ID", "ISBN Libro", "Título", "Fecha préstamo", "Fecha vencimiento", "Estado", "Fecha devolución"
+            "ID", "ISBN", "Título", "Fecha préstamo", "Fecha vencimiento"
         });
 
         loansTable.setModel(model);
@@ -341,9 +324,7 @@ public class LoansWindow extends javax.swing.JFrame {
                 loan.getBook().getIsbn(),
                 loan.getBook().getTitle(),
                 loan.getDate(),
-                loan.getDueDate(),
-                loan.isReturned() ? "Devuelto" : "Sin devolver",
-                loan.getReturnDate() != null ? loan.getReturnDate() : ""
+                loan.getDueDate()
             });
         }
     }

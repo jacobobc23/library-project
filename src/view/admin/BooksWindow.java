@@ -1,6 +1,7 @@
 package view.admin;
 
 import controllers.BookManagementController;
+import exceptions.BookIsLoanedException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
@@ -19,10 +20,10 @@ import view.logIn.LogInWindow;
  * @author Jacobo-bc
  */
 public class BooksWindow extends javax.swing.JFrame {
-
+    
     private final User admin;
     private final BookManagementController controller;
-
+    
     private TableRowSorter<DefaultTableModel> sorter;
 
     /**
@@ -68,9 +69,9 @@ public class BooksWindow extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cbxGenre = new javax.swing.JComboBox<>();
         lblGenresManagement = new javax.swing.JLabel();
-        btnDeleteUser = new javax.swing.JButton();
+        btnDeleteBook = new javax.swing.JButton();
         btnAddBook = new javax.swing.JButton();
-        btnUpdateUser = new javax.swing.JButton();
+        btnUpdateBook = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -267,14 +268,14 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btnDeleteUser.setBackground(new java.awt.Color(220, 20, 60));
-        btnDeleteUser.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnDeleteUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeleteUser.setText("Eliminar");
-        btnDeleteUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteBook.setBackground(new java.awt.Color(220, 20, 60));
+        btnDeleteBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnDeleteBook.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeleteBook.setText("Eliminar");
+        btnDeleteBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeleteBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteUserActionPerformed(evt);
+                btnDeleteBookActionPerformed(evt);
             }
         });
 
@@ -289,13 +290,13 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
-        btnUpdateUser.setBackground(new java.awt.Color(255, 215, 0));
-        btnUpdateUser.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnUpdateUser.setText("Editar");
-        btnUpdateUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnUpdateUser.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdateBook.setBackground(new java.awt.Color(255, 215, 0));
+        btnUpdateBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnUpdateBook.setText("Editar");
+        btnUpdateBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUpdateBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateUserActionPerformed(evt);
+                btnUpdateBookActionPerformed(evt);
             }
         });
 
@@ -314,9 +315,9 @@ public class BooksWindow extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(btnAddBook)
                         .addGap(65, 65, 65)
-                        .addComponent(btnUpdateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUpdateBook, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65)
-                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDeleteBook, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -328,8 +329,8 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddBook)
-                    .addComponent(btnUpdateUser)
-                    .addComponent(btnDeleteUser))
+                    .addComponent(btnUpdateBook)
+                    .addComponent(btnDeleteBook))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -351,44 +352,46 @@ public class BooksWindow extends javax.swing.JFrame {
         new BookRegistryWindow(this).setVisible(true);
     }//GEN-LAST:event_btnAddBookActionPerformed
 
-    private void btnUpdateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateUserActionPerformed
+    private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
         int selected = booksTable.getSelectedRow();
-
+        
         if (selected >= 0) {
-
+            
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
             Book book = controller.searchBook(isbn);
-
+            
             if (book != null) {
                 new BookEdtingWindow(book, this).setVisible(true);
             }
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla");
         }
-    }//GEN-LAST:event_btnUpdateUserActionPerformed
+    }//GEN-LAST:event_btnUpdateBookActionPerformed
 
-    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+    private void btnDeleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteBookActionPerformed
         int selected = booksTable.getSelectedRow();
-
+        
         if (selected >= 0) {
-
+            
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-
+            
             int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el libro?",
                     "Confirmación", JOptionPane.YES_NO_OPTION);
-
+            
             if (answer == 0) {
-
-                controller.deleteBook(isbn);
-                fillTable();
-                JOptionPane.showMessageDialog(null, "Libro eliminado correctamente");
-
+                try {
+                    controller.deleteBook(isbn);
+                    fillTable();
+                    JOptionPane.showMessageDialog(null, "Libro eliminado correctamente");
+                } catch (BookIsLoanedException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla");
         }
-    }//GEN-LAST:event_btnDeleteUserActionPerformed
+    }//GEN-LAST:event_btnDeleteBookActionPerformed
 
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
         new AdminAccountWindow(admin).setVisible(true);
@@ -417,16 +420,16 @@ public class BooksWindow extends javax.swing.JFrame {
     private void cbxGenreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxGenreItemStateChanged
         if (cbxGenre.getSelectedIndex() != 0) {
             int genreId = cbxGenre.getSelectedIndex();
-
+            
             DefaultTableModel model = new DefaultTableModel();
-
+            
             model.setColumnIdentifiers(new Object[]{
                 "ISBN", "Título", "Autor", "Género", "Año de publicación", "Número de copias"
             });
-
+            
             booksTable.setModel(model);
             ArrayList<Book> books = controller.searchBooksByGenre(genreId);
-
+            
             if (!books.isEmpty()) {
                 for (Book book : books) {
                     model.addRow(new Object[]{
@@ -439,10 +442,10 @@ public class BooksWindow extends javax.swing.JFrame {
                     });
                 }
             } else {
-
+                
                 cleanTable();
             }
-
+            
         } else {
             fillTable();
         }
@@ -451,20 +454,20 @@ public class BooksWindow extends javax.swing.JFrame {
     private void lblGenresManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGenresManagementMouseClicked
         new GenreCrudWindow(this).setVisible(true);
     }//GEN-LAST:event_lblGenresManagementMouseClicked
-
+    
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
-
+        
         ArrayList<Book> books = controller.listBooks();
         model.setColumnIdentifiers(new Object[]{
             "ISBN", "Título", "Autor", "Género", "Año de publicación", "Número de copias"
         });
-
+        
         booksTable.setModel(model);
         booksTable.setAutoCreateRowSorter(true);
         sorter = new TableRowSorter<>(model);
         booksTable.setRowSorter(sorter);
-
+        
         for (Book book : books) {
             model.addRow(new Object[]{
                 book.getIsbn(),
@@ -476,27 +479,27 @@ public class BooksWindow extends javax.swing.JFrame {
             });
         }
     }
-
+    
     private void filter() {
         String filterText = txtFilter.getText().trim();
-
+        
         RowFilter<Object, Object> isbn = RowFilter.regexFilter(filterText, 0);
         RowFilter<Object, Object> title = RowFilter.regexFilter("(?i)" + filterText, 1);
         RowFilter<Object, Object> author = RowFilter.regexFilter("(?i)" + filterText, 2);
         RowFilter<Object, Object> genre = RowFilter.regexFilter("(?i)" + filterText, 3);
         RowFilter<Object, Object> publicationYear = RowFilter.regexFilter(filterText, 4);
         RowFilter<Object, Object> copiesNumber = RowFilter.regexFilter(filterText, 5);
-        
+
         // Se combinan todos los filtros.
         // Una fila será visible si al menos uno de los filtros devuelve true para esa fila
         sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(isbn, title, author, genre, publicationYear, copiesNumber)));
-
+        
     }
-
+    
     public void setCbxGenre() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
-
+        
         ArrayList<Genre> genres = controller.getAllGenres();
         model.addElement("Seleccione un género"); // Agrega la opción predeterminada
 
@@ -504,7 +507,7 @@ public class BooksWindow extends javax.swing.JFrame {
             model.addElement(genre.getName()); // Agrega los nombres de las categorías al ComboBoxModel
         }
     }
-
+    
     private void cleanTable() {
         DefaultTableModel model = (DefaultTableModel) booksTable.getModel();
         model.setRowCount(0);
@@ -515,10 +518,10 @@ public class BooksWindow extends javax.swing.JFrame {
     private javax.swing.JPanel booksPanel;
     private javax.swing.JTable booksTable;
     private javax.swing.JButton btnAddBook;
-    private javax.swing.JButton btnDeleteUser;
+    private javax.swing.JButton btnDeleteBook;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLoans;
-    private javax.swing.JButton btnUpdateUser;
+    private javax.swing.JButton btnUpdateBook;
     private javax.swing.JButton btnUsersManagement;
     private javax.swing.JComboBox<String> cbxGenre;
     private javax.swing.JLabel jLabel1;

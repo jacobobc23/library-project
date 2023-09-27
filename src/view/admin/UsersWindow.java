@@ -1,6 +1,7 @@
 package view.admin;
 
 import controllers.UserManagemetController;
+import exceptions.UserHasLoansException;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -151,7 +152,7 @@ public class UsersWindow extends javax.swing.JFrame {
         lblUsers.setBackground(new java.awt.Color(135, 178, 255));
         lblUsers.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         lblUsers.setForeground(new java.awt.Color(255, 255, 255));
-        lblUsers.setText("        USUARIOS");
+        lblUsers.setText("       USUARIOS");
         lblUsers.setOpaque(true);
 
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
@@ -404,14 +405,19 @@ public class UsersWindow extends javax.swing.JFrame {
                     "Confirmación", JOptionPane.YES_NO_OPTION);
 
             if (answer == 0) {
+                try {
+                    controller.deleteUser(id);
 
-                controller.deleteUser(id);
+                    fillTable();
+                    JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
 
-                fillTable();
-                JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
+                } catch (UserHasLoansException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un usuario de la tabla");
+
         }
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 

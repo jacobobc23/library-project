@@ -49,7 +49,7 @@ public class LoansWindow extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
         btnBooksManagement = new javax.swing.JButton();
         btnUserManagement = new javax.swing.JButton();
-        btnLoans = new javax.swing.JButton();
+        lblLoans = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         loansTable = new javax.swing.JTable();
 
@@ -134,26 +134,11 @@ public class LoansWindow extends javax.swing.JFrame {
             }
         });
 
-        btnLoans.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        btnLoans.setForeground(new java.awt.Color(255, 255, 255));
-        btnLoans.setText("    PRÉSTAMOS");
-        btnLoans.setBorderPainted(false);
-        btnLoans.setContentAreaFilled(false);
-        btnLoans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLoans.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnLoans.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnLoansMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnLoansMouseExited(evt);
-            }
-        });
-        btnLoans.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoansActionPerformed(evt);
-            }
-        });
+        lblLoans.setBackground(new java.awt.Color(135, 178, 255));
+        lblLoans.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblLoans.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoans.setText("        PRÉSTAMOS");
+        lblLoans.setOpaque(true);
 
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
         menuBarPanel.setLayout(menuBarPanelLayout);
@@ -173,7 +158,7 @@ public class LoansWindow extends javax.swing.JFrame {
                 .addContainerGap())
             .addComponent(btnBooksManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnUserManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,9 +173,9 @@ public class LoansWindow extends javax.swing.JFrame {
                 .addComponent(btnBooksManagement)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUserManagement)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLoans)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLoans, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -222,7 +207,7 @@ public class LoansWindow extends javax.swing.JFrame {
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menuBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(89, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
         );
@@ -281,26 +266,12 @@ public class LoansWindow extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnUserManagementActionPerformed
 
-    private void btnLoansMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoansMouseEntered
-        Color color = new Color(135, 178, 255);
-        btnLoans.setBackground(color);
-        btnLoans.setOpaque(true);
-    }//GEN-LAST:event_btnLoansMouseEntered
-
-    private void btnLoansMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoansMouseExited
-        btnLoans.setOpaque(false);
-    }//GEN-LAST:event_btnLoansMouseExited
-
-    private void btnLoansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoansActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLoansActionPerformed
-
     private void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
         ArrayList<Loan> loans = controller.listLoans();
         model.setColumnIdentifiers(new Object[]{
-            "ID Usuario", "Nombre usuario", "ISBN Libro", "Título libro", "Fecha préstamo", "Fecha vencimiento", "Estado", "Fecha devolución"
+            "ID Usuario", "Usuario", "ISBN", "Título", "Fecha préstamo", "Fecha vencimiento"
         });
 
         loansTable.setModel(model);
@@ -313,8 +284,6 @@ public class LoansWindow extends javax.swing.JFrame {
                 loan.getBook().getTitle(),
                 loan.getDate(),
                 loan.getDueDate(),
-                loan.isReturned() ? "Devuelto" : "Sin devolver",
-                loan.getReturnDate() != null ? loan.getReturnDate() : ""
             });
         }
     }
@@ -326,12 +295,12 @@ public class LoansWindow extends javax.swing.JFrame {
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton btnBooksManagement;
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnLoans;
     private javax.swing.JButton btnUserManagement;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAdminAccount;
     private javax.swing.JLabel lblAdminName;
+    private javax.swing.JLabel lblLoans;
     private javax.swing.JTable loansTable;
     private javax.swing.JPanel menuBarPanel;
     // End of variables declaration//GEN-END:variables

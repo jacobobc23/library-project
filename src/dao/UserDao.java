@@ -4,6 +4,7 @@ import enums.Role;
 import exceptions.LoanPastDueException;
 import exceptions.MobileNumberAlreadyInUseException;
 import exceptions.UserAlreadyRegisteredException;
+import exceptions.UserHasLoansException;
 import exceptions.UserNameAlreadyInUseException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -144,13 +145,16 @@ public class UserDao {
     }
 
     public void deleteUser(String id) {
-        String query = "DELETE FROM users WHERE id = ?";
+        String query = "DELETE FROM users WHERE id = ? AND NOT EXISTS (SELECT 1 FROM loans WHERE user_id = ?)";
         try ( PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setString(1, id);
+            ps.setString(2, id);
+            int rowsDeleted = ps.executeUpdate();
 
-            ps.executeUpdate();
-
+            if (rowsDeleted == 0) {
+                throw new UserHasLoansException();
+            }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
@@ -172,26 +176,22 @@ public class UserDao {
             ps.setDate(4, java.sql.Date.valueOf(loan.getDueDate()));
             ps.setBoolean(5, false);
             ps.setDate(6, null);
-
             ps.executeUpdate();
+            subtractAvailableCopy(loan.getBook().getIsbn());
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
-
-        subtractAvailableCopy(loan.getBook().getIsbn());
     }
 
     public void repayLoan(Loan loan) {
-        String query = "UPDATE loans SET returned = true, return_date = ? WHERE loan_id = ?";
+        String query = "DELETE FROM loans WHERE loan_id = ?";
         try ( PreparedStatement ps = connection.prepareStatement(query)) {
-            Date currentDate = new Date();
-            ps.setDate(1, new java.sql.Date(currentDate.getTime()));
-            ps.setInt(2, loan.getId());
+            ps.setInt(1, loan.getId());
             ps.executeUpdate();
+            sumAvailableCopy(loan.getBook().getIsbn());
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
-        sumAvailableCopy(loan.getBook().getIsbn());
     }
 
     private void subtractAvailableCopy(String isbn) {

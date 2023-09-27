@@ -326,11 +326,6 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
         LocalDate loanDate = LocalDate.now();
         LocalDate dueDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        if (controller.hasPastDueLoan(user)) {
-            JOptionPane.showMessageDialog(null, "No puedes solicitar un nuevo préstamo porque tienes un préstamo vencido.");
-            return;
-        }
-
         try {
             Loan loan = new Loan(user, book, loanDate, dueDate);
             controller.applyLoan(loan);

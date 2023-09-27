@@ -1,6 +1,7 @@
 package dao;
 
 import exceptions.BookAlreadyRegisteredException;
+import exceptions.BookIsLoanedException;
 import exceptions.TitleAlreadyInUseException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -175,13 +176,17 @@ public class BookDao {
      * @return true si se pudo eliminar, false en caso contrario.
      */
     public void deleteBook(String isbn) {
-        String query = "DELETE FROM books WHERE isbn = ?";
+        String query = "DELETE FROM books WHERE isbn = ? AND NOT EXISTS (SELECT 1 FROM loans WHERE isbn_book = ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setString(1, isbn);
-
-            ps.executeUpdate();
-
+            ps.setString(2, isbn);
+            
+            int rowsDeleted = ps.executeUpdate();
+            
+            if (rowsDeleted == 0) {
+                throw new BookIsLoanedException();
+            }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }

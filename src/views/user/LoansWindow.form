@@ -238,7 +238,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="        PR&#xc9;STAMOS"/>
+                <Property name="text" type="java.lang.String" value="       PR&#xc9;STAMOS"/>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
             </Component>
@@ -262,9 +262,6 @@
                   </Table>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="loansTableMouseClicked"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>

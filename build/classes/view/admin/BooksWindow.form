@@ -55,9 +55,9 @@
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Component id="btnAddBook" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                          <Component id="btnUpdateUser" min="-2" pref="84" max="-2" attributes="0"/>
+                          <Component id="btnUpdateBook" min="-2" pref="84" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                          <Component id="btnDeleteUser" min="-2" pref="84" max="-2" attributes="0"/>
+                          <Component id="btnDeleteBook" min="-2" pref="84" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -73,8 +73,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnAddBook" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnUpdateUser" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnDeleteUser" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnUpdateBook" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnDeleteBook" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="35" max="32767" attributes="0"/>
               </Group>
@@ -396,7 +396,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnDeleteUser">
+        <Component class="javax.swing.JButton" name="btnDeleteBook">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3c" green="14" red="dc" type="rgb"/>
@@ -413,7 +413,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteUserActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteBookActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAddBook">
@@ -436,7 +436,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddBookActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnUpdateUser">
+        <Component class="javax.swing.JButton" name="btnUpdateBook">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="d7" red="ff" type="rgb"/>
@@ -450,7 +450,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateUserActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateBookActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
