@@ -4,7 +4,6 @@ import dao.BookDao;
 import java.util.ArrayList;
 import model.Book;
 import model.Genre;
-import singleton.dao.SingletonBookDAO;
 
 /**
  * Controlador para gestionar los libros.
@@ -16,23 +15,27 @@ public class BookManagementController {
     private final BookDao bookDao;
 
     public BookManagementController() {
-        bookDao = SingletonBookDAO.getINSTANCE().getBookdao();
+        bookDao = new BookDao();
     }
 
     public ArrayList<Book> listBooks() {
         return bookDao.listBooks();
     }
+    
+    public ArrayList<Book> listBooksByGenre(int id) {
+        return bookDao.listBooksByGenre(id);
+    }
 
-    public Book searchBook(String isbn) {
-        return bookDao.searchBook(isbn);
+    public ArrayList<Genre> listAllGenres() {
+        return bookDao.listAllGenres();
     }
     
-    public ArrayList<Book> searchBooksByGenre(int id) {
-        return bookDao.searchBooksByGenre(id);
+    public Book selectBook(String isbn) {
+        return bookDao.selectBook(isbn);
     }
 
-    public void addBook(Book book) {
-        bookDao.addBook(book);
+    public void insertBook(Book book) {
+        bookDao.insertBook(book);
     }
 
     public void updateBook(Book book) {
@@ -49,10 +52,6 @@ public class BookManagementController {
 
     public boolean isBookRegistered(String isbn) {
         return bookDao.isBookRegistered(isbn);
-    }
-    
-    public ArrayList<Genre> getAllGenres() {
-        return bookDao.getAllGenres();
     }
 
 }

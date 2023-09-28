@@ -254,7 +254,7 @@ public class LogInWindow extends javax.swing.JFrame {
         String password = txtPassword.getText().trim();
 
         try {
-            User user = controller.searchUser(username, password);
+            User user = controller.selectUser(username, password);
 
             Role role = user.getRole();
             String name = user.getFullName();

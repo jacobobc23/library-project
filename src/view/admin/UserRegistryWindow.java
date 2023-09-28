@@ -423,7 +423,7 @@ public class UserRegistryWindow extends javax.swing.JFrame {
 
         try {
             User user = new User(id, fullname, role, mobilenumber, username, password);
-            controller.addUser(user);
+            controller.insertUser(user);
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
             uw.fillTable();
             cleanFields();

@@ -29,7 +29,7 @@ public class LogInDao {
      * @return el usuario que va a ingresar, null si no se encontró un usuario
      * con esas credenciales.
      */
-    public User searchUser(String username, String password) {
+    public User selectUser(String username, String password) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
 

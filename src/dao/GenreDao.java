@@ -21,7 +21,7 @@ public class GenreDao {
         connection = Singleton.getINSTANCE().getConnection();
     }
 
-    public ArrayList<Genre> listGenres() {
+    public ArrayList<Genre> listAllGenres() {
         ArrayList<Genre> genres = new ArrayList<>();
 
         String query = "SELECT * FROM genres";
@@ -44,7 +44,7 @@ public class GenreDao {
         return genres;
     }
 
-    public Genre searchGenre(String name) {
+    public Genre selectGenre(String name) {
         String query = "SELECT id, name FROM genres WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
 
@@ -64,7 +64,7 @@ public class GenreDao {
         return null;
     }
 
-    public void addGenre(Genre genre) throws SQLException {
+    public void insertGenre(Genre genre) throws SQLException {
         String query = "INSERT INTO genres (id, name) VALUES (?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
 

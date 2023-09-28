@@ -5,8 +5,6 @@ import dao.UserDao;
 import java.util.ArrayList;
 import model.Loan;
 import model.User;
-import singleton.dao.SingletonLoanDAO;
-import singleton.dao.SingletonUserDAO;
 
 /**
  *
@@ -18,16 +16,20 @@ public class LoanManagementController {
     private final LoanDao loanDao;
 
     public LoanManagementController() {
-        userDao = SingletonUserDAO.getINSTANCE().getUserdao();
-        loanDao = SingletonLoanDAO.getINSTANCE().getLoanDao();
+        userDao = new UserDao();
+        loanDao = new LoanDao();
+    }
+   
+    public ArrayList<Loan> listAllLoans() {
+        return loanDao.listAllLoans();
     }
     
-    public ArrayList<Loan> listLoans(User user) {
-        return userDao.listLoans(user);
+    public ArrayList<Loan> listUserLoans(User user) {
+        return loanDao.listUserLoans(user);
     }
     
-    public Loan searchLoan(int id) {
-        return loanDao.searchLoan(id);
+    public Loan selectLoan(int id) {
+        return loanDao.selectLoan(id);
     }
     
     public void applyLoan(Loan loan) {
@@ -36,10 +38,6 @@ public class LoanManagementController {
     
     public void repayLoan(Loan loan) {
         userDao.repayLoan(loan);
-    }
-    
-    public ArrayList<Loan> listLoans() {
-        return loanDao.listLoans();
     }
     
     public boolean hasPastDueLoan(User user) {

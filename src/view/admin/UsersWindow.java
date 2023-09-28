@@ -383,7 +383,7 @@ public class UsersWindow extends javax.swing.JFrame {
         if (selected >= 0) {
 
             String ID = usersTable.getModel().getValueAt(selected, 0).toString();
-            User user = controller.searchUser(ID);
+            User user = controller.selectUser(ID);
 
             if (user != null) {
                 new UserEditingWindow(user, this).setVisible(true);

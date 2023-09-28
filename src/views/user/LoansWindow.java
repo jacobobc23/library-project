@@ -290,7 +290,7 @@ public class LoansWindow extends javax.swing.JFrame {
 
         if (selected >= 0) {
             int loanId = (int) loansTable.getModel().getValueAt(selected, 0);
-            Loan loan = controller.searchLoan(loanId);
+            Loan loan = controller.selectLoan(loanId);
 
             int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de realizar la devolución?",
                     "Confirmación", JOptionPane.YES_NO_OPTION);
@@ -308,7 +308,7 @@ public class LoansWindow extends javax.swing.JFrame {
     private void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<Loan> loans = controller.listLoans(user);
+        ArrayList<Loan> loans = controller.listUserLoans(user);
         model.setColumnIdentifiers(new Object[]{
             "ID", "ISBN", "Título", "Fecha préstamo", "Fecha vencimiento"
         });

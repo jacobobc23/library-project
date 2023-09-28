@@ -26,7 +26,7 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
     private final BookManagementController controllerbook;
 
     /**
-     * Creates new form LoanWindow
+     * Creates new form LoanConfirmationWindow
      */
     public LoanConfirmationWindow(User user, Book book) {
         initComponents();
@@ -72,7 +72,7 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
 
-        ArrayList<Genre> genres = controllerbook.getAllGenres();
+        ArrayList<Genre> genres = controllerbook.listAllGenres();
         model.addElement("Seleccione una categoría"); // Agrega la opción predeterminada
 
         for (Genre genre : genres) {

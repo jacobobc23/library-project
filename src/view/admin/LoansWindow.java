@@ -269,7 +269,7 @@ public class LoansWindow extends javax.swing.JFrame {
     private void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<Loan> loans = controller.listLoans();
+        ArrayList<Loan> loans = controller.listAllLoans();
         model.setColumnIdentifiers(new Object[]{
             "ID Usuario", "Usuario", "ISBN", "Título", "Fecha préstamo", "Fecha vencimiento"
         });

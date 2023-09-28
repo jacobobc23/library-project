@@ -1,7 +1,8 @@
 package exceptions;
 
 /**
- *
+ * Excepción lanzada cuando se intenta eliminar un género y existen libros
+ * registrados con ese género.
  * @author Jacobo-bc
  */
 public class BookGenreException extends RuntimeException {

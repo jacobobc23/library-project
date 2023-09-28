@@ -312,7 +312,7 @@ public class BooksWindow extends javax.swing.JFrame {
         if (selected >= 0) {
 
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-            Book book = controller.searchBook(isbn);
+            Book book = controller.selectBook(isbn);
 
             if (book != null) {
                 new LoanConfirmationWindow(user, book).setVisible(true);
@@ -347,6 +347,10 @@ public class BooksWindow extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Actúa como un buscador avanzado. Permitiendo filtrar los libros por 
+     * distintos atributos.
+     */
     private void filter() {
         String filterText = txtFilter.getText();
 

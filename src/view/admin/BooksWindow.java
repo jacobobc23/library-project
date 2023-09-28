@@ -358,7 +358,7 @@ public class BooksWindow extends javax.swing.JFrame {
         if (selected >= 0) {
             
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-            Book book = controller.searchBook(isbn);
+            Book book = controller.selectBook(isbn);
             
             if (book != null) {
                 new BookEdtingWindow(book, this).setVisible(true);
@@ -428,7 +428,7 @@ public class BooksWindow extends javax.swing.JFrame {
             });
             
             booksTable.setModel(model);
-            ArrayList<Book> books = controller.searchBooksByGenre(genreId);
+            ArrayList<Book> books = controller.listBooksByGenre(genreId);
             
             if (!books.isEmpty()) {
                 for (Book book : books) {
@@ -500,7 +500,7 @@ public class BooksWindow extends javax.swing.JFrame {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
         
-        ArrayList<Genre> genres = controller.getAllGenres();
+        ArrayList<Genre> genres = controller.listAllGenres();
         model.addElement("Seleccione un género"); // Agrega la opción predeterminada
 
         for (Genre genre : genres) {

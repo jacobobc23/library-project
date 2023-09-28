@@ -204,7 +204,7 @@ public class GenreCrudWindow extends javax.swing.JFrame {
 
         try {
             Genre newGenre = new Genre(name);
-            controller.addGenre(newGenre);
+            controller.insertGenre(newGenre);
             JOptionPane.showMessageDialog(null, "Género registrado correctamente");
             fillTable();
             bw.setCbxGenre();
@@ -277,7 +277,7 @@ public class GenreCrudWindow extends javax.swing.JFrame {
     private void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<Genre> genres = controller.listGenres();
+        ArrayList<Genre> genres = controller.listAllGenres();
         model.setColumnIdentifiers(new Object[]{
             "ID", "Nombre"
         });
