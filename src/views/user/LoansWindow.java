@@ -310,7 +310,7 @@ public class LoansWindow extends javax.swing.JFrame {
 
         ArrayList<Loan> loans = controller.listUserLoans(user);
         model.setColumnIdentifiers(new Object[]{
-            "ID", "ISBN", "Título", "Fecha préstamo", "Fecha vencimiento"
+            "ID", "ISBN", "Título", "Cantidad", "Fecha préstamo", "Fecha vencimiento"
         });
 
         loansTable.setModel(model);
@@ -323,6 +323,7 @@ public class LoansWindow extends javax.swing.JFrame {
                 loan.getId(),
                 loan.getBook().getIsbn(),
                 loan.getBook().getTitle(),
+                loan.getBookQuantity(),
                 loan.getDate(),
                 loan.getDueDate()
             });

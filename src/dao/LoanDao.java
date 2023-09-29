@@ -37,6 +37,7 @@ public class LoanDao {
                 String userId = rs.getString("user_id");
                 String isbn = rs.getString("isbn_book");
                 int loanId = rs.getInt("loan_id");
+                int bookQuantity = rs.getInt("book_quantity");
                 LocalDate date = rs.getDate("loan_date").toLocalDate();
                 LocalDate dueDate = rs.getDate("due_date").toLocalDate();
                 LocalDate returnDate = (rs.getDate("return_date") != null) ? rs.getDate("return_date").toLocalDate() : null;
@@ -45,7 +46,7 @@ public class LoanDao {
                 User user = getUser(userId);
                 Book book = getBook(isbn);
 
-                Loan loan = new Loan(user, book, returnDate, loanId, date, dueDate, returned);
+                Loan loan = new Loan(user, book, bookQuantity, returnDate, loanId, date, dueDate, returned);
                 loans.add(loan);
             }
 
@@ -66,6 +67,7 @@ public class LoanDao {
             while (rs.next()) {
                 String isbn = rs.getString("isbn_book");
                 int loanId = rs.getInt("loan_id");
+                int bookQuantity = rs.getInt("book_quantity");
                 LocalDate date = rs.getDate("loan_date").toLocalDate();
                 LocalDate dueDate = rs.getDate("due_date").toLocalDate();
                 LocalDate returnDate = (rs.getDate("return_date") != null) ? rs.getDate("return_date").toLocalDate() : null;
@@ -73,7 +75,7 @@ public class LoanDao {
 
                 Book book = getBook(isbn);
 
-                Loan loan = new Loan(user, book, returnDate, loanId, date, dueDate, returned);
+                Loan loan = new Loan(user, book, bookQuantity, returnDate, loanId, date, dueDate, returned);
                 loans.add(loan);
             }
         } catch (SQLException ex) {
@@ -94,6 +96,7 @@ public class LoanDao {
             if (rs.next()) {
                 String userId = rs.getString("user_id");
                 String isbn = rs.getString("isbn_book");
+                int bookQuantity = rs.getInt("book_quantity");
                 LocalDate date = rs.getDate("loan_date").toLocalDate();
                 LocalDate dueDate = rs.getDate("due_date").toLocalDate();
                 LocalDate returnDate = (rs.getDate("return_date") != null) ? rs.getDate("return_date").toLocalDate() : null;
@@ -102,14 +105,14 @@ public class LoanDao {
                 User user = getUser(userId);
                 Book book = getBook(isbn);
 
-                return new Loan(user, book, returnDate, id, date, dueDate, returned);
+                return new Loan(user, book, bookQuantity, returnDate, id, date, dueDate, returned);
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
         return null;
     }
-
+    
     private User getUser(String id) {
         UserDao userDao = new UserDao();
         return userDao.selectUser(id);

@@ -1,6 +1,7 @@
 package dao;
 
 import enums.Role;
+import exceptions.InsufficientCopiesException;
 import exceptions.LoanPastDueException;
 import exceptions.MobileNumberAlreadyInUseException;
 import exceptions.UserAlreadyRegisteredException;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import model.Book;
 import model.Loan;
 import model.User;
 import org.mariadb.jdbc.Connection;
@@ -128,24 +130,29 @@ public class UserDao {
         }
     }
 
-    public void applyLoan(Loan loan) throws LoanPastDueException {
-        String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, returned, return_date) VALUES "
-                + "(?, ?, ?, ?, ?, ?)";
+    public void applyLoan(Loan loan) throws LoanPastDueException, InsufficientCopiesException {
+        String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, returned, return_date, book_quantity) VALUES "
+                + "(?, ?, ?, ?, ?, ?, ?)";
         try ( PreparedStatement ps = connection.prepareStatement(query)) {
             User user = loan.getUser();
+            
+            if (!copiesAvailable(loan.getBook(), loan.getBookQuantity())) {
+                throw new InsufficientCopiesException();
+            }
 
             if (hasPastDueLoan(user)) {
                 throw new LoanPastDueException();
             }
-
+            
             ps.setString(1, loan.getUser().getId());
             ps.setString(2, loan.getBook().getIsbn());
             ps.setDate(3, java.sql.Date.valueOf(loan.getDate()));
             ps.setDate(4, java.sql.Date.valueOf(loan.getDueDate()));
             ps.setBoolean(5, false);
             ps.setDate(6, null);
+            ps.setInt(7, loan.getBookQuantity());
             ps.executeUpdate();
-            subtractAvailableCopy(loan.getBook().getIsbn());
+            subtractAvailableCopy(loan.getBook().getIsbn(), loan.getBookQuantity());
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
@@ -156,27 +163,40 @@ public class UserDao {
         try ( PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, loan.getId());
             ps.executeUpdate();
-            sumAvailableCopy(loan.getBook().getIsbn());
+            sumAvailableCopy(loan.getBook().getIsbn(), loan.getBookQuantity());
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
     }
 
-    private void subtractAvailableCopy(String isbn) {
-        String query = "UPDATE books SET copiesNumber = copiesNumber - 1 WHERE isbn = ?";
+    private boolean copiesAvailable(Book book, int quantity) {
+        Book b = getBook(book.getIsbn());
+        
+        if (b != null) {
+            if (quantity <= book.getCopiesNumber()) {
+                return true;
+            }
+        }
+        return false; // No hay suficientes copias.
+    }
+
+    private void subtractAvailableCopy(String isbn, int quantity) {
+        String query = "UPDATE books SET copiesNumber = copiesNumber - ? WHERE isbn = ?";
         try ( PreparedStatement ps = connection.prepareStatement(query)) {
 
-            ps.setString(1, isbn);
+            ps.setInt(1, quantity);
+            ps.setString(2, isbn);
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
     }
 
-    private void sumAvailableCopy(String isbn) {
-        String query = "UPDATE books SET copiesNumber = copiesNumber + 1 WHERE isbn = ?";
+    private void sumAvailableCopy(String isbn, int quantity) {
+        String query = "UPDATE books SET copiesNumber = copiesNumber + ? WHERE isbn = ?";
         try ( PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, isbn);
+            ps.setInt(1, quantity);
+            ps.setString(2, isbn);
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.err.println(ex.toString());
@@ -265,5 +285,10 @@ public class UserDao {
         return new User(id, fullname, role, mobilenumber, username, password);
 
     }
-    
+
+    private Book getBook(String isbn) {
+        BookDao bookDao = new BookDao();
+        return bookDao.selectBook(isbn);
+    }
+
 }

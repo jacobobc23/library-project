@@ -7,36 +7,43 @@ import java.time.LocalDate;
  * @author Jacobo-bc
  */
 public class Loan {
-    
+
     private final User user;
     private final Book book;
     private final LocalDate returnDate;
+    private final int bookQuantity;
     private int id;
     private LocalDate date;
     private LocalDate dueDate;
     private boolean returned;
 
-    public Loan(User user, Book book, LocalDate date, LocalDate dueDate) {
+    public Loan(User user, Book book, int bookQuantity, LocalDate date, LocalDate dueDate) {
         this.user = user;
         this.book = book;
+        this.bookQuantity = bookQuantity;
         this.date = date;
         this.dueDate = dueDate;
         returnDate = null;
         returned = false;
     }
 
-    public Loan(User user, Book book, LocalDate returnDate, int id, LocalDate date, LocalDate dueDate, boolean returned) {
+    public Loan(User user, Book book, int bookQuantity, LocalDate returnDate, int id, LocalDate date, LocalDate dueDate, boolean returned) {
         this.user = user;
         this.book = book;
+        this.bookQuantity = bookQuantity;
         this.returnDate = returnDate;
         this.id = id;
         this.date = date;
         this.dueDate = dueDate;
         this.returned = returned;
     }
-    
+
     public int getId() {
         return id;
+    }
+
+    public int getBookQuantity() {
+        return bookQuantity;
     }
 
     public User getUser() {
@@ -74,5 +81,5 @@ public class Loan {
     public void setReturned(boolean returned) {
         this.returned = returned;
     }
-    
+
 }

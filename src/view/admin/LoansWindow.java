@@ -271,7 +271,7 @@ public class LoansWindow extends javax.swing.JFrame {
 
         ArrayList<Loan> loans = controller.listAllLoans();
         model.setColumnIdentifiers(new Object[]{
-            "ID Usuario", "Usuario", "ISBN", "Título", "Fecha préstamo", "Fecha vencimiento"
+            "ID Usuario", "Usuario", "ISBN", "Título", "Cantidad", "Fecha préstamo", "Fecha vencimiento"
         });
 
         loansTable.setModel(model);
@@ -282,6 +282,7 @@ public class LoansWindow extends javax.swing.JFrame {
                 loan.getUser().getFullName(),
                 loan.getBook().getIsbn(),
                 loan.getBook().getTitle(),
+                loan.getBookQuantity(),
                 loan.getDate(),
                 loan.getDueDate(),
             });
