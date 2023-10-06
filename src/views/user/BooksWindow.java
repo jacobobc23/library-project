@@ -28,11 +28,11 @@ public class BooksWindow extends javax.swing.JFrame {
      */
     public BooksWindow(User user) {
         initComponents();
-        this.user = user;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Libros");
-        lblUserName.setText(user.getFullName());
         setResizable(false);
+        this.user = user;
+        lblUserName.setText(user.getFullName());
         controller = new BookManagementController();
         fillTable();
     }

@@ -21,8 +21,8 @@ public class GenreManagementController {
         return genreDao.listAllGenres();
     }
     
-    public Genre selectGenre(String name) {
-        return genreDao.selectGenre(name);
+    public Genre selectGenre(int id) {
+        return genreDao.selectGenre(id);
     }
     
     public void insertGenre(Genre genre) throws SQLException {

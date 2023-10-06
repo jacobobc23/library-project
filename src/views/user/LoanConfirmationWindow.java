@@ -386,7 +386,7 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
     private void txtBookQuantityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBookQuantityKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c) || (c == '0')) {
+        if (!Character.isDigit(c)) {
             evt.consume();
         }
     }//GEN-LAST:event_txtBookQuantityKeyTyped

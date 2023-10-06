@@ -44,17 +44,17 @@ public class GenreDao {
         return genres;
     }
 
-    public Genre selectGenre(String name) {
+    public Genre selectGenre(int id) {
         String query = "SELECT id, name FROM genres WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ResultSet rs;
 
-            ps.setString(1, name);
+            ps.setInt(1, id);
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                int id = rs.getInt("id");
+                String name = rs.getString("name");
                 Genre genre = new Genre(id, name);
                 return genre;
             }

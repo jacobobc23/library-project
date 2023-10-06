@@ -263,7 +263,7 @@ public class GenreCrudWindow extends javax.swing.JFrame {
                 try {
                     controller.deleteGenre(id);
                     fillTable();
-                    JOptionPane.showMessageDialog(null, "Categoria eliminada correctamente");
+                    JOptionPane.showMessageDialog(null, "Género eliminado correctamente");
                     bw.setCbxGenre();
                 } catch (BookGenreException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
