@@ -375,10 +375,14 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
         LocalDate dueDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         try {
-            Loan loan = new Loan(user, book, bookQuantity, loanDate, dueDate);
-            controller.applyLoan(loan);
-            JOptionPane.showMessageDialog(null, "Préstamo realizado correctamente");
-            this.dispose();
+            if (bookQuantity > 0) {
+                Loan loan = new Loan(user, book, bookQuantity, loanDate, dueDate);
+                controller.applyLoan(loan);
+                JOptionPane.showMessageDialog(null, "Préstamo realizado correctamente");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Cantidad inválida");
+            }
         } catch (LoanPastDueException | InsufficientCopiesException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
