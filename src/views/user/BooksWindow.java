@@ -25,6 +25,8 @@ public class BooksWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form BooksWindow
+     *
+     * @param user
      */
     public BooksWindow(User user) {
         initComponents();
@@ -312,10 +314,10 @@ public class BooksWindow extends javax.swing.JFrame {
         if (selected >= 0) {
 
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-            Book book = controller.selectBook(isbn);
+            Object book = controller.selectBook(isbn);
 
             if (book != null) {
-                new LoanConfirmationWindow(user, book).setVisible(true);
+                new LoanConfirmationWindow(user, (Book) book).setVisible(true);
             }
 
         } else {
@@ -326,7 +328,7 @@ public class BooksWindow extends javax.swing.JFrame {
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<Book> books = controller.listBooks();
+        ArrayList<Object> books = controller.listBooks();
         model.setColumnIdentifiers(new Object[]{
             "ISBN", "Título", "Autor", "Género", "Año de publicación"
         });
@@ -336,7 +338,8 @@ public class BooksWindow extends javax.swing.JFrame {
         sorter = new TableRowSorter<>(model);
         booksTable.setRowSorter(sorter);
 
-        for (Book book : books) {
+        for (int i = 0; i < books.size(); i++) {
+            Book book = (Book) books.get(i);
             model.addRow(new Object[]{
                 book.getIsbn(),
                 book.getTitle(),
@@ -348,7 +351,7 @@ public class BooksWindow extends javax.swing.JFrame {
     }
 
     /**
-     * Actúa como un buscador avanzado. Permitiendo filtrar los libros por 
+     * Actúa como un buscador avanzado. Permitiendo filtrar los libros por
      * distintos atributos.
      */
     private void filter() {

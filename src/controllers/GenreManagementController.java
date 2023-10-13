@@ -17,24 +17,24 @@ public class GenreManagementController {
         genreDao = new GenreDao();
     }
     
-    public ArrayList<Genre> listAllGenres() {
-        return genreDao.listAllGenres();
+    public ArrayList<Object> listAllGenres() {
+        return genreDao.listEntity();
     }
     
     public Genre selectGenre(int id) {
-        return genreDao.selectGenre(id);
+        return (Genre) genreDao.selectEntity(id);
     }
     
     public void insertGenre(Genre genre) throws SQLException {
-        genreDao.insertGenre(genre);
+        genreDao.insertEntity(genre);
     }
     
-    public void updateGenre(int id, String name) throws SQLException {
-        genreDao.updateGenre(id, name);
+    public void updateGenre(Genre genre) throws SQLException {
+        genreDao.updateEntity(genre);
     }
     
     public void deleteGenre(int id) {
-        genreDao.deleteGenre(id);
+        genreDao.deleteEntity(id);
     }
     
 }

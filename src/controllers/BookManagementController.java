@@ -18,8 +18,8 @@ public class BookManagementController {
         bookDao = new BookDao();
     }
 
-    public ArrayList<Book> listBooks() {
-        return bookDao.listBooks();
+    public ArrayList<Object> listBooks() {
+        return bookDao.listEntity();
     }
     
     public ArrayList<Book> listBooksByGenre(int id) {
@@ -30,20 +30,20 @@ public class BookManagementController {
         return bookDao.listAllGenres();
     }
     
-    public Book selectBook(String isbn) {
-        return bookDao.selectBook(isbn);
+    public Object selectBook(String isbn) {
+        return bookDao.selectEntity(isbn);
     }
 
     public void insertBook(Book book) {
-        bookDao.insertBook(book);
+        bookDao.insertEntity(book);
     }
 
     public void updateBook(Book book) {
-        bookDao.updateBook(book);
+        bookDao.updateEntity(book);
     }
 
     public void deleteBook(String isbn) {
-        bookDao.deleteBook(isbn);
+        bookDao.deleteEntity(isbn);
     }
 
     public boolean isTitleInUse(String title) {

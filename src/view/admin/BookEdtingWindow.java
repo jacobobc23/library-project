@@ -345,6 +345,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
             controller.updateBook(updatedBook);
             bw.fillTable();
             JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
+            this.dispose();
         } catch (TitleAlreadyInUseException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

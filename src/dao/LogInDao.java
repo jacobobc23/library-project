@@ -8,12 +8,13 @@ import java.sql.SQLException;
 import model.User;
 import org.mariadb.jdbc.Connection;
 import singleton.Singleton;
+import interfaces.LogInDaoInterface;
 
 /**
  *
  * @author joanp
  */
-public class LogInDao {
+public class LogInDao implements LogInDaoInterface {
 
     private final Connection connection;
 
@@ -21,14 +22,7 @@ public class LogInDao {
         connection = Singleton.getINSTANCE().getConnection();
     }
 
-    /**
-     * Busca el usuario que está intentando acceder al sistema.
-     *
-     * @param username
-     * @param password
-     * @return el usuario que va a ingresar, null si no se encontró un usuario
-     * con esas credenciales.
-     */
+    @Override
     public User selectUser(String username, String password) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {

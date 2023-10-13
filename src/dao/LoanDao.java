@@ -1,5 +1,6 @@
 package dao;
 
+import interfaces.LoanDaoInterface;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ import singleton.Singleton;
  *
  * @author joanp
  */
-public class LoanDao {
+public class LoanDao implements LoanDaoInterface {
 
     private final Connection connection;
 
@@ -23,11 +24,41 @@ public class LoanDao {
         connection = Singleton.getINSTANCE().getConnection();
     }
 
+    @Override
+    public ArrayList<Loan> listUserLoans(User user) {
+        ArrayList<Loan> loans = new ArrayList<>();
+        String query = "SELECT * FROM loans WHERE user_id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, user.getId());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String isbn = rs.getString("isbn_book");
+                int loanId = rs.getInt("loan_id");
+                int bookQuantity = rs.getInt("book_quantity");
+                LocalDate date = rs.getDate("loan_date").toLocalDate();
+                LocalDate dueDate = rs.getDate("due_date").toLocalDate();
+                LocalDate returnDate = (rs.getDate("return_date") != null) ? rs.getDate("return_date").toLocalDate() : null;
+                boolean returned = rs.getBoolean("returned");
+
+                Book book = getBook(isbn);
+
+                Loan loan = new Loan(user, book, bookQuantity, returnDate, loanId, date, dueDate, returned);
+                loans.add(loan);
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return loans;
+    }
+
+    @Override
     public ArrayList<Loan> listAllLoans() {
         ArrayList<Loan> loans = new ArrayList<>();
 
         String query = "SELECT * FROM loans";
-        try ( PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ResultSet rs;
 
@@ -56,37 +87,10 @@ public class LoanDao {
         return loans;
     }
 
-    public ArrayList<Loan> listUserLoans(User user) {
-        ArrayList<Loan> loans = new ArrayList<>();
-        String query = "SELECT * FROM loans WHERE user_id = ?";
-
-        try ( PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, user.getId());
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                String isbn = rs.getString("isbn_book");
-                int loanId = rs.getInt("loan_id");
-                int bookQuantity = rs.getInt("book_quantity");
-                LocalDate date = rs.getDate("loan_date").toLocalDate();
-                LocalDate dueDate = rs.getDate("due_date").toLocalDate();
-                LocalDate returnDate = (rs.getDate("return_date") != null) ? rs.getDate("return_date").toLocalDate() : null;
-                boolean returned = rs.getBoolean("returned");
-
-                Book book = getBook(isbn);
-
-                Loan loan = new Loan(user, book, bookQuantity, returnDate, loanId, date, dueDate, returned);
-                loans.add(loan);
-            }
-        } catch (SQLException ex) {
-            System.err.println(ex.toString());
-        }
-        return loans;
-    }
-
+    @Override
     public Loan selectLoan(int id) {
         String query = "SELECT * FROM loans WHERE loan_id = ?";
-        try ( PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ResultSet rs;
 
@@ -112,14 +116,15 @@ public class LoanDao {
         }
         return null;
     }
-    
+
     private User getUser(String id) {
         UserDao userDao = new UserDao();
-        return userDao.selectUser(id);
+        return (User) userDao.selectEntity(id);
     }
 
     private Book getBook(String isbn) {
         BookDao bookDao = new BookDao();
-        return bookDao.selectBook(isbn);
+        return (Book) bookDao.selectEntity(isbn);
     }
+
 }

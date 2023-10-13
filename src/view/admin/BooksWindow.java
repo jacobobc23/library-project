@@ -20,10 +20,10 @@ import view.logIn.LogInWindow;
  * @author Jacobo-bc
  */
 public class BooksWindow extends javax.swing.JFrame {
-    
+
     private final User admin;
     private final BookManagementController controller;
-    
+
     private TableRowSorter<DefaultTableModel> sorter;
 
     /**
@@ -354,16 +354,16 @@ public class BooksWindow extends javax.swing.JFrame {
 
     private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
         int selected = booksTable.getSelectedRow();
-        
+
         if (selected >= 0) {
-            
+
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-            Book book = controller.selectBook(isbn);
-            
+            Object book = controller.selectBook(isbn);
+
             if (book != null) {
-                new BookEdtingWindow(book, this).setVisible(true);
+                new BookEdtingWindow((Book) book, this).setVisible(true);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla");
         }
@@ -371,14 +371,14 @@ public class BooksWindow extends javax.swing.JFrame {
 
     private void btnDeleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteBookActionPerformed
         int selected = booksTable.getSelectedRow();
-        
+
         if (selected >= 0) {
-            
+
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-            
+
             int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el libro?",
                     "Confirmación", JOptionPane.YES_NO_OPTION);
-            
+
             if (answer == 0) {
                 try {
                     controller.deleteBook(isbn);
@@ -420,16 +420,16 @@ public class BooksWindow extends javax.swing.JFrame {
     private void cbxGenreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxGenreItemStateChanged
         if (cbxGenre.getSelectedIndex() != 0) {
             int genreId = cbxGenre.getSelectedIndex();
-            
+
             DefaultTableModel model = new DefaultTableModel();
-            
+
             model.setColumnIdentifiers(new Object[]{
                 "ISBN", "Título", "Autor", "Género", "Año de publicación", "Número de copias"
             });
-            
+
             booksTable.setModel(model);
             ArrayList<Book> books = controller.listBooksByGenre(genreId);
-            
+
             if (!books.isEmpty()) {
                 for (Book book : books) {
                     model.addRow(new Object[]{
@@ -442,10 +442,10 @@ public class BooksWindow extends javax.swing.JFrame {
                     });
                 }
             } else {
-                
+
                 cleanTable();
             }
-            
+
         } else {
             fillTable();
         }
@@ -454,35 +454,38 @@ public class BooksWindow extends javax.swing.JFrame {
     private void lblGenresManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGenresManagementMouseClicked
         new GenreCrudWindow(this).setVisible(true);
     }//GEN-LAST:event_lblGenresManagementMouseClicked
-    
+
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
-        
-        ArrayList<Book> books = controller.listBooks();
+
+        ArrayList<Object> books = controller.listBooks();
         model.setColumnIdentifiers(new Object[]{
             "ISBN", "Título", "Autor", "Género", "Año de publicación", "Número de copias"
         });
-        
+
         booksTable.setModel(model);
         booksTable.setAutoCreateRowSorter(true);
         sorter = new TableRowSorter<>(model);
         booksTable.setRowSorter(sorter);
-        
-        for (Book book : books) {
-            model.addRow(new Object[]{
-                book.getIsbn(),
-                book.getTitle(),
-                book.getAuthor(),
-                book.getGenre().getName(),
-                book.getPublicationYear(),
-                book.getCopiesNumber()
-            });
+
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i) instanceof Book) {
+                Book book = (Book) books.get(i);
+                model.addRow(new Object[]{
+                    book.getIsbn(),
+                    book.getTitle(),
+                    book.getAuthor(),
+                    book.getGenre().getName(),
+                    book.getPublicationYear(),
+                    book.getCopiesNumber()
+                });
+            }
         }
     }
-    
+
     private void filter() {
         String filterText = txtFilter.getText().trim();
-        
+
         RowFilter<Object, Object> isbn = RowFilter.regexFilter(filterText, 0);
         RowFilter<Object, Object> title = RowFilter.regexFilter("(?i)" + filterText, 1);
         RowFilter<Object, Object> author = RowFilter.regexFilter("(?i)" + filterText, 2);
@@ -493,13 +496,13 @@ public class BooksWindow extends javax.swing.JFrame {
         // Se combinan todos los filtros.
         // Una fila será visible si al menos uno de los filtros devuelve true para esa fila
         sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(isbn, title, author, genre, publicationYear, copiesNumber)));
-        
+
     }
-    
+
     public void setCbxGenre() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
-        
+
         ArrayList<Genre> genres = controller.listAllGenres();
         model.addElement("Seleccione un género"); // Agrega la opción predeterminada
 
@@ -507,7 +510,7 @@ public class BooksWindow extends javax.swing.JFrame {
             model.addElement(genre.getName()); // Agrega los nombres de las categorías al ComboBoxModel
         }
     }
-    
+
     private void cleanTable() {
         DefaultTableModel model = (DefaultTableModel) booksTable.getModel();
         model.setRowCount(0);

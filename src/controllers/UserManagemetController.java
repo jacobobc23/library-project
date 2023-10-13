@@ -17,24 +17,24 @@ public class UserManagemetController {
         userDao = new UserDao();
     }
 
-    public ArrayList<User> listUsers() {
-        return userDao.listUsers();
+    public ArrayList<Object> listUsers() {
+        return userDao.listEntity();
     }
 
     public User selectUser(String id) {
-        return userDao.selectUser(id);
+        return (User) userDao.selectEntity(id);
     }
 
     public void insertUser(User user) {
-        userDao.insertUser(user);
+        userDao.insertEntity(user);
     }
 
     public void updateUser(User user) {
-        userDao.updateUser(user);
+        userDao.updateEntity(user);
     }
 
     public void deleteUser(String id) {
-        userDao.deleteUser(id);
+        userDao.deleteEntity(id);
     }
 
     public boolean isUserRegistered(String id) {

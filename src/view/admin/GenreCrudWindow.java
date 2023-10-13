@@ -23,6 +23,8 @@ public class GenreCrudWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form GenreCrudWindow
+     *
+     * @param bw
      */
     public GenreCrudWindow(BooksWindow bw) {
         initComponents();
@@ -216,10 +218,11 @@ public class GenreCrudWindow extends javax.swing.JFrame {
     private void btnUpdateGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateGenreActionPerformed
         int selected = genresTable.getSelectedRow();
 
-        if (selected >= 0) {
-            int id = (int) genresTable.getModel().getValueAt(selected, 0);
+        int id;
+        String name;
 
-            String name;
+        if (selected >= 0) {
+            id = (int) genresTable.getModel().getValueAt(selected, 0);
 
             do {
                 name = JOptionPane.showInputDialog("Ingrese el nuevo nombre: ");
@@ -236,7 +239,9 @@ public class GenreCrudWindow extends javax.swing.JFrame {
             } while (name.isEmpty());
 
             try {
-                controller.updateGenre(id, name);
+                Genre genre = new Genre(id, name);
+
+                controller.updateGenre(genre);
                 JOptionPane.showMessageDialog(null, "Género editado correctamente");
                 fillTable();
                 bw.setCbxGenre();
@@ -277,7 +282,7 @@ public class GenreCrudWindow extends javax.swing.JFrame {
     private void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<Genre> genres = controller.listAllGenres();
+        ArrayList<Object> genres = controller.listAllGenres();
         model.setColumnIdentifiers(new Object[]{
             "ID", "Nombre"
         });
@@ -287,12 +292,14 @@ public class GenreCrudWindow extends javax.swing.JFrame {
         sorter = new TableRowSorter<>(model);
         genresTable.setRowSorter(sorter);
 
-        for (Genre genre : genres) {
+        for (int i = 0; i < genres.size(); i++) {
+            Genre genre = (Genre) genres.get(i);
             model.addRow(new Object[]{
                 genre.getId(),
                 genre.getName()
             });
         }
+
     }
 
     private void filter() {

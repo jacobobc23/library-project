@@ -435,7 +435,7 @@ public class UsersWindow extends javax.swing.JFrame {
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<User> users = controller.listUsers();
+        ArrayList<Object> users = controller.listUsers();
         model.setColumnIdentifiers(new Object[]{
             "ID", "Nombre", "Rol", "Teléfono", "Usuario", "Contraseña"
         });
@@ -446,7 +446,8 @@ public class UsersWindow extends javax.swing.JFrame {
         sorter = new TableRowSorter<>(model);
         usersTable.setRowSorter(sorter);
 
-        for (User user : users) {
+        for (int i = 0; i < users.size(); i++) {
+            User user = (User) users.get(i);
             if (!user.getId().equals(admin.getId())) {
                 model.addRow(new Object[]{
                     user.getId(),
