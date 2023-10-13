@@ -25,13 +25,16 @@ public class BooksWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form BooksWindow
+     *
+     * @param user
      */
     public BooksWindow(User user) {
         initComponents();
-        this.user = user;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Libros");
         setResizable(false);
+        this.user = user;
+        lblUserName.setText(user.getFullName());
         controller = new BookManagementController();
         fillTable();
     }
@@ -290,7 +293,8 @@ public class BooksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnLoansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoansActionPerformed
-
+        new LoansWindow(user).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnLoansActionPerformed
 
     private void txtFilterKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilterKeyReleased
@@ -308,14 +312,14 @@ public class BooksWindow extends javax.swing.JFrame {
         int selected = booksTable.getSelectedRow();
 
         if (selected >= 0) {
-            
+
             String isbn = booksTable.getModel().getValueAt(selected, 0).toString();
-            Book book = controller.searchBook(isbn);
-            
+            Object book = controller.selectBook(isbn);
+
             if (book != null) {
-                new LoanConfirmationWindow(user, book).setVisible(true);
+                new LoanConfirmationWindow(user, (Book) book).setVisible(true);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla.");
         }
@@ -324,7 +328,7 @@ public class BooksWindow extends javax.swing.JFrame {
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<Book> books = controller.listBooks();
+        ArrayList<Object> books = controller.listBooks();
         model.setColumnIdentifiers(new Object[]{
             "ISBN", "Título", "Autor", "Género", "Año de publicación"
         });
@@ -334,17 +338,22 @@ public class BooksWindow extends javax.swing.JFrame {
         sorter = new TableRowSorter<>(model);
         booksTable.setRowSorter(sorter);
 
-        for (Book book : books) {
+        for (int i = 0; i < books.size(); i++) {
+            Book book = (Book) books.get(i);
             model.addRow(new Object[]{
                 book.getIsbn(),
                 book.getTitle(),
                 book.getAuthor(),
-                book.getGenre(),
+                book.getGenre().getName(),
                 book.getPublicationYear()
             });
         }
     }
 
+    /**
+     * Actúa como un buscador avanzado. Permitiendo filtrar los libros por
+     * distintos atributos.
+     */
     private void filter() {
         String filterText = txtFilter.getText();
 

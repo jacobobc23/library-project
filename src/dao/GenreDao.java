@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import exceptions.BookGenreException;
+import interfaces.DaoInterface;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Genre;
@@ -13,7 +14,7 @@ import singleton.Singleton;
  *
  * @author joanp
  */
-public class GenreDao {
+public class GenreDao implements DaoInterface {
 
     private final Connection connection;
 
@@ -21,8 +22,9 @@ public class GenreDao {
         connection = Singleton.getINSTANCE().getConnection();
     }
 
-    public ArrayList<Genre> listGenres() {
-        ArrayList<Genre> genres = new ArrayList<>();
+    @Override
+    public ArrayList<Object> listEntity() {
+        ArrayList<Object> genres = new ArrayList<>();
 
         String query = "SELECT * FROM genres";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -44,17 +46,20 @@ public class GenreDao {
         return genres;
     }
 
-    public Genre searchGenre(String name) {
+    @Override
+    public Object selectEntity(Object obj) {
         String query = "SELECT id, name FROM genres WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
 
             ResultSet rs;
 
-            ps.setString(1, name);
+            int id = (int) obj;
+
+            ps.setInt(1, id);
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                int id = rs.getInt("id");
+                String name = rs.getString("name");
                 Genre genre = new Genre(id, name);
                 return genre;
             }
@@ -64,35 +69,44 @@ public class GenreDao {
         return null;
     }
 
-    public void addGenre(Genre genre) throws SQLException {
+    @Override
+    public void insertEntity(Object obj) {
         String query = "INSERT INTO genres (id, name) VALUES (?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
+
+            Genre genre = (Genre) obj;
 
             ps.setInt(1, genre.getId());
             ps.setString(2, genre.getName());
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            throw new SQLException();
+
         }
     }
 
-    public void updateGenre(int id, String name) throws SQLException {
+    @Override
+    public void updateEntity(Object obj) {
         String query = "UPDATE genres SET name = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
 
-            ps.setString(1, name);
-            ps.setInt(2, id);
+            Genre genre = (Genre) obj;
+
+            ps.setString(1, genre.getName());
+            ps.setInt(2, genre.getId());
 
             ps.executeUpdate();
         } catch (SQLException ex) {
-            throw new SQLException();
+
         }
     }
 
-    public void deleteGenre(int id) {
+    @Override
+    public void deleteEntity(Object obj) {
         String query = "DELETE FROM genres WHERE id = ? AND NOT EXISTS (SELECT 1 FROM books WHERE genre_id = ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
+
+            int id = (int) obj;
 
             ps.setInt(1, id);
             ps.setInt(2, id);

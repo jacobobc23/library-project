@@ -330,7 +330,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         String genreName = cbxGenre.getSelectedItem().toString();
         Genre selectedGenre = null;
 
-        for (Genre genre : controller.getAllGenres()) {
+        for (Genre genre : controller.listAllGenres()) {
             if (genre.getName().equals(genreName)) {
                 selectedGenre = genre;
                 break;
@@ -345,6 +345,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
             controller.updateBook(updatedBook);
             bw.fillTable();
             JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
+            this.dispose();
         } catch (TitleAlreadyInUseException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -458,7 +459,7 @@ public class BookEdtingWindow extends javax.swing.JFrame {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
 
-        ArrayList<Genre> genres = controller.getAllGenres();
+        ArrayList<Genre> genres = controller.listAllGenres();
         model.addElement("Seleccione un género"); // Agrega la opción predeterminada
 
         for (Genre genre : genres) {

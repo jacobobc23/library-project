@@ -1,8 +1,6 @@
 package model;
 
 import enums.Role;
-import exceptions.LoanPastDueException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -70,14 +68,4 @@ public class User {
         return loans;
     }
 
-    public boolean hasPastDueLoans() {
-        for (Loan loan : loans) {
-            if (!loan.isReturned()) {
-                if (LocalDate.now().isAfter(loan.getDueDate())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 }

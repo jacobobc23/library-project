@@ -27,7 +27,7 @@ public class SignUpWindow extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Registro de usuario");
+        setTitle("Registro");
         setResizable(false);
         controller = new UserManagemetController();
         hideWarnings();
@@ -65,7 +65,7 @@ public class SignUpWindow extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         toggleBtnShowPass = new javax.swing.JToggleButton();
         btnCancel = new javax.swing.JButton();
-        btnAddUser = new javax.swing.JButton();
+        btnSignUp = new javax.swing.JButton();
         IDWarning = new javax.swing.JLabel();
         mobNumWarning = new javax.swing.JLabel();
         userWarning = new javax.swing.JLabel();
@@ -266,15 +266,15 @@ public class SignUpWindow extends javax.swing.JFrame {
             }
         });
 
-        btnAddUser.setBackground(new java.awt.Color(0, 123, 255));
-        btnAddUser.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        btnAddUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnAddUser.setText("Registrar");
-        btnAddUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAddUser.setFocusable(false);
-        btnAddUser.addActionListener(new java.awt.event.ActionListener() {
+        btnSignUp.setBackground(new java.awt.Color(0, 123, 255));
+        btnSignUp.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnSignUp.setForeground(new java.awt.Color(255, 255, 255));
+        btnSignUp.setText("Registrarse");
+        btnSignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSignUp.setFocusable(false);
+        btnSignUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddUserActionPerformed(evt);
+                btnSignUpActionPerformed(evt);
             }
         });
 
@@ -297,8 +297,8 @@ public class SignUpWindow extends javax.swing.JFrame {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 439, Short.MAX_VALUE)
-                .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSignUp)
                 .addGap(49, 49, 49))
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(209, 209, 209)
@@ -322,7 +322,7 @@ public class SignUpWindow extends javax.swing.JFrame {
                     .addComponent(mobileNumberPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(passwordPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,7 +356,7 @@ public class SignUpWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
-                    .addComponent(btnAddUser))
+                    .addComponent(btnSignUp))
                 .addGap(56, 56, 56))
         );
 
@@ -374,28 +374,27 @@ public class SignUpWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
+    private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
         if (hasEmptyFields()) {
             JOptionPane.showMessageDialog(null, "Debe ingresar todos los datos");
             return;
         }
 
         String id = txtID.getText().trim();
-        String fullname = txtName.getText();
-        Role role = Role.USER;
-        String mobilenumber = txtMobileNumber.getText();
+        String fullName = txtName.getText();
+        String mobileNumber = txtMobileNumber.getText();
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
 
         try {
-            User user = new User(id, fullname, role, mobilenumber, username, password);
-            controller.addUser(user);
+            User user = new User(id, fullName, Role.USER, mobileNumber, username, password);
+            controller.insertUser(user);
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
             returnWindow();
         } catch (UserAlreadyRegisteredException | UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-    }//GEN-LAST:event_btnAddUserActionPerformed
+    }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         returnWindow();
@@ -498,7 +497,7 @@ public class SignUpWindow extends javax.swing.JFrame {
             userWarning.setVisible(false);
         }
 
-        btnAddUser.setEnabled(enableBtnAddUser);
+        btnSignUp.setEnabled(enableBtnAddUser);
     }
 
     private void hideWarnings() {
@@ -515,8 +514,8 @@ public class SignUpWindow extends javax.swing.JFrame {
     private javax.swing.JPanel IDPanel;
     private javax.swing.JLabel IDWarning;
     private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSignUp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

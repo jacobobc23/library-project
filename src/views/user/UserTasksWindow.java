@@ -3,7 +3,6 @@ package views.user;
 import java.awt.Color;
 import javax.swing.JFrame;
 import model.User;
-import view.admin.AdminAccountWindow;
 import view.logIn.LogInWindow;
 
 /**
@@ -250,8 +249,8 @@ public class UserTasksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoansMouseExited
 
     private void btnLoansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoansActionPerformed
-//        new UsersWindow(user).setVisible(true);
-//        this.dispose();
+        new LoansWindow(user).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnLoansActionPerformed
 
     private void btnTransactionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseEntered

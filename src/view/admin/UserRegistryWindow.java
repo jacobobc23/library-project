@@ -89,6 +89,9 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         txtID.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txtID.setBorder(null);
         txtID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIDKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIDKeyTyped(evt);
             }
@@ -423,7 +426,7 @@ public class UserRegistryWindow extends javax.swing.JFrame {
 
         try {
             User user = new User(id, fullname, role, mobilenumber, username, password);
-            controller.addUser(user);
+            controller.insertUser(user);
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
             uw.fillTable();
             cleanFields();
@@ -499,6 +502,10 @@ public class UserRegistryWindow extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIDKeyReleased
+        validateFields();
+    }//GEN-LAST:event_txtIDKeyReleased
 
     private void setCbxRole() {
         Role[] roles = Role.values();

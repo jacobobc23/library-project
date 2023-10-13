@@ -1,14 +1,20 @@
 package dao;
 
 import enums.Role;
+import exceptions.InsufficientCopiesException;
 import exceptions.LoanPastDueException;
 import exceptions.MobileNumberAlreadyInUseException;
 import exceptions.UserAlreadyRegisteredException;
+import exceptions.UserHasLoansException;
 import exceptions.UserNameAlreadyInUseException;
+import interfaces.DaoInterface;
+import interfaces.UserDaoInterface;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import model.Book;
 import model.Loan;
 import model.User;
 import org.mariadb.jdbc.Connection;
@@ -18,7 +24,7 @@ import singleton.Singleton;
  *
  * @author joanp
  */
-public class UserDao {
+public class UserDao implements DaoInterface, UserDaoInterface {
 
     private final Connection connection;
 
@@ -26,8 +32,9 @@ public class UserDao {
         connection = Singleton.getINSTANCE().getConnection();
     }
 
-    public ArrayList<User> listUsers() {
-        ArrayList<User> users = new ArrayList<>();
+    @Override
+    public ArrayList<Object> listEntity() {
+        ArrayList<Object> users = new ArrayList<>();
         String query = "SELECT * FROM users";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -43,10 +50,13 @@ public class UserDao {
         return users;
     }
 
-    public User searchUser(String id) {
+    @Override
+    public Object selectEntity(Object obj) {
         String query = "SELECT * FROM users WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs;
+
+            String id = (String) obj;
 
             ps.setString(1, id);
 
@@ -61,9 +71,12 @@ public class UserDao {
         return null;
     }
 
-    public void addUser(User user) {
+    @Override
+    public void insertEntity(Object obj) {
         String query = "INSERT INTO users (id, fullname, role, mobilenumber, username, password) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
+
+            User user = (User) obj;
 
             if (isUserRegistered(user.getId())) {
                 throw new UserAlreadyRegisteredException();
@@ -90,17 +103,16 @@ public class UserDao {
         }
     }
 
-    public void updateUser(User user) {
+    @Override
+    public void updateEntity(Object obj) {
         String query = "UPDATE users SET mobilenumber = ?, username = ?, password = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
+
+            User user = (User) obj;
 
             if (isMobileNumberInUse(user.getMobileNumber())) {
                 throw new MobileNumberAlreadyInUseException();
             }
-
-//            if (isUsernameInUse(user.getUsername())) {
-//                throw new UserNameAlreadyInUseException();
-//            }
 
             ps.setString(1, user.getMobileNumber());
             ps.setString(2, user.getUsername());
@@ -114,26 +126,37 @@ public class UserDao {
         }
     }
 
-    public void deleteUser(String id) {
-        String query = "DELETE FROM users WHERE id = ?";
+    @Override
+    public void deleteEntity(Object obj) {
+        String query = "DELETE FROM users WHERE id = ? AND NOT EXISTS (SELECT 1 FROM loans WHERE user_id = ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
 
+            String id = (String) obj;
+
             ps.setString(1, id);
+            ps.setString(2, id);
+            int rowsDeleted = ps.executeUpdate();
 
-            ps.executeUpdate();
-
+            if (rowsDeleted == 0) {
+                throw new UserHasLoansException();
+            }
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
     }
 
-    public void applyLoan(Loan loan) throws LoanPastDueException {
-        String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, returned, return_date) VALUES "
-                + "(?, ?, ?, ?, ?, ?)";
+    @Override
+    public void applyLoan(Loan loan) throws LoanPastDueException, InsufficientCopiesException {
+        String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, returned, return_date, book_quantity) VALUES "
+                + "(?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            User user = searchUser(loan.getUser().getId());
+            User user = loan.getUser();
 
-            if (user != null && user.hasPastDueLoans()) {
+            if (!copiesAvailable(loan.getBook(), loan.getBookQuantity())) {
+                throw new InsufficientCopiesException();
+            }
+
+            if (hasPastDueLoan(user)) {
                 throw new LoanPastDueException();
             }
 
@@ -143,13 +166,41 @@ public class UserDao {
             ps.setDate(4, java.sql.Date.valueOf(loan.getDueDate()));
             ps.setBoolean(5, false);
             ps.setDate(6, null);
-
+            ps.setInt(7, loan.getBookQuantity());
             ps.executeUpdate();
+            subtractAvailableCopy(loan.getBook().getIsbn(), loan.getBookQuantity());
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
+    }
 
-        subtractAvailableCopy(loan.getBook().getIsbn());
+    @Override
+    public void repayLoan(Loan loan) {
+        String query = "DELETE FROM loans WHERE loan_id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, loan.getId());
+            ps.executeUpdate();
+            sumAvailableCopy(loan.getBook().getIsbn(), loan.getBookQuantity());
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+
+    public boolean hasPastDueLoan(User user) {
+        String query = "SELECT * FROM loans WHERE user_id = ? AND returned = false AND due_date < ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, user.getId());
+            Date currentDate = new Date();
+            ps.setDate(2, new java.sql.Date(currentDate.getTime()));
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+        return false;
     }
 
     public boolean isMobileNumberInUse(String mobileNumber) {
@@ -206,17 +257,6 @@ public class UserDao {
         return false;
     }
 
-    private void subtractAvailableCopy(String isbn) {
-        String query = "UPDATE books SET copiesNumber = copiesNumber - 1 WHERE isbn = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-
-            ps.setString(1, isbn);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            System.err.println(ex.toString());
-        }
-    }
-
     private User getUser(ResultSet rs) throws SQLException {
         String id = rs.getString("id");
         String fullname = rs.getString("fullname");
@@ -228,4 +268,44 @@ public class UserDao {
         return new User(id, fullname, role, mobilenumber, username, password);
 
     }
+
+    private Book getBook(String isbn) {
+        BookDao bookDao = new BookDao();
+        return (Book) bookDao.selectEntity(isbn);
+    }
+
+    private boolean copiesAvailable(Book book, int quantity) {
+        Book b = getBook(book.getIsbn());
+
+        if (b != null) {
+            if (quantity <= book.getCopiesNumber()) {
+                return true;
+            }
+        }
+        return false; // No hay suficientes copias.
+    }
+
+    private void subtractAvailableCopy(String isbn, int quantity) {
+        String query = "UPDATE books SET copiesNumber = copiesNumber - ? WHERE isbn = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setInt(1, quantity);
+            ps.setString(2, isbn);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+
+    private void sumAvailableCopy(String isbn, int quantity) {
+        String query = "UPDATE books SET copiesNumber = copiesNumber + ? WHERE isbn = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, quantity);
+            ps.setString(2, isbn);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println(ex.toString());
+        }
+    }
+
 }

@@ -3,7 +3,6 @@ package controllers;
 import dao.UserDao;
 import java.util.ArrayList;
 import model.User;
-import singleton.dao.SingletonUserDAO;
 
 /**
  * Controlador para gestionar los usuarios.
@@ -15,27 +14,27 @@ public class UserManagemetController {
     private final UserDao userDao;
 
     public UserManagemetController() {
-        userDao = SingletonUserDAO.getINSTANCE().getUserdao();
+        userDao = new UserDao();
     }
 
-    public ArrayList<User> listUsers() {
-        return userDao.listUsers();
+    public ArrayList<Object> listUsers() {
+        return userDao.listEntity();
     }
 
-    public User searchUser(String id) {
-        return userDao.searchUser(id);
+    public User selectUser(String id) {
+        return (User) userDao.selectEntity(id);
     }
 
-    public void addUser(User user) {
-        userDao.addUser(user);
+    public void insertUser(User user) {
+        userDao.insertEntity(user);
     }
 
     public void updateUser(User user) {
-        userDao.updateUser(user);
+        userDao.updateEntity(user);
     }
 
     public void deleteUser(String id) {
-        userDao.deleteUser(id);
+        userDao.deleteEntity(id);
     }
 
     public boolean isUserRegistered(String id) {

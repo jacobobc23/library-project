@@ -342,7 +342,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         String genreName = cbxGenre.getSelectedItem().toString();
         Genre selectedGenre = null;
         
-        for (Genre genre: controller.getAllGenres()) {
+        for (Genre genre: controller.listAllGenres()) {
             if (genre.getName().equals(genreName)) {
                 selectedGenre = genre;
                 break;
@@ -354,7 +354,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
         try {
             Book book = new Book(isbn, title, author, selectedGenre, publicationYear, copiesNumber);
-            controller.addBook(book);
+            controller.insertBook(book);
             JOptionPane.showMessageDialog(null, "Libro registrado correctamente");
             bw.fillTable();
             cleanFields();
@@ -474,7 +474,7 @@ public class BookRegistryWindow extends javax.swing.JFrame {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
 
-        ArrayList<Genre> genres = controller.getAllGenres();
+        ArrayList<Genre> genres = controller.listAllGenres();
         model.addElement("Seleccione una categoría"); // Agrega la opción predeterminada
 
         for (Genre genre : genres) {

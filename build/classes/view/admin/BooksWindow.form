@@ -55,9 +55,9 @@
                           <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                           <Component id="btnAddBook" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                          <Component id="btnUpdateUser" min="-2" pref="84" max="-2" attributes="0"/>
+                          <Component id="btnUpdateBook" min="-2" pref="84" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                          <Component id="btnDeleteUser" min="-2" pref="84" max="-2" attributes="0"/>
+                          <Component id="btnDeleteBook" min="-2" pref="84" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -73,8 +73,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnAddBook" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnUpdateUser" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnDeleteUser" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnUpdateBook" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnDeleteBook" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="35" max="32767" attributes="0"/>
               </Group>
@@ -95,7 +95,7 @@
                   <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                   <Component id="lblAdminName" alignment="1" max="32767" attributes="0"/>
                   <Component id="btnUsersManagement" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnTransactions" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnLoans" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -127,7 +127,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnUsersManagement" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnTransactions" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnLoans" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnExit" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
@@ -169,7 +169,7 @@
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Gestionar mi cuenta"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
@@ -190,7 +190,7 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="SALIR"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -209,7 +209,7 @@
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
@@ -217,7 +217,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsersManagementActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnTransactions">
+            <Component class="javax.swing.JButton" name="btnLoans">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century Gothic" size="14" style="1"/>
@@ -225,16 +225,16 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="    TRANSACCIONES"/>
+                <Property name="text" type="java.lang.String" value="    PR&#xc9;STAMOS"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTransactionsActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoansActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblBooks">
@@ -370,7 +370,7 @@
                   <StringArray count="0"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -387,7 +387,7 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Gestionar"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Hand Cursor"/>
+                  <Color id="Cursor Por defecto"/>
                 </Property>
               </Properties>
               <Events>
@@ -396,7 +396,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnDeleteUser">
+        <Component class="javax.swing.JButton" name="btnDeleteBook">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="3c" green="14" red="dc" type="rgb"/>
@@ -409,11 +409,11 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Cursor Por defecto"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteUserActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteBookActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAddBook">
@@ -429,14 +429,14 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Nuevo"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Cursor Por defecto"/>
             </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddBookActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnUpdateUser">
+        <Component class="javax.swing.JButton" name="btnUpdateBook">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="d7" red="ff" type="rgb"/>
@@ -446,11 +446,11 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Editar"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Cursor Por defecto"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateUserActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateBookActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

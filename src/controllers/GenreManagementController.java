@@ -4,7 +4,6 @@ import dao.GenreDao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Genre;
-import singleton.dao.SingletonGenreDAO;
 
 /**
  *
@@ -15,27 +14,27 @@ public class GenreManagementController {
     private final GenreDao genreDao;
 
     public GenreManagementController() {
-        this.genreDao = SingletonGenreDAO.getINSTANCE().getGenreDao();
+        genreDao = new GenreDao();
     }
     
-    public ArrayList<Genre> listGenres() {
-        return genreDao.listGenres();
+    public ArrayList<Object> listAllGenres() {
+        return genreDao.listEntity();
     }
     
-    public Genre searchGenre(String name) {
-        return genreDao.searchGenre(name);
+    public Genre selectGenre(int id) {
+        return (Genre) genreDao.selectEntity(id);
     }
     
-    public void addGenre(Genre genre) throws SQLException {
-        genreDao.addGenre(genre);
+    public void insertGenre(Genre genre) throws SQLException {
+        genreDao.insertEntity(genre);
     }
     
-    public void updateGenre(int id, String name) throws SQLException {
-        genreDao.updateGenre(id, name);
+    public void updateGenre(Genre genre) throws SQLException {
+        genreDao.updateEntity(genre);
     }
     
     public void deleteGenre(int id) {
-        genreDao.deleteGenre(id);
+        genreDao.deleteEntity(id);
     }
     
 }

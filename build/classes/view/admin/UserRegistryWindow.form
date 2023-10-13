@@ -189,6 +189,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtIDKeyReleased"/>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtIDKeyTyped"/>
               </Events>
               <Constraints>
@@ -309,7 +310,7 @@
               </StringArray>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Cursor de Mano"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -566,7 +567,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Cursor de Mano"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
@@ -587,7 +588,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Registrar"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Cursor de Mano"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>

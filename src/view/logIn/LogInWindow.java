@@ -17,6 +17,7 @@ import views.user.UserTasksWindow;
 public class LogInWindow extends javax.swing.JFrame {
 
     private final LogInController controller;
+
     private boolean passwordVisible = false;
 
     /**
@@ -26,7 +27,7 @@ public class LogInWindow extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Log In");
+        setTitle("Inicio de Sesión");
         controller = new LogInController();
     }
 
@@ -219,7 +220,6 @@ public class LogInWindow extends javax.swing.JFrame {
     private void lblCreateAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCreateAccountMouseClicked
         new SignUpWindow().setVisible(true);
         this.dispose();
-
     }//GEN-LAST:event_lblCreateAccountMouseClicked
 
     private void txtUserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyPressed
@@ -235,13 +235,7 @@ public class LogInWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordKeyPressed
 
     private void toggleBtnShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBtnShowPassActionPerformed
-        passwordVisible = !passwordVisible;
-
-        if (passwordVisible) {
-            txtPassword.setEchoChar((char) 0);
-        } else {
-            txtPassword.setEchoChar('\u25cf');
-        }
+        togglePasswordVisibility();
     }//GEN-LAST:event_toggleBtnShowPassActionPerformed
 
     private void logIn() {
@@ -254,34 +248,40 @@ public class LogInWindow extends javax.swing.JFrame {
         String password = txtPassword.getText().trim();
 
         try {
-            User user = controller.searchUser(username, password);
+            User user = controller.selectUser(username, password);
+            openAppropriateWindow(user);
 
-            Role role = user.getRole();
-            String name = user.getFullName();
-
-            JOptionPane.showMessageDialog(null, "Bienvenido " + name);
-
-            switch (role) {
-                case ADMIN:
-                    new AdminTasksWindow(user).setVisible(true);
-                    this.dispose();
-                    break;
-
-                case USER:
-                    new UserTasksWindow(user).setVisible(true);
-                    this.dispose();
-                    break;
-
-                default:
-                    break;
-            }
         } catch (CredentialsException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
+    private void openAppropriateWindow(User user) {
+        Role role = user.getRole();
+
+        if (role == Role.ADMIN) {
+            showMessage("Bienvenido " + user.getFullName());
+            new AdminTasksWindow(user).setVisible(true);
+        } else if (role == Role.USER) {
+            showMessage("Bienvenido " + user.getFullName());
+            new UserTasksWindow(user).setVisible(true);
+        }
+        this.dispose();
+    }
+
     private boolean hasEmptyFields() {
         return (txtUser.getText().isEmpty() || txtPassword.getText().isEmpty());
+    }
+
+    private void togglePasswordVisibility() {
+        passwordVisible = !passwordVisible;
+
+        char echoChar = passwordVisible ? (char) 0 : '\u25cf';
+        txtPassword.setEchoChar(echoChar);
+    }
+
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(null, message);
     }
 
     /**
@@ -300,15 +300,11 @@ public class LogInWindow extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LogInWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LogInWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LogInWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(LogInWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */

@@ -1,6 +1,7 @@
 package view.admin;
 
 import controllers.UserManagemetController;
+import exceptions.UserHasLoansException;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,7 +56,7 @@ public class UsersWindow extends javax.swing.JFrame {
         lblAdminAccount = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
         btnBooksManagement = new javax.swing.JButton();
-        btnTransactions = new javax.swing.JButton();
+        btnLoans = new javax.swing.JButton();
         lblUsers = new javax.swing.JLabel();
         usersPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -127,31 +128,31 @@ public class UsersWindow extends javax.swing.JFrame {
             }
         });
 
-        btnTransactions.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        btnTransactions.setForeground(new java.awt.Color(255, 255, 255));
-        btnTransactions.setText("    TRANSACCIONES");
-        btnTransactions.setBorderPainted(false);
-        btnTransactions.setContentAreaFilled(false);
-        btnTransactions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnTransactions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnLoans.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnLoans.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoans.setText("    PRÉSTAMOS");
+        btnLoans.setBorderPainted(false);
+        btnLoans.setContentAreaFilled(false);
+        btnLoans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLoans.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLoans.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnTransactionsMouseEntered(evt);
+                btnLoansMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnTransactionsMouseExited(evt);
+                btnLoansMouseExited(evt);
             }
         });
-        btnTransactions.addActionListener(new java.awt.event.ActionListener() {
+        btnLoans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTransactionsActionPerformed(evt);
+                btnLoansActionPerformed(evt);
             }
         });
 
         lblUsers.setBackground(new java.awt.Color(135, 178, 255));
         lblUsers.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         lblUsers.setForeground(new java.awt.Color(255, 255, 255));
-        lblUsers.setText("        USUARIOS");
+        lblUsers.setText("       USUARIOS");
         lblUsers.setOpaque(true);
 
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
@@ -171,7 +172,7 @@ public class UsersWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(btnBooksManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblUsers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
@@ -188,7 +189,7 @@ public class UsersWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTransactions)
+                .addComponent(btnLoans)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
@@ -357,20 +358,20 @@ public class UsersWindow extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnBooksManagementActionPerformed
 
-    private void btnTransactionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseEntered
+    private void btnLoansMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoansMouseEntered
         Color color = new Color(135, 178, 255);
-        btnTransactions.setBackground(color);
-        btnTransactions.setOpaque(true);
-    }//GEN-LAST:event_btnTransactionsMouseEntered
+        btnLoans.setBackground(color);
+        btnLoans.setOpaque(true);
+    }//GEN-LAST:event_btnLoansMouseEntered
 
-    private void btnTransactionsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseExited
-        btnTransactions.setOpaque(false);
-    }//GEN-LAST:event_btnTransactionsMouseExited
+    private void btnLoansMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoansMouseExited
+        btnLoans.setOpaque(false);
+    }//GEN-LAST:event_btnLoansMouseExited
 
-    private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
+    private void btnLoansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoansActionPerformed
         new LoansWindow(admin).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnTransactionsActionPerformed
+    }//GEN-LAST:event_btnLoansActionPerformed
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
         new UserRegistryWindow(this).setVisible(true);
@@ -382,7 +383,7 @@ public class UsersWindow extends javax.swing.JFrame {
         if (selected >= 0) {
 
             String ID = usersTable.getModel().getValueAt(selected, 0).toString();
-            User user = controller.searchUser(ID);
+            User user = controller.selectUser(ID);
 
             if (user != null) {
                 new UserEditingWindow(user, this).setVisible(true);
@@ -404,14 +405,19 @@ public class UsersWindow extends javax.swing.JFrame {
                     "Confirmación", JOptionPane.YES_NO_OPTION);
 
             if (answer == 0) {
+                try {
+                    controller.deleteUser(id);
 
-                controller.deleteUser(id);
+                    fillTable();
+                    JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
 
-                fillTable();
-                JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
+                } catch (UserHasLoansException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un usuario de la tabla");
+
         }
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 
@@ -429,7 +435,7 @@ public class UsersWindow extends javax.swing.JFrame {
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<User> users = controller.listUsers();
+        ArrayList<Object> users = controller.listUsers();
         model.setColumnIdentifiers(new Object[]{
             "ID", "Nombre", "Rol", "Teléfono", "Usuario", "Contraseña"
         });
@@ -440,7 +446,8 @@ public class UsersWindow extends javax.swing.JFrame {
         sorter = new TableRowSorter<>(model);
         usersTable.setRowSorter(sorter);
 
-        for (User user : users) {
+        for (int i = 0; i < users.size(); i++) {
+            User user = (User) users.get(i);
             if (!user.getId().equals(admin.getId())) {
                 model.addRow(new Object[]{
                     user.getId(),
@@ -473,7 +480,7 @@ public class UsersWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnBooksManagement;
     private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnTransactions;
+    private javax.swing.JButton btnLoans;
     private javax.swing.JButton btnUpdateUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

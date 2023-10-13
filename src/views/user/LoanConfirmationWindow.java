@@ -2,6 +2,7 @@ package views.user;
 
 import controllers.BookManagementController;
 import controllers.LoanManagementController;
+import exceptions.InsufficientCopiesException;
 import exceptions.LoanPastDueException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -22,12 +23,11 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
     private final User user;
     private final Book book;
-    private final LoanManagementController controller;    
+    private final LoanManagementController controller;
     private final BookManagementController controllerbook;
 
-
     /**
-     * Creates new form LoanWindow
+     * Creates new form LoanConfirmationWindow
      */
     public LoanConfirmationWindow(User user, Book book) {
         initComponents();
@@ -68,12 +68,12 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
         cbxPublicationYear.insertItemAt("Seleccione una opción", 0);
     }
-    
+
     private void setCbxGenre() {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         cbxGenre.setModel(model);
 
-        ArrayList<Genre> genres = controllerbook.getAllGenres();
+        ArrayList<Genre> genres = controllerbook.listAllGenres();
         model.addElement("Seleccione una categoría"); // Agrega la opción predeterminada
 
         for (Genre genre : genres) {
@@ -107,6 +107,10 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
         btnConfirmLoan = new javax.swing.JButton();
         btnCancel1 = new javax.swing.JButton();
         jDate = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        namePanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        txtBookQuantity = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -231,6 +235,37 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        jLabel7.setText("Cantidad requerida");
+
+        namePanel2.setBackground(new java.awt.Color(245, 245, 245));
+        namePanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(0, 123, 255));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        namePanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        txtBookQuantity.setBackground(new java.awt.Color(245, 245, 245));
+        txtBookQuantity.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        txtBookQuantity.setBorder(null);
+        txtBookQuantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBookQuantityKeyTyped(evt);
+            }
+        });
+        namePanel2.add(txtBookQuantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 210, -1));
+
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -238,28 +273,35 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(namePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(IDPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cbxPublicationYear, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnCancel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2)
-                    .addComponent(namePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
                     .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnConfirmLoan, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbxGenre, javax.swing.GroupLayout.Alignment.TRAILING, 0, 252, Short.MAX_VALUE)
-                            .addComponent(jDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(birthDatePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(50, 50, 50))
+                        .addComponent(jLabel7)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(namePanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                            .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(namePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(IDPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxPublicationYear, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnCancel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2)
+                            .addComponent(namePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6)
+                            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnConfirmLoan, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cbxGenre, javax.swing.GroupLayout.Alignment.TRAILING, 0, 252, Short.MAX_VALUE)
+                                    .addComponent(jDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(birthDatePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(50, 50, 50))))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,7 +333,11 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
                     .addComponent(cbxPublicationYear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(birthDatePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(namePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmLoan)
                     .addComponent(btnCancel1))
@@ -319,23 +365,35 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
     private void btnConfirmLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmLoanActionPerformed
         Date date = jDate.getDate();
 
-        if (date == null) {
-            JOptionPane.showMessageDialog(null, "Ingrese la fecha de devolución del libro");
+        if (date == null || txtBookQuantity.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
             return;
         }
 
+        int bookQuantity = Integer.parseInt(txtBookQuantity.getText());
         LocalDate loanDate = LocalDate.now();
         LocalDate dueDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         try {
-            Loan loan = new Loan(user, book, loanDate, dueDate);
-            controller.applyLoan(loan);
-            JOptionPane.showMessageDialog(null, "Préstamo realizado correctamente");
-            this.dispose();
-        } catch (LoanPastDueException ex) {
+            if (bookQuantity > 0) {
+                Loan loan = new Loan(user, book, bookQuantity, loanDate, dueDate);
+                controller.applyLoan(loan);
+                JOptionPane.showMessageDialog(null, "Préstamo realizado correctamente");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Cantidad inválida");
+            }
+        } catch (LoanPastDueException | InsufficientCopiesException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_btnConfirmLoanActionPerformed
+
+    private void txtBookQuantityKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBookQuantityKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtBookQuantityKeyTyped
 
     /**
      * @param args the command line arguments
@@ -343,6 +401,7 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel IDPanel;
+    private javax.swing.JPanel IDPanel1;
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JPanel birthDatePanel1;
     private javax.swing.JButton btnCancel1;
@@ -356,13 +415,18 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblAuthor;
     private javax.swing.JLabel lblIsbn;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel namePanel;
     private javax.swing.JPanel namePanel1;
+    private javax.swing.JPanel namePanel2;
+    private javax.swing.JTextField txtBookQuantity;
+    private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
 }

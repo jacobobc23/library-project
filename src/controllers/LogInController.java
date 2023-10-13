@@ -2,7 +2,6 @@ package controllers;
 
 import dao.LogInDao;
 import model.User;
-import singleton.dao.SingletonLoginDAO;
 
 /**
  * Controlador para buscar el usuario que desea ingresar al sistema.
@@ -11,13 +10,13 @@ import singleton.dao.SingletonLoginDAO;
  */
 public class LogInController {
     
-    private final LogInDao logInDAO;
+    private final LogInDao loginDao;
 
     public LogInController() {
-        logInDAO = SingletonLoginDAO.getINSTANCE().getLoginDao();
+        loginDao = new LogInDao();
     }
 
-    public User searchUser(String username, String password) {
-         return logInDAO.searchUser(username, password);
+    public User selectUser(String username, String password) {
+         return loginDao.selectUser(username, password);
     }
 }
