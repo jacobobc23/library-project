@@ -64,7 +64,10 @@ public class PdfDao {
                 if (rs.next()) {
                     hasLoans = true;
 
-                    PdfWriter.getInstance(document, new FileOutputStream(ruta + "/Desktop/" + fileName + ".pdf"));
+                    String date = LocalDate.now().toString();
+                    String file = fileName + "_" + date;
+
+                    PdfWriter.getInstance(document, new FileOutputStream(ruta + "/Desktop/" + file + ".pdf"));
                     document.open();
 
                     // Agregar un título
@@ -78,10 +81,6 @@ public class PdfDao {
                     subtitleAssigment.setSpacingAfter(10f); // Espacio después del subtítulo
                     document.add(subtitleAssigment);
 
-                    Paragraph additionalText = new Paragraph(aditionalInformation);
-                    additionalText.setAlignment(Paragraph.ALIGN_LEFT);
-                    additionalText.setSpacingBefore(10f); // Espacio antes del texto
-                    document.add(additionalText);
 
                     do {
                         table.addCell(rs.getString(1));
@@ -92,6 +91,11 @@ public class PdfDao {
                         table.addCell(rs.getString(8));
                     } while (rs.next());
                     document.add(table);
+
+                    Paragraph additionalText = new Paragraph(aditionalInformation);
+                    additionalText.setAlignment(Paragraph.ALIGN_LEFT);
+                    additionalText.setSpacingBefore(10f); // Espacio antes del texto
+                    document.add(additionalText);
 
                     document.close();
                 }
@@ -135,7 +139,10 @@ public class PdfDao {
                 if (rs.next()) {
                     hasLoans = true;
 
-                    PdfWriter.getInstance(document, new FileOutputStream(ruta + "/Desktop/" + fileName + ".pdf"));
+                    String date = LocalDate.now().toString();
+                    String file = fileName + "_" + date;
+
+                    PdfWriter.getInstance(document, new FileOutputStream(ruta + "/Desktop/" + file + ".pdf"));
                     document.open();
 
                     Paragraph titleAssigment = new Paragraph(title);
@@ -147,11 +154,6 @@ public class PdfDao {
                     subtitleAssigment.setSpacingAfter(10f); // Espacio después del subtítulo
                     document.add(subtitleAssigment);
 
-                    Paragraph additionalText = new Paragraph(aditionalInformation);
-                    additionalText.setAlignment(Paragraph.ALIGN_LEFT);
-                    additionalText.setSpacingBefore(10f); // Espacio antes del texto
-                    document.add(additionalText);
-
                     do {
                         table.addCell(rs.getString(1));
                         table.addCell(rs.getString(2));
@@ -161,6 +163,11 @@ public class PdfDao {
                         table.addCell(rs.getString(8));
                     } while (rs.next());
                     document.add(table);
+
+                    Paragraph additionalText = new Paragraph(aditionalInformation);
+                    additionalText.setAlignment(Paragraph.ALIGN_LEFT);
+                    additionalText.setSpacingBefore(10f); // Espacio antes del texto
+                    document.add(additionalText);
 
                     document.close();
                 }
