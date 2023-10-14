@@ -235,7 +235,7 @@ public class LoansWindow extends javax.swing.JFrame {
             }
         });
 
-        cbxTypesReport.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un tipo de reporte", "General", "Fecha", "Usuario" }));
+        cbxTypesReport.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un tipo de reporte", "General", "Fecha", "Usuario", "Fecha y usuario", "Retrasos" }));
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
@@ -330,6 +330,13 @@ public class LoansWindow extends javax.swing.JFrame {
             case 3:
                 new GenerateByUserReportView(admin, this).setVisible(true);
                 break;
+            case 4:
+                new GenerateByUserAndDate(admin).setVisible(true);
+                break;
+            case 5:
+                new GenerateByDelays().setVisible(true);
+                break;
+            
             default:
                 JOptionPane.showMessageDialog(null, "Seleccion un tipo de reporte");
                 break;

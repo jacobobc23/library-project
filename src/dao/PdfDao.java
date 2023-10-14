@@ -34,6 +34,63 @@ public class PdfDao {
         document = new Document();
     }
 
+    public boolean generatePDFLoansByUserAndDates(String id, LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
+            String aditionalInformation) {
+
+        boolean hasLoans = false;
+        try {
+
+            String ruta = System.getProperty("user.home");
+
+            PdfPTable table = createTableUsersDates();
+
+            String query = "SELECT users.id, users.fullname, books.isbn, books.author, books.title, genres.name, loans.loan_date, loans.due_date"
+                    + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres "
+                    + "ON books.genre_id = genres.id WHERE loan_date >= ? AND loan_date <= ? AND loans.user_id = ?";
+
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
+                ps.setDate(1, java.sql.Date.valueOf(startDate.toString()));
+                ps.setDate(2, java.sql.Date.valueOf((endDate.toString())));
+                ps.setString(3, id);
+
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    hasLoans = true;
+
+                    String date = LocalDate.now().toString();
+                    String file = fileName + "_" + date;
+
+                    PdfWriter.getInstance(document, new FileOutputStream(ruta + "/Desktop/" + file + ".pdf"));
+                    document.open();
+
+                    insertImportantInformation(title, subtitle);
+
+                    do {
+                        table.addCell(rs.getString(1));
+                        table.addCell(rs.getString(2));
+                        table.addCell(rs.getString(3));
+                        table.addCell(rs.getString(4));
+                        table.addCell(rs.getString(5));
+                        table.addCell(rs.getString(6));
+                        table.addCell(rs.getString(7));
+                        table.addCell(rs.getString(8));
+                    } while (rs.next());
+                    document.add(table);
+
+                    insertAditionalInformation(aditionalInformation);
+
+                    document.close();
+                }
+            } catch (DocumentException | SQLException ex) {
+            }
+
+        } catch (HeadlessException | FileNotFoundException ex) {
+
+        }
+        return hasLoans;
+    }
+
     public boolean generateGeneralLoansPDF(String title, String subtitle, String aditionalInformation, String fileName) {
         boolean hasLoans = false;
 
@@ -75,7 +132,7 @@ public class PdfDao {
             } catch (DocumentException | SQLException ex) {
             }
 
-        } catch (HeadlessException | FileNotFoundException  ex) {
+        } catch (HeadlessException | FileNotFoundException ex) {
         }
         return hasLoans;
     }
@@ -122,7 +179,7 @@ public class PdfDao {
                 System.err.println(ex.toString());
             }
 
-        } catch (HeadlessException | FileNotFoundException  ex) {
+        } catch (HeadlessException | FileNotFoundException ex) {
             System.err.println(ex.toString());
 
         }
@@ -174,7 +231,7 @@ public class PdfDao {
             } catch (DocumentException | SQLException ex) {
             }
 
-        } catch (HeadlessException | FileNotFoundException  ex) {
+        } catch (HeadlessException | FileNotFoundException ex) {
 
         }
         return hasLoans;
@@ -189,7 +246,7 @@ public class PdfDao {
             String ruta = System.getProperty("user.home");
 
             PdfPTable table = createTable();
-            
+
             String query = "SELECT users.id, users.fullname, books.title, genres.name, loan_repayments.return_date FROM"
                     + " loan_repayments JOIN users ON loan_repayments.user_id = users.id JOIN books ON loan_repayments.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id WHERE return_date >= ? AND return_date <= ?";
 
@@ -225,7 +282,7 @@ public class PdfDao {
             } catch (DocumentException | SQLException ex) {
             }
 
-        } catch (HeadlessException | FileNotFoundException  ex) {
+        } catch (HeadlessException | FileNotFoundException ex) {
 
         }
         return hasLoans;
@@ -282,7 +339,7 @@ public class PdfDao {
             } catch (DocumentException | SQLException ex) {
 
             }
-        } catch (HeadlessException | FileNotFoundException  ex) {
+        } catch (HeadlessException | FileNotFoundException ex) {
         }
         return hasLoans;
     }
@@ -338,7 +395,7 @@ public class PdfDao {
             } catch (DocumentException | SQLException ex) {
 
             }
-        } catch (HeadlessException | FileNotFoundException  ex) {
+        } catch (HeadlessException | FileNotFoundException ex) {
         }
         return hasLoans;
     }
@@ -352,7 +409,23 @@ public class PdfDao {
         table.addCell(new Phrase("Nombre Libro"));
         table.addCell(new Phrase("Categoría"));
         table.addCell(new Phrase("Fecha"));
-        
+
+        return table;
+    }
+
+    private PdfPTable createTableUsersDates() {
+        float[] columnWidths = {7, 15, 20, 15, 15, 15, 15, 15};
+        PdfPTable table = new PdfPTable(columnWidths);
+
+        table.addCell(new Phrase("Id Usuario"));
+        table.addCell(new Phrase("Nombre Usuario"));
+        table.addCell(new Phrase("ISBN"));
+        table.addCell(new Phrase("Autor"));
+        table.addCell(new Phrase("Nombre Libro"));
+        table.addCell(new Phrase("Categoria"));
+        table.addCell(new Phrase("Fecha prestamo"));
+        table.addCell(new Phrase("Fecha vencimiento"));
+
         return table;
     }
 

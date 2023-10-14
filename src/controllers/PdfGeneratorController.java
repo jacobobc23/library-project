@@ -19,6 +19,10 @@ public class PdfGeneratorController {
         this.pdfdao = new PdfDao();
     }
 
+    public boolean generatePDFLoansByUserAndDates(String id, LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle, String aditionalInformation) {
+        return pdfdao.generatePDFLoansByUserAndDates(id, startDate, endDate, fileName, title, subtitle, aditionalInformation);
+    }
+
     public boolean generateGeneralLoansPDF(String title, String subtitle, String aditionalInformation, String fileName) {
         return pdfdao.generateGeneralLoansPDF(title, subtitle, aditionalInformation, fileName);
     }
