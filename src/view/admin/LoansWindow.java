@@ -4,6 +4,7 @@ import controllers.LoanManagementController;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Loan;
 import model.User;
@@ -20,13 +21,15 @@ public class LoansWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form LoansWindow
+     *
+     * @param admin
      */
     public LoansWindow(User admin) {
         initComponents();
         this.admin = admin;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Préstamos");
-        setResizable(false);
+//        setResizable(false);
         lblAdminName.setText(admin.getFullName());
         controller = new LoanManagementController();
         fillTable();
@@ -53,6 +56,7 @@ public class LoansWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         loansTable = new javax.swing.JTable();
         btnPdf = new javax.swing.JButton();
+        cbxTypesReport = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,7 +78,7 @@ public class LoansWindow extends javax.swing.JFrame {
         lblAdminAccount.setForeground(new java.awt.Color(255, 255, 255));
         lblAdminAccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAdminAccount.setText("Gestionar mi cuenta");
-        lblAdminAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAdminAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblAdminAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblAdminAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -86,7 +90,7 @@ public class LoansWindow extends javax.swing.JFrame {
         btnExit.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("SALIR");
-        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
@@ -98,7 +102,7 @@ public class LoansWindow extends javax.swing.JFrame {
         btnBooksManagement.setText("    LIBROS");
         btnBooksManagement.setBorderPainted(false);
         btnBooksManagement.setContentAreaFilled(false);
-        btnBooksManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBooksManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnBooksManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnBooksManagement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -119,7 +123,7 @@ public class LoansWindow extends javax.swing.JFrame {
         btnUserManagement.setText("    USUARIOS");
         btnUserManagement.setBorderPainted(false);
         btnUserManagement.setContentAreaFilled(false);
-        btnUserManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUserManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnUserManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnUserManagement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -198,13 +202,15 @@ public class LoansWindow extends javax.swing.JFrame {
         btnPdf.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnPdf.setForeground(new java.awt.Color(255, 255, 255));
         btnPdf.setText("Generar reporte");
-        btnPdf.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPdf.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnPdf.setFocusable(false);
         btnPdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPdfActionPerformed(evt);
             }
         });
+
+        cbxTypesReport.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un tipo de reporte", "General", "Fecha", "Usuario" }));
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
@@ -214,8 +220,11 @@ public class LoansWindow extends javax.swing.JFrame {
                 .addComponent(menuBarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(116, 116, 116)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1025, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPdf))
+                    .addGroup(backgroundPanelLayout.createSequentialGroup()
+                        .addComponent(cbxTypesReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPdf))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1025, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(525, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
@@ -223,10 +232,12 @@ public class LoansWindow extends javax.swing.JFrame {
             .addComponent(menuBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxTypesReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPdf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPdf)
-                .addGap(295, 295, 295))
+                .addGap(324, 324, 324))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,7 +295,21 @@ public class LoansWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUserManagementActionPerformed
 
     private void btnPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPdfActionPerformed
-       new GenerateReportView().setVisible(true);
+        switch (cbxTypesReport.getSelectedIndex()) {
+            case 1:
+                new GenerateGeneralReportView().setVisible(true);
+                break;
+            case 2:
+                new GenerateByDatesReportView().setVisible(true);
+                break;
+            case 3:
+//            new GenerateByUserReportView().setVisible(true);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Seleccion un tipo de reporte");
+                break;
+        }
+
     }//GEN-LAST:event_btnPdfActionPerformed
 
     private void fillTable() {
@@ -305,8 +330,7 @@ public class LoansWindow extends javax.swing.JFrame {
                 loan.getBook().getTitle(),
                 loan.getBookQuantity(),
                 loan.getDate(),
-                loan.getDueDate(),
-            });
+                loan.getDueDate(),});
         }
     }
     /**
@@ -319,6 +343,7 @@ public class LoansWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnPdf;
     private javax.swing.JButton btnUserManagement;
+    private javax.swing.JComboBox<String> cbxTypesReport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAdminAccount;
