@@ -88,7 +88,7 @@ public class PdfDao {
                         table.addCell(rs.getString(3));
                         table.addCell(rs.getString(4));
                         table.addCell(rs.getString(5));
-                        table.addCell(rs.getString(8));
+                        table.addCell(rs.getString(6));
                     } while (rs.next());
                     document.add(table);
 
@@ -161,7 +161,7 @@ public class PdfDao {
                         table.addCell(rs.getString(3));
                         table.addCell(rs.getString(4));
                         table.addCell(rs.getString(5));
-                        table.addCell(rs.getString(8));
+                        table.addCell(rs.getString(6));
                     } while (rs.next());
                     document.add(table);
 
