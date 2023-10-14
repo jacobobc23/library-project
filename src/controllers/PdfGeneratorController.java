@@ -27,4 +27,9 @@ public class PdfGeneratorController {
             String aditionalInformation) {
         return pdfdao.generatePDFByDates(startDate, endDate, fileName, title, subtitle, aditionalInformation);
     }
+    
+    public boolean generatePDFByUser(String id, String fileName, String title, String subtitle,
+            String aditionalInformation) {
+        return pdfdao.generatePDFByUser(id, fileName, title, subtitle, aditionalInformation);
+    }
 }
