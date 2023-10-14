@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/dao/BookDao.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/UserRegistryWindow.java</file>
@@ -26,5 +27,8 @@
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/BooksWindow.java</file>
             <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/LoansWindow.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 27f6d30181e5716f6d02510296c4c4b2669db6a4
     </open-files>
 </project-private>

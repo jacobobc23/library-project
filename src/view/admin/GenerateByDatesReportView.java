@@ -8,6 +8,7 @@ import controllers.PdfGeneratorController;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,17 +18,20 @@ import javax.swing.JOptionPane;
 public class GenerateByDatesReportView extends javax.swing.JFrame {
 
     private final PdfGeneratorController controller;
+    private final JFrame window;
 
     /**
      * Creates new form GenerateByDatesReportView
+     * @param window
      */
-    public GenerateByDatesReportView() {
+    public GenerateByDatesReportView(JFrame window) {
         initComponents();
         controller = new PdfGeneratorController();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generar Reporte");
         setResizable(false);
+        this.window = window;
     }
 
     /**
@@ -319,7 +323,13 @@ public class GenerateByDatesReportView extends javax.swing.JFrame {
         String subtitle = txtSubtitle.getText();
         String aditionalInformation = txtAditionalInformation.getText();
 
-        boolean success = controller.generatePDFByDates(startDate, endDate, fileName, title, subtitle, aditionalInformation);
+        boolean success = false;
+        
+        if (window instanceof LoansWindow) {
+            success = controller.generatePDFLoansByDates(startDate, endDate, fileName, title, subtitle, aditionalInformation);
+        } else if (window instanceof LoanRepaymentsWindow) {
+            success = controller.generatePDFLoanRepaymentsByDates(startDate, endDate, fileName, title, subtitle, aditionalInformation);
+        }
 
         if (success) {
             JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");

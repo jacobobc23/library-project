@@ -5,6 +5,7 @@
 package view.admin;
 
 import controllers.PdfGeneratorController;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,17 +15,21 @@ import javax.swing.JOptionPane;
 public class GenerateGeneralReportView extends javax.swing.JFrame {
 
     private final PdfGeneratorController controller;
+    private final JFrame window;
 
     /**
      * Creates new form GenerateReportView
+     *
+     * @param window
      */
-    public GenerateGeneralReportView() {
+    public GenerateGeneralReportView(JFrame window) {
         initComponents();
         controller = new PdfGeneratorController();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generar Reporte");
         setResizable(false);
+        this.window = window;
     }
 
     /**
@@ -303,8 +308,14 @@ public class GenerateGeneralReportView extends javax.swing.JFrame {
         String subtitle = txtSubtitle.getText();
         String aditionalInformation = txtAditionalInformation.getText();
 
-        boolean success = controller.generatePDF(title, subtitle, aditionalInformation, fileName);
-        
+        boolean success = false;
+
+        if (window instanceof LoansWindow) {
+            success = controller.generateGeneralLoansPDF(title, subtitle, aditionalInformation, fileName);
+        } else if (window instanceof LoanRepaymentsWindow) {
+            success = controller.generateGeneralLoanRepaymentPDF(title, subtitle, aditionalInformation, fileName);
+        }
+
         if (success) {
             JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
             this.dispose();

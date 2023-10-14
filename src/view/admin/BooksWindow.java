@@ -2,6 +2,7 @@ package view.admin;
 
 import controllers.BookManagementController;
 import exceptions.BookIsLoanedException;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
@@ -61,6 +62,7 @@ public class BooksWindow extends javax.swing.JFrame {
         btnUsersManagement = new javax.swing.JButton();
         btnLoans = new javax.swing.JButton();
         lblBooks = new javax.swing.JLabel();
+        btnLoanRepayments = new javax.swing.JButton();
         booksPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         booksTable = new javax.swing.JTable();
@@ -93,7 +95,7 @@ public class BooksWindow extends javax.swing.JFrame {
         lblAdminAccount.setForeground(new java.awt.Color(255, 255, 255));
         lblAdminAccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAdminAccount.setText("Gestionar mi cuenta");
-        lblAdminAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblAdminAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblAdminAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblAdminAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -105,7 +107,7 @@ public class BooksWindow extends javax.swing.JFrame {
         btnExit.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("SALIR");
-        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
@@ -117,8 +119,16 @@ public class BooksWindow extends javax.swing.JFrame {
         btnUsersManagement.setText("    USUARIOS");
         btnUsersManagement.setBorderPainted(false);
         btnUsersManagement.setContentAreaFilled(false);
-        btnUsersManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsersManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnUsersManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnUsersManagement.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnUsersManagementMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnUsersManagementMouseExited(evt);
+            }
+        });
         btnUsersManagement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUsersManagementActionPerformed(evt);
@@ -130,8 +140,16 @@ public class BooksWindow extends javax.swing.JFrame {
         btnLoans.setText("    PRÉSTAMOS");
         btnLoans.setBorderPainted(false);
         btnLoans.setContentAreaFilled(false);
-        btnLoans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLoans.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLoans.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLoans.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLoansMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLoansMouseExited(evt);
+            }
+        });
         btnLoans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoansActionPerformed(evt);
@@ -144,6 +162,27 @@ public class BooksWindow extends javax.swing.JFrame {
         lblBooks.setText("        LIBROS");
         lblBooks.setOpaque(true);
 
+        btnLoanRepayments.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnLoanRepayments.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoanRepayments.setText("    DEVOLUCIONES");
+        btnLoanRepayments.setBorderPainted(false);
+        btnLoanRepayments.setContentAreaFilled(false);
+        btnLoanRepayments.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnLoanRepayments.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLoanRepayments.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLoanRepaymentsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLoanRepaymentsMouseExited(evt);
+            }
+        });
+        btnLoanRepayments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoanRepaymentsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
         menuBarPanel.setLayout(menuBarPanelLayout);
         menuBarPanelLayout.setHorizontalGroup(
@@ -151,7 +190,7 @@ public class BooksWindow extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblAdminName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnUsersManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblBooks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuBarPanelLayout.createSequentialGroup()
                 .addGroup(menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuBarPanelLayout.createSequentialGroup()
@@ -160,9 +199,10 @@ public class BooksWindow extends javax.swing.JFrame {
                     .addGroup(menuBarPanelLayout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnLoans, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLoanRepayments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(lblBooks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,10 +215,12 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addComponent(lblAdminAccount)
                 .addGap(88, 88, 88)
                 .addComponent(lblBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(14, 14, 14)
                 .addComponent(btnUsersManagement)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(btnLoans)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnLoanRepayments)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
@@ -212,7 +254,7 @@ public class BooksWindow extends javax.swing.JFrame {
 
         cbxGenre.setBackground(new java.awt.Color(245, 245, 245));
         cbxGenre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cbxGenre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbxGenre.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cbxGenre.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbxGenreItemStateChanged(evt);
@@ -221,7 +263,7 @@ public class BooksWindow extends javax.swing.JFrame {
 
         lblGenresManagement.setForeground(new java.awt.Color(153, 153, 153));
         lblGenresManagement.setText("Gestionar");
-        lblGenresManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblGenresManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblGenresManagement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblGenresManagementMouseClicked(evt);
@@ -272,7 +314,7 @@ public class BooksWindow extends javax.swing.JFrame {
         btnDeleteBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnDeleteBook.setForeground(new java.awt.Color(255, 255, 255));
         btnDeleteBook.setText("Eliminar");
-        btnDeleteBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeleteBook.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnDeleteBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteBookActionPerformed(evt);
@@ -283,7 +325,7 @@ public class BooksWindow extends javax.swing.JFrame {
         btnAddBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnAddBook.setForeground(new java.awt.Color(255, 255, 255));
         btnAddBook.setText("Nuevo");
-        btnAddBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAddBook.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAddBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddBookActionPerformed(evt);
@@ -293,7 +335,7 @@ public class BooksWindow extends javax.swing.JFrame {
         btnUpdateBook.setBackground(new java.awt.Color(255, 215, 0));
         btnUpdateBook.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnUpdateBook.setText("Editar");
-        btnUpdateBook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUpdateBook.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnUpdateBook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateBookActionPerformed(evt);
@@ -455,6 +497,41 @@ public class BooksWindow extends javax.swing.JFrame {
         new GenreCrudWindow(this).setVisible(true);
     }//GEN-LAST:event_lblGenresManagementMouseClicked
 
+    private void btnLoanRepaymentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsActionPerformed
+        new LoanRepaymentsWindow(admin).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLoanRepaymentsActionPerformed
+
+    private void btnUsersManagementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsersManagementMouseEntered
+        Color color = new Color(135, 178, 255);
+        btnUsersManagement.setBackground(color);
+        btnUsersManagement.setOpaque(true);
+    }//GEN-LAST:event_btnUsersManagementMouseEntered
+
+    private void btnUsersManagementMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsersManagementMouseExited
+        btnUsersManagement.setOpaque(false);
+    }//GEN-LAST:event_btnUsersManagementMouseExited
+
+    private void btnLoansMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoansMouseEntered
+        Color color = new Color(135, 178, 255);
+        btnLoans.setBackground(color);
+        btnLoans.setOpaque(true);
+    }//GEN-LAST:event_btnLoansMouseEntered
+
+    private void btnLoansMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoansMouseExited
+        btnLoans.setOpaque(false);
+    }//GEN-LAST:event_btnLoansMouseExited
+
+    private void btnLoanRepaymentsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsMouseEntered
+        Color color = new Color(135, 178, 255);
+        btnLoanRepayments.setBackground(color);
+        btnLoanRepayments.setOpaque(true);
+    }//GEN-LAST:event_btnLoanRepaymentsMouseEntered
+
+    private void btnLoanRepaymentsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsMouseExited
+        btnLoanRepayments.setOpaque(false);
+    }//GEN-LAST:event_btnLoanRepaymentsMouseExited
+
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
@@ -523,6 +600,7 @@ public class BooksWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnAddBook;
     private javax.swing.JButton btnDeleteBook;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnLoanRepayments;
     private javax.swing.JButton btnLoans;
     private javax.swing.JButton btnUpdateBook;
     private javax.swing.JButton btnUsersManagement;

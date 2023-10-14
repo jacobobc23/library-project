@@ -6,19 +6,12 @@ import model.User;
 import view.logIn.LogInWindow;
 
 /**
- * Ventana principal para el administrador, en esta encuentra las diferentes
- * gestiones que tiene disponible.
- * 
  * @author Jacobo-bc
  */
 public class AdminTasksWindow extends javax.swing.JFrame {
 
     private final User user;
 
-    /**
-     *
-     * @param user El administrador que ingresó.
-     */
     public AdminTasksWindow(User user) {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Abre en pantalla completa.
@@ -46,6 +39,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
         btnBooksManagement = new javax.swing.JButton();
         btnUserManagement = new javax.swing.JButton();
         btnLoans = new javax.swing.JButton();
+        btnLoanRepayments = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -149,12 +143,36 @@ public class AdminTasksWindow extends javax.swing.JFrame {
             }
         });
 
+        btnLoanRepayments.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnLoanRepayments.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoanRepayments.setText("    DEVOLUCIONES");
+        btnLoanRepayments.setBorderPainted(false);
+        btnLoanRepayments.setContentAreaFilled(false);
+        btnLoanRepayments.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLoanRepayments.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLoanRepayments.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLoanRepaymentsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLoanRepaymentsMouseExited(evt);
+            }
+        });
+        btnLoanRepayments.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoanRepaymentsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
         menuBarPanel.setLayout(menuBarPanelLayout);
         menuBarPanelLayout.setHorizontalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblAdminName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnBooksManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnUserManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuBarPanelLayout.createSequentialGroup()
                 .addGroup(menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuBarPanelLayout.createSequentialGroup()
@@ -165,9 +183,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
                         .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(btnBooksManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnUserManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLoanRepayments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +200,9 @@ public class AdminTasksWindow extends javax.swing.JFrame {
                 .addComponent(btnUserManagement)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLoans)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnLoanRepayments)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -215,31 +233,18 @@ public class AdminTasksWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    /**
-     * Abre AdminAccountWindow, para asi ver sus datos y poder modificarlos. 
-     * @param evt 
-     */
+
+
     private void lblAdminAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAdminAccountMouseClicked
         new AdminAccountWindow(user).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_lblAdminAccountMouseClicked
 
-    /**
-     * Abre BooksWindow, para ver la información de los libros y poder
-     * gestionarlos
-     * @param evt 
-     */
     private void btnBooksManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBooksManagementActionPerformed
         new BooksWindow(user).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBooksManagementActionPerformed
 
-    /**
-     * Abre UsersWindow, para ver la información de los usuarios y poder
-     * gestionarlos.
-     * @param evt 
-     */
     private void btnUserManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserManagementActionPerformed
         new UsersWindow(user).setVisible(true);
         this.dispose();
@@ -280,14 +285,25 @@ public class AdminTasksWindow extends javax.swing.JFrame {
         btnLoans.setOpaque(false);
     }//GEN-LAST:event_btnLoansMouseExited
 
-    /**
-     * Regresa al logIn
-     * @param evt 
-     */
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         new LogInWindow().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnLoanRepaymentsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsMouseEntered
+        Color color = new Color(135, 178, 255);
+        btnLoanRepayments.setBackground(color);
+        btnLoanRepayments.setOpaque(true);
+    }//GEN-LAST:event_btnLoanRepaymentsMouseEntered
+
+    private void btnLoanRepaymentsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsMouseExited
+        btnLoanRepayments.setOpaque(false);
+    }//GEN-LAST:event_btnLoanRepaymentsMouseExited
+
+    private void btnLoanRepaymentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsActionPerformed
+        new LoanRepaymentsWindow(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLoanRepaymentsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,6 +313,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton btnBooksManagement;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnLoanRepayments;
     private javax.swing.JButton btnLoans;
     private javax.swing.JButton btnUserManagement;
     private javax.swing.JLabel jLabel1;
