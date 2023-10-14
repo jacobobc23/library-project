@@ -19,17 +19,32 @@ public class PdfGeneratorController {
         this.pdfdao = new PdfDao();
     }
 
-    public boolean generatePDF(String title, String subtitle, String aditionalInformation, String fileName) {
-        return pdfdao.generatePDF(title, subtitle, aditionalInformation, fileName);
+    public boolean generateGeneralLoansPDF(String title, String subtitle, String aditionalInformation, String fileName) {
+        return pdfdao.generateGeneralLoansPDF(title, subtitle, aditionalInformation, fileName);
     }
 
-    public boolean generatePDFByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
-            String aditionalInformation) {
-        return pdfdao.generatePDFByDates(startDate, endDate, fileName, title, subtitle, aditionalInformation);
+    public boolean generateGeneralLoanRepaymentPDF(String title, String subtitle, String aditionalInformation, String fileName) {
+        return pdfdao.generateGeneralLoanRepaymentPDF(title, subtitle, aditionalInformation, fileName);
     }
-    
-    public boolean generatePDFByUser(String id, String fileName, String title, String subtitle,
+
+    public boolean generatePDFLoansByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
             String aditionalInformation) {
-        return pdfdao.generatePDFByUser(id, fileName, title, subtitle, aditionalInformation);
+        return pdfdao.generatePDFLoansByDates(startDate, endDate, fileName, title, subtitle, aditionalInformation);
     }
+
+    public boolean generatePDFLoanRepaymentsByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
+            String aditionalInformation) {
+        return pdfdao.generatePDFLoanRepaymentsByDates(startDate, endDate, fileName, title, subtitle, aditionalInformation);
+    }
+
+    public boolean generatePDFLoansByUser(String id, String fileName, String title, String subtitle,
+            String aditionalInformation) {
+        return pdfdao.generatePDFLoansByUser(id, fileName, title, subtitle, aditionalInformation);
+    }
+
+    public boolean generatePDFLoanRepaymentsByUser(String id, String fileName, String title, String subtitle,
+            String aditionalInformation) {
+        return pdfdao.generatePDFLoanRepaymentsByUser(id, fileName, title, subtitle, aditionalInformation);
+    }
+
 }

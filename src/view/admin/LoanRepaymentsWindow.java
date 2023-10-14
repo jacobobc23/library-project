@@ -1,38 +1,43 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package view.admin;
 
-import controllers.LoanManagementController;
+import controllers.LoanRepaymentController;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Loan;
+import model.LoanRepayment;
 import model.User;
 import view.logIn.LogInWindow;
 
 /**
  *
- * @author Jacobo-bc
+ * @author jacobobc
  */
-public class LoansWindow extends javax.swing.JFrame {
+public class LoanRepaymentsWindow extends javax.swing.JFrame {
 
     private final User admin;
-    private final LoanManagementController controller;
+    private final LoanRepaymentController controller;
 
     /**
-     * Creates new form LoansWindow
+     * Creates new form LoanRepaymenstWindow
      *
      * @param admin
      */
-    public LoansWindow(User admin) {
+    public LoanRepaymentsWindow(User admin) {
         initComponents();
         this.admin = admin;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setTitle("Préstamos");
+        setTitle("Devoluciones");
 //        setResizable(false);
         lblAdminName.setText(admin.getFullName());
-        controller = new LoanManagementController();
+        controller = new LoanRepaymentController();
         fillTable();
+
     }
 
     /**
@@ -53,9 +58,9 @@ public class LoansWindow extends javax.swing.JFrame {
         btnBooksManagement = new javax.swing.JButton();
         btnUserManagement = new javax.swing.JButton();
         lblLoans = new javax.swing.JLabel();
-        btnLoanRepayments = new javax.swing.JButton();
+        btnLoanManagement = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        loansTable = new javax.swing.JTable();
+        loanRepaymentsTable = new javax.swing.JTable();
         btnPdf = new javax.swing.JButton();
         cbxTypesReport = new javax.swing.JComboBox<>();
 
@@ -143,27 +148,27 @@ public class LoansWindow extends javax.swing.JFrame {
         lblLoans.setBackground(new java.awt.Color(135, 178, 255));
         lblLoans.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         lblLoans.setForeground(new java.awt.Color(255, 255, 255));
-        lblLoans.setText("       PRÉSTAMOS");
+        lblLoans.setText("       DEVOLUCIONES");
         lblLoans.setOpaque(true);
 
-        btnLoanRepayments.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        btnLoanRepayments.setForeground(new java.awt.Color(255, 255, 255));
-        btnLoanRepayments.setText("    DEVOLUCIONES");
-        btnLoanRepayments.setBorderPainted(false);
-        btnLoanRepayments.setContentAreaFilled(false);
-        btnLoanRepayments.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnLoanRepayments.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnLoanRepayments.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnLoanManagement.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnLoanManagement.setForeground(new java.awt.Color(255, 255, 255));
+        btnLoanManagement.setText("    PRÉSTAMOS");
+        btnLoanManagement.setBorderPainted(false);
+        btnLoanManagement.setContentAreaFilled(false);
+        btnLoanManagement.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnLoanManagement.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnLoanManagement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnLoanRepaymentsMouseEntered(evt);
+                btnLoanManagementMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnLoanRepaymentsMouseExited(evt);
+                btnLoanManagementMouseExited(evt);
             }
         });
-        btnLoanRepayments.addActionListener(new java.awt.event.ActionListener() {
+        btnLoanManagement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoanRepaymentsActionPerformed(evt);
+                btnLoanManagementActionPerformed(evt);
             }
         });
 
@@ -186,7 +191,7 @@ public class LoansWindow extends javax.swing.JFrame {
             .addComponent(btnBooksManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnUserManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnLoanRepayments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLoanManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,16 +206,16 @@ public class LoansWindow extends javax.swing.JFrame {
                 .addComponent(btnBooksManagement)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUserManagement)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblLoans, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(btnLoanManagement)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLoanRepayments)
+                .addComponent(lblLoans, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
 
-        loansTable.setModel(new javax.swing.table.DefaultTableModel(
+        loanRepaymentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -221,7 +226,7 @@ public class LoansWindow extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(loansTable);
+        jScrollPane1.setViewportView(loanRepaymentsTable);
 
         btnPdf.setBackground(new java.awt.Color(0, 123, 255));
         btnPdf.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -250,13 +255,13 @@ public class LoansWindow extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnPdf))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1025, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(525, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menuBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addContainerGap(306, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxTypesReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPdf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -334,43 +339,42 @@ public class LoansWindow extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Seleccion un tipo de reporte");
                 break;
         }
-
     }//GEN-LAST:event_btnPdfActionPerformed
 
-    private void btnLoanRepaymentsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsMouseEntered
+    private void btnLoanManagementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanManagementMouseEntered
         Color color = new Color(135, 178, 255);
-        btnLoanRepayments.setBackground(color);
-        btnLoanRepayments.setOpaque(true);
-    }//GEN-LAST:event_btnLoanRepaymentsMouseEntered
+        btnLoanManagement.setBackground(color);
+        btnLoanManagement.setOpaque(true);
+    }//GEN-LAST:event_btnLoanManagementMouseEntered
 
-    private void btnLoanRepaymentsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsMouseExited
-        btnLoanRepayments.setOpaque(false);
-    }//GEN-LAST:event_btnLoanRepaymentsMouseExited
+    private void btnLoanManagementMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanManagementMouseExited
+        btnLoanManagement.setOpaque(false);
+    }//GEN-LAST:event_btnLoanManagementMouseExited
 
-    private void btnLoanRepaymentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsActionPerformed
-        new LoanRepaymentsWindow(admin).setVisible(true);
+    private void btnLoanManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoanManagementActionPerformed
+        new LoansWindow(admin).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnLoanRepaymentsActionPerformed
+    }//GEN-LAST:event_btnLoanManagementActionPerformed
 
     private void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
 
-        ArrayList<Loan> loans = controller.listAllLoans();
+        ArrayList<Object> loanRepayments = controller.listAllLoanRepayments();
         model.setColumnIdentifiers(new Object[]{
-            "ID Usuario", "Usuario", "ISBN", "Título", "Cantidad", "Fecha préstamo", "Fecha vencimiento"
+            "ID", "ID Usuario", "Nombre usuario", "Titulo libro", "Fecha de devolución"
         });
 
-        loansTable.setModel(model);
+        loanRepaymentsTable.setModel(model);
 
-        for (Loan loan : loans) {
+        for (int i = 0; i < loanRepayments.size(); i++) {
+            LoanRepayment lr = (LoanRepayment) loanRepayments.get(i);
             model.addRow(new Object[]{
-                loan.getUser().getId(),
-                loan.getUser().getFullName(),
-                loan.getBook().getIsbn(),
-                loan.getBook().getTitle(),
-                loan.getBookQuantity(),
-                loan.getDate(),
-                loan.getDueDate(),});
+                lr.getId(),
+                lr.getUser().getId(),
+                lr.getUser().getFullName(),
+                lr.getBook().getTitle(),
+                lr.getReturnDate()
+            });
         }
     }
     /**
@@ -381,7 +385,7 @@ public class LoansWindow extends javax.swing.JFrame {
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JButton btnBooksManagement;
     private javax.swing.JButton btnExit;
-    private javax.swing.JButton btnLoanRepayments;
+    private javax.swing.JButton btnLoanManagement;
     private javax.swing.JButton btnPdf;
     private javax.swing.JButton btnUserManagement;
     private javax.swing.JComboBox<String> cbxTypesReport;
@@ -390,7 +394,7 @@ public class LoansWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblAdminAccount;
     private javax.swing.JLabel lblAdminName;
     private javax.swing.JLabel lblLoans;
-    private javax.swing.JTable loansTable;
+    private javax.swing.JTable loanRepaymentsTable;
     private javax.swing.JPanel menuBarPanel;
     // End of variables declaration//GEN-END:variables
 }

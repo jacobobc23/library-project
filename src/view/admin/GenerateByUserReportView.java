@@ -7,6 +7,7 @@ package view.admin;
 import controllers.PdfGeneratorController;
 import controllers.UserManagemetController;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.User;
@@ -20,13 +21,15 @@ public class GenerateByUserReportView extends javax.swing.JFrame {
     private final PdfGeneratorController controller;
     private final UserManagemetController userManagemetController;
     private final User admin;
+    private final JFrame window;
 
     /**
      * Creates new form GenerateByUserReportView
      *
      * @param admin
+     * @param window
      */
-    public GenerateByUserReportView(User admin) {
+    public GenerateByUserReportView(User admin, JFrame window) {
         initComponents();
         this.admin = admin;
         controller = new PdfGeneratorController();
@@ -36,6 +39,7 @@ public class GenerateByUserReportView extends javax.swing.JFrame {
         setTitle("Generar Reporte");
         setResizable(false);
         fillTable();
+        this.window = window;
     }
 
     /**
@@ -360,7 +364,13 @@ public class GenerateByUserReportView extends javax.swing.JFrame {
         String subtitle = txtSubtitle.getText();
         String aditionalInformation = txtAditionalInformation.getText();
 
-        boolean success = controller.generatePDFByUser(id, fileName, title, subtitle, aditionalInformation);
+        boolean success = false;
+
+        if (window instanceof LoansWindow) {
+            success = controller.generatePDFLoansByUser(id, fileName, title, subtitle, aditionalInformation);
+        } else if (window instanceof LoanRepaymentsWindow) {
+            success = controller.generatePDFLoanRepaymentsByUser(id, fileName, title, subtitle, aditionalInformation);
+        }
 
         if (success) {
             JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
