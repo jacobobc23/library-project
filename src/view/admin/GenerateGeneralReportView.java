@@ -11,24 +11,20 @@ import javax.swing.JOptionPane;
  *
  * @author joanp
  */
-public class GenerateReportView extends javax.swing.JFrame {
+public class GenerateGeneralReportView extends javax.swing.JFrame {
 
     private final PdfGeneratorController controller;
 
     /**
      * Creates new form GenerateReportView
      */
-    public GenerateReportView() {
+    public GenerateGeneralReportView() {
         initComponents();
         controller = new PdfGeneratorController();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generar Reporte");
         setResizable(false);
-    }
-
-    private boolean isEmptyFields() {
-        return (txtTitle.getText().isEmpty() || txtSubtitle.getText().isEmpty() || txtAditionalInformation.getText().isEmpty());
     }
 
     /**
@@ -59,7 +55,6 @@ public class GenerateReportView extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
 
         jInternalFrame1.setVisible(true);
 
@@ -199,9 +194,6 @@ public class GenerateReportView extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(204, 0, 0));
         jLabel2.setText("*");
 
-        jLabel4.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel4.setText("*");
-
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
         backgroundPanel.setLayout(backgroundPanelLayout);
         backgroundPanelLayout.setHorizontalGroup(
@@ -219,10 +211,7 @@ public class GenerateReportView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap(132, Short.MAX_VALUE)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
+                    .addComponent(jLabel8)
                     .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(namePanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundPanelLayout.createSequentialGroup()
@@ -252,12 +241,10 @@ public class GenerateReportView extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(namePanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel4))
+                .addGap(34, 34, 34)
+                .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(namePanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(namePanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel)
@@ -280,9 +267,9 @@ public class GenerateReportView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtTitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTitleKeyTyped
-        String Title = txtTitle.getText().trim();
+        String fileName = txtTitle.getText().trim();
         char c = evt.getKeyChar();
-        if (Character.isDigit(c) || Title.length() == 50) {
+        if (Character.isDigit(c) || fileName.length() == 50) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTitleKeyTyped
@@ -292,18 +279,38 @@ public class GenerateReportView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnGeneratePdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGeneratePdfActionPerformed
-        if (isEmptyFields()) {
-            JOptionPane.showMessageDialog(null, "Hay campos vacios");
+        if (hasEmptyFields()) {
+            JOptionPane.showMessageDialog(null, "Ingrese los datos obligatorios");
             return;
         }
+
+        String fileName;
+
+        do {
+            fileName = JOptionPane.showInputDialog("Guardar como:");
+
+            if (fileName == null) {
+                return;
+            }
+
+            if (fileName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el nombre del documento");
+
+            }
+        } while (fileName.isEmpty());
 
         String title = txtTitle.getText();
         String subtitle = txtSubtitle.getText();
         String aditionalInformation = txtAditionalInformation.getText();
 
-        controller.generatePDF(title, subtitle, aditionalInformation);
-        JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
-        this.dispose();
+        boolean success = controller.generatePDF(title, subtitle, aditionalInformation, fileName);
+        
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron resultados");
+        }
 
     }//GEN-LAST:event_btnGeneratePdfActionPerformed
 
@@ -315,6 +322,9 @@ public class GenerateReportView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtSubtitleKeyTyped
 
+    private boolean hasEmptyFields() {
+        return (txtTitle.getText().isEmpty() || txtSubtitle.getText().isEmpty());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
@@ -324,7 +334,6 @@ public class GenerateReportView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel3;

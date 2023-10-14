@@ -5,6 +5,7 @@
 package controllers;
 
 import dao.PdfDao;
+import java.time.LocalDate;
 
 /**
  *
@@ -18,8 +19,12 @@ public class PdfGeneratorController {
         this.pdfdao = new PdfDao();
     }
 
-    public void generatePDF(String title, String subtitle, String aditionalInformation) {
-        pdfdao.generatePDF(title, subtitle, aditionalInformation);
+    public boolean generatePDF(String title, String subtitle, String aditionalInformation, String fileName) {
+        return pdfdao.generatePDF(title, subtitle, aditionalInformation, fileName);
     }
 
+    public boolean generatePDFByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
+            String aditionalInformation) {
+        return pdfdao.generatePDFByDates(startDate, endDate, fileName, title, subtitle, aditionalInformation);
+    }
 }
