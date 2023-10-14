@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import model.Book;
 import model.Loan;
+import model.LoanRepayment;
 import model.User;
 import org.mariadb.jdbc.Connection;
 import singleton.Singleton;
@@ -27,9 +28,11 @@ import singleton.Singleton;
 public class UserDao implements DaoInterface, UserDaoInterface {
 
     private final Connection connection;
+    private final LoanRepaymentDao loanRepaymentDao;
 
     public UserDao() {
         connection = Singleton.getINSTANCE().getConnection();
+        loanRepaymentDao = new LoanRepaymentDao();
     }
 
     @Override
@@ -181,6 +184,10 @@ public class UserDao implements DaoInterface, UserDaoInterface {
             ps.setInt(1, loan.getId());
             ps.executeUpdate();
             sumAvailableCopy(loan.getBook().getIsbn(), loan.getBookQuantity());
+            
+            LoanRepayment loanRepayment = new LoanRepayment(loan.getUser(), loan.getBook());
+            loanRepaymentDao.insertEntity(loanRepayment);
+            
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }

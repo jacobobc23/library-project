@@ -303,7 +303,7 @@ public class LoansWindow extends javax.swing.JFrame {
                 new GenerateByDatesReportView().setVisible(true);
                 break;
             case 3:
-//            new GenerateByUserReportView().setVisible(true);
+            new GenerateByUserReportView(admin).setVisible(true);
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Seleccion un tipo de reporte");
