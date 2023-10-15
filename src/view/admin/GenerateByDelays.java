@@ -10,8 +10,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import model.User;
 
 /**
  *
@@ -21,11 +21,13 @@ public class GenerateByDelays extends javax.swing.JFrame {
 
     private final PdfGeneratorController controller;
     private final UserManagemetController userManagemetController;
+    private User admin;
 
     /**
      * Creates new form GenerateByDelays
+     * @param admin
      */
-    public GenerateByDelays() {
+    public GenerateByDelays(User admin) {
         initComponents();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -33,6 +35,7 @@ public class GenerateByDelays extends javax.swing.JFrame {
         setResizable(false);
         controller = new PdfGeneratorController();
         userManagemetController = new UserManagemetController();
+        this.admin = admin;
     }
 
     /**
@@ -71,11 +74,11 @@ public class GenerateByDelays extends javax.swing.JFrame {
         mainDesktop.setLayout(mainDesktopLayout);
         mainDesktopLayout.setHorizontalGroup(
             mainDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 608, Short.MAX_VALUE)
         );
         mainDesktopLayout.setVerticalGroup(
             mainDesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 360, Short.MAX_VALUE)
+            .addGap(0, 710, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
@@ -83,13 +86,13 @@ public class GenerateByDelays extends javax.swing.JFrame {
         backgroundPanelLayout.setHorizontalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(cbxTypesReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(276, Short.MAX_VALUE))
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mainDesktop)
                 .addContainerGap())
+            .addGroup(backgroundPanelLayout.createSequentialGroup()
+                .addGap(179, 179, 179)
+                .addComponent(cbxTypesReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         backgroundPanelLayout.setVerticalGroup(
             backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,25 +118,29 @@ public class GenerateByDelays extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbxTypesReportItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxTypesReportItemStateChanged
-        //prueba luego creo ventanas, (deben ser internal)
         if (evt.getStateChange() == ItemEvent.SELECTED) {
+            // Verifica si hay un componente en el mainDesktop y, de ser así, ciérralo.
+            if (mainDesktop.getComponentCount() > 0) {
+                mainDesktop.getComponent(0).setVisible(false);
+                mainDesktop.remove(0);
+            }
+
             switch (cbxTypesReport.getSelectedIndex()) {
                 case 1:
+                    GenerateByGeneralDelays view1 = new GenerateByGeneralDelays();
+                    mainDesktop.add(view1);
+                    view1.setVisible(true);
 
-                    Test test = new Test();
-                    mainDesktop.add(test);
-                    test.setVisible(true);
                     break;
-//                GenerateGeneralReportView view = new GenerateGeneralReportView(this);
-//                mainDesktop.add(view);
-//                view.setVisible(true);
                 case 2:
-//                GenerateByDatesReportView view2 = new GenerateByDatesReportView(this);
-//                mainDesktop.add(view2);
-//                view2.setVisible(true);
+                    GenerateByDatesDelays view2 = new GenerateByDatesDelays();
+                    mainDesktop.add(view2);
+                    view2.setVisible(true);
                     break;
                 case 3:
-//                new GenerateByUserReportView(admin, this).setVisible(true);
+                    GenerateByUserDelays view3 = new GenerateByUserDelays(admin);
+                    mainDesktop.add(view3);
+                    view3.setVisible(true);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Selecciona un tipo de reporte");

@@ -334,7 +334,7 @@ public class LoansWindow extends javax.swing.JFrame {
                 new GenerateByUserAndDate(admin).setVisible(true);
                 break;
             case 5:
-                new GenerateByDelays().setVisible(true);
+                new GenerateByDelays(admin).setVisible(true);
                 break;
             
             default:
