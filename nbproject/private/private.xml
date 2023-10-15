@@ -1,23 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-<<<<<<< HEAD
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/dao/BookDao.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/logIn/LogInWindow.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/controllers/PdfGeneratorController.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/dao/PdfDao.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/LoanRepaymentsWindow.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/GenerateByUserReportView.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/Test.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/GenerateByDelays.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/GenerateByUserAndDate.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/GenerateGeneralReportView.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/LoansWindow.java</file>
-            <file>file:/C:/Users/joanp/OneDrive/Documentos/NetBeansProjects/library-project/src/view/admin/GenerateByDatesReportView.java</file>
-        </group>
-    </open-files>
-=======
->>>>>>> 2957845 (empty)
 </project-private>
