@@ -5,6 +5,7 @@
 package view.admin;
 
 import controllers.PdfGeneratorController;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -226,13 +227,13 @@ public class GenerateByGeneralDelays extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(namePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGap(57, 57, 57)
                 .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(namePanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(namePanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,16 +291,20 @@ public class GenerateByGeneralDelays extends javax.swing.JInternalFrame {
             }
         } while (fileName.isEmpty());
 
-        String title = txtTitle.getText();
+        LocalDate currentDate = LocalDate.now();
+        String title1 = txtTitle.getText();
         String subtitle = txtSubtitle.getText();
         String aditionalInformation = txtAditionalInformation.getText();
 
-//        if (success) {
-//            JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
-//            this.dispose();
-//        } else {
-//            JOptionPane.showMessageDialog(null, "No se encontraron resultados");
-//        }
+        boolean success = controller.generateGeneralLoansDelaysPDF(title1, subtitle, aditionalInformation, fileName, currentDate);
+
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron prestamos retrasados para el día: " + currentDate);
+
+        }
     }//GEN-LAST:event_btnGeneratePdfActionPerformed
 
     private void txtSubtitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtitleKeyTyped

@@ -6,6 +6,7 @@ package view.admin;
 
 import controllers.PdfGeneratorController;
 import controllers.UserManagemetController;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -18,13 +19,14 @@ import model.User;
  * @author joanp
  */
 public class GenerateByUserDelays extends javax.swing.JInternalFrame {
-    
+
     private final PdfGeneratorController controller;
     private final UserManagemetController userManagemetController;
     private final User admin;
 
     /**
      * Creates new form GenerateByUserDelays
+     *
      * @param admin
      */
     public GenerateByUserDelays(User admin) {
@@ -62,7 +64,7 @@ public class GenerateByUserDelays extends javax.swing.JInternalFrame {
                     user.getFullName(),});
             }
         }
-    }   
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -387,19 +389,22 @@ public class GenerateByUserDelays extends javax.swing.JInternalFrame {
             }
         } while (fileName.isEmpty());
 
+        LocalDate currentDate = LocalDate.now();
         String id = txtUserId.getText();
         String title = txtTitle.getText();
         String subtitle = txtSubtitle.getText();
         String aditionalInformation = txtAditionalInformation.getText();
-        
-        
-//
-//        if (success) {
-//            JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
-//            this.dispose();
-//        } else {
-//            JOptionPane.showMessageDialog(null, "No se encontraron resultados");
-//        }
+
+        boolean success = controller.generatePDFLoansDelaysByUser(id, fileName, title, subtitle, aditionalInformation, currentDate);
+
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron prestamos retrasados para el día: " + currentDate + " del "
+                    + "usuario seleccionado");
+
+        }
     }//GEN-LAST:event_btnGeneratePdfActionPerformed
 
     private void txtSubtitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtitleKeyTyped

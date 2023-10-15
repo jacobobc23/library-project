@@ -322,17 +322,20 @@ public class GenerateByDatesDelays extends javax.swing.JInternalFrame {
 
             }
         } while (fileName.isEmpty());
-
+        
+        LocalDate currentDate = LocalDate.now();
         String title = txtTitle.getText();
         String subtitle = txtSubtitle.getText();
         String aditionalInformation = txtAditionalInformation.getText();
+        
+        boolean success = controller.generatePDFLoansDelaysByDates(startDate, endDate, currentDate, fileName, title, subtitle, aditionalInformation);
 
-//        if (success) {
-//            JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
-//            this.dispose();
-//        } else {
-//            JOptionPane.showMessageDialog(null, "No se encontraron resultados");
-//        }
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron prestamos retrasados para el día: " +currentDate + " en ese rango de fechas");
+        }
     }//GEN-LAST:event_btnGeneratePdfActionPerformed
 
     private void txtSubtitleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSubtitleKeyTyped
