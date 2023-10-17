@@ -10,6 +10,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import interfaces.PdfDaoInterface;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -24,7 +25,7 @@ import singleton.Singleton;
  *
  * @author joanp
  */
-public class PdfDao {
+public class PdfDao implements PdfDaoInterface {
 
     private final Connection connection;
     private final Document document;
@@ -34,6 +35,7 @@ public class PdfDao {
         document = new Document();
     }
 
+    @Override
     public boolean generatePDFLoansDelaysByUser(String id, String fileName, String title, String subtitle, String aditionalInformation, LocalDate currentDate) {
 
         boolean hasOverdueLoans = false;
@@ -93,6 +95,7 @@ public class PdfDao {
         return hasOverdueLoans;
     }
 
+    @Override
     public boolean generatePDFLoansDelaysByDates(LocalDate startDate, LocalDate endDate, LocalDate currentDate, String fileName, String title, String subtitle,
             String aditionalInformation) {
 
@@ -147,6 +150,7 @@ public class PdfDao {
         return hasOverdueLoans;
     }
 
+    @Override
     public boolean generateGeneralLoansDelaysPDF(String title, String subtitle, String aditionalInformation, String fileName, LocalDate currentDate) {
         boolean hasOverdueLoans = false;
 
@@ -198,6 +202,7 @@ public class PdfDao {
         return hasOverdueLoans;
     }
 
+    @Override
     public boolean generatePDFLoansByUserAndDates(String id, LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
             String aditionalInformation) {
 
@@ -255,6 +260,7 @@ public class PdfDao {
         return hasLoans;
     }
 
+    @Override
     public boolean generateGeneralLoansPDF(String title, String subtitle, String aditionalInformation, String fileName) {
         boolean hasLoans = false;
 
@@ -301,6 +307,7 @@ public class PdfDao {
         return hasLoans;
     }
 
+    @Override
     public boolean generateGeneralLoanRepaymentPDF(String title, String subtitle, String aditionalInformation, String fileName) {
         boolean hasLoans = false;
 
@@ -350,6 +357,7 @@ public class PdfDao {
         return hasLoans;
     }
 
+    @Override
     public boolean generatePDFLoansByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
             String aditionalInformation) {
 
@@ -401,6 +409,7 @@ public class PdfDao {
         return hasLoans;
     }
 
+    @Override
     public boolean generatePDFLoanRepaymentsByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
             String aditionalInformation) {
 
@@ -452,6 +461,7 @@ public class PdfDao {
         return hasLoans;
     }
 
+    @Override
     public boolean generatePDFLoansByUser(String id, String fileName, String title, String subtitle,
             String aditionalInformation) {
 
@@ -508,6 +518,7 @@ public class PdfDao {
         return hasLoans;
     }
 
+    @Override
     public boolean generatePDFLoanRepaymentsByUser(String id, String fileName, String title, String subtitle,
             String aditionalInformation) {
 
