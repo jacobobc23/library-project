@@ -44,7 +44,7 @@ public class PdfDao {
 
             String query = "SELECT users.id, users.fullname, books.title, loans.loan_date, loans.due_date, loans.book_quantity"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn WHERE loans.user_id = ?"
-                    + "AND loans.due_date > ?";
+                    + "AND loans.due_date < ?";
 
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setString(1, id);
@@ -76,6 +76,7 @@ public class PdfDao {
                         table.addCell(rs.getString(3));
                         table.addCell(rs.getString(4));
                         table.addCell(rs.getString(5));
+                        table.addCell(rs.getString(6));
                     } while (rs.next());
                     document.add(table);
 
@@ -104,7 +105,7 @@ public class PdfDao {
 
             String query = "SELECT users.id, users.fullname, books.title,loans.loan_date, loans.due_date, loans.book_quantity"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres "
-                    + "ON books.genre_id = genres.id WHERE loan_date >= ? AND loan_date <= ? AND loans.due_date > ?";
+                    + "ON books.genre_id = genres.id WHERE loan_date >= ? AND loan_date <= ? AND loans.due_date < ?";
 
             try (PreparedStatement ps = connection.prepareStatement(query)) {
                 ps.setDate(1, java.sql.Date.valueOf(startDate.toString()));
@@ -156,7 +157,7 @@ public class PdfDao {
 
             String query = "SELECT users.id, users.fullname, books.title, loans.loan_date, loans.due_date, loans.book_quantity"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres"
-                    + " ON books.genre_id = genres.id WHERE loans.due_date > ? ";
+                    + " ON books.genre_id = genres.id WHERE loans.due_date < ? ";
 
             try (PreparedStatement ps = connection.prepareStatement(query)) {
 
@@ -262,7 +263,7 @@ public class PdfDao {
 
             PdfPTable table = createTable();
 
-            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date, loans.due_date, loans.book_quantity"
+            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id";
 
             try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -359,7 +360,7 @@ public class PdfDao {
 
             PdfPTable table = createTable();
 
-            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date, loans.due_date, loans.book_quantity"
+            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id WHERE loan_date >= ? AND loan_date <= ?";
 
             try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -460,7 +461,7 @@ public class PdfDao {
 
             PdfPTable table = createTable();
 
-            String query = "SELECT users.id, users.fullname, books.title, loans.loan_date, loans.due_date, loans.book_quantity"
+            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn WHERE loans.user_id = ?";
 
             try (PreparedStatement ps = connection.prepareStatement(query)) {
