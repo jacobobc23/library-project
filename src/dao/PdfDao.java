@@ -11,9 +11,12 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import interfaces.PdfDaoInterface;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -85,6 +88,7 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
                 }
 
             } catch (DocumentException | SQLException ex) {
@@ -140,6 +144,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -193,6 +199,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -250,6 +258,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -298,6 +308,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -345,6 +357,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
                 System.err.println(ex.toString());
@@ -399,6 +413,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -451,6 +467,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -508,6 +526,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
 
             } catch (DocumentException | SQLException ex) {
@@ -565,6 +585,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
 
             } catch (DocumentException | SQLException ex) {
@@ -644,5 +666,14 @@ public class PdfDao implements PdfDaoInterface {
         } catch (DocumentException ex) {
 
         }
+    }
+
+    private void openFile(String ruta, String file) {
+        try {
+            Desktop.getDesktop().open(new File(ruta + "/Desktop/" + file + ".pdf"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
