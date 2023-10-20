@@ -18,10 +18,10 @@ import singleton.Singleton;
  */
 public class LoanDao implements LoanDaoInterface {
 
-    private final Connection connection;
+    private final Connection con;
 
     public LoanDao() {
-        connection = Singleton.getINSTANCE().getConnection();
+        con = Singleton.getINSTANCE().getConnection();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class LoanDao implements LoanDaoInterface {
         ArrayList<Loan> loans = new ArrayList<>();
         String query = "SELECT * FROM loans WHERE user_id = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, user.getId());
             ResultSet rs = ps.executeQuery();
 
@@ -39,12 +39,10 @@ public class LoanDao implements LoanDaoInterface {
                 int bookQuantity = rs.getInt("book_quantity");
                 LocalDate date = rs.getDate("loan_date").toLocalDate();
                 LocalDate dueDate = rs.getDate("due_date").toLocalDate();
-                LocalDate returnDate = (rs.getDate("return_date") != null) ? rs.getDate("return_date").toLocalDate() : null;
-                boolean returned = rs.getBoolean("returned");
 
                 Book book = getBook(isbn);
 
-                Loan loan = new Loan(user, book, bookQuantity, returnDate, loanId, date, dueDate, returned);
+                Loan loan = new Loan(user, book, bookQuantity, loanId, date, dueDate);
                 loans.add(loan);
             }
         } catch (SQLException ex) {
@@ -58,7 +56,7 @@ public class LoanDao implements LoanDaoInterface {
         ArrayList<Loan> loans = new ArrayList<>();
 
         String query = "SELECT * FROM loans";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
 
             ResultSet rs;
 
@@ -71,13 +69,11 @@ public class LoanDao implements LoanDaoInterface {
                 int bookQuantity = rs.getInt("book_quantity");
                 LocalDate date = rs.getDate("loan_date").toLocalDate();
                 LocalDate dueDate = rs.getDate("due_date").toLocalDate();
-                LocalDate returnDate = (rs.getDate("return_date") != null) ? rs.getDate("return_date").toLocalDate() : null;
-                boolean returned = rs.getBoolean("returned");
 
                 User user = getUser(userId);
                 Book book = getBook(isbn);
 
-                Loan loan = new Loan(user, book, bookQuantity, returnDate, loanId, date, dueDate, returned);
+                Loan loan = new Loan(user, book, bookQuantity, loanId, date, dueDate);
                 loans.add(loan);
             }
 
@@ -90,7 +86,7 @@ public class LoanDao implements LoanDaoInterface {
     @Override
     public Loan selectLoan(int id) {
         String query = "SELECT * FROM loans WHERE loan_id = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
 
             ResultSet rs;
 
@@ -103,13 +99,11 @@ public class LoanDao implements LoanDaoInterface {
                 int bookQuantity = rs.getInt("book_quantity");
                 LocalDate date = rs.getDate("loan_date").toLocalDate();
                 LocalDate dueDate = rs.getDate("due_date").toLocalDate();
-                LocalDate returnDate = (rs.getDate("return_date") != null) ? rs.getDate("return_date").toLocalDate() : null;
-                boolean returned = rs.getBoolean("returned");
 
                 User user = getUser(userId);
                 Book book = getBook(isbn);
 
-                return new Loan(user, book, bookQuantity, returnDate, id, date, dueDate, returned);
+                return new Loan(user, book, bookQuantity, id, date, dueDate);
             }
         } catch (SQLException ex) {
             System.err.println(ex.toString());

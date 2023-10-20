@@ -47,10 +47,11 @@ public class UserDao implements DaoInterface, UserDaoInterface {
             while (rs.next()) {
                 users.add(getUser(rs));
             }
+            return users;
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
-        return users;
+        return null;
     }
 
     @Override
@@ -113,10 +114,6 @@ public class UserDao implements DaoInterface, UserDaoInterface {
 
             User user = (User) obj;
 
-            if (isMobileNumberInUse(user.getMobileNumber())) {
-                throw new MobileNumberAlreadyInUseException();
-            }
-
             ps.setString(1, user.getMobileNumber());
             ps.setString(2, user.getUsername());
             ps.setString(3, user.getPassword());
@@ -150,8 +147,8 @@ public class UserDao implements DaoInterface, UserDaoInterface {
 
     @Override
     public void applyLoan(Loan loan) throws LoanPastDueException, InsufficientCopiesException {
-        String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, returned, return_date, book_quantity) VALUES "
-                + "(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO loans (user_id, isbn_book, loan_date, due_date, book_quantity) VALUES "
+                + "(?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             User user = loan.getUser();
 
@@ -167,9 +164,7 @@ public class UserDao implements DaoInterface, UserDaoInterface {
             ps.setString(2, loan.getBook().getIsbn());
             ps.setDate(3, java.sql.Date.valueOf(loan.getDate()));
             ps.setDate(4, java.sql.Date.valueOf(loan.getDueDate()));
-            ps.setBoolean(5, false);
-            ps.setDate(6, null);
-            ps.setInt(7, loan.getBookQuantity());
+            ps.setInt(5, loan.getBookQuantity());
             ps.executeUpdate();
             subtractAvailableCopy(loan.getBook().getIsbn(), loan.getBookQuantity());
         } catch (SQLException ex) {
@@ -184,17 +179,17 @@ public class UserDao implements DaoInterface, UserDaoInterface {
             ps.setInt(1, loan.getId());
             ps.executeUpdate();
             sumAvailableCopy(loan.getBook().getIsbn(), loan.getBookQuantity());
-            
+
             LoanRepayment loanRepayment = new LoanRepayment(loan.getUser(), loan.getBook());
             loanRepaymentDao.insertEntity(loanRepayment);
-            
+
         } catch (SQLException ex) {
             System.err.println(ex.toString());
         }
     }
 
     public boolean hasPastDueLoan(User user) {
-        String query = "SELECT * FROM loans WHERE user_id = ? AND returned = false AND due_date < ?";
+        String query = "SELECT * FROM loans WHERE user_id = ? AND due_date < ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, user.getId());
             Date currentDate = new Date();

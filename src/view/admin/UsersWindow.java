@@ -426,7 +426,8 @@ public class UsersWindow extends javax.swing.JFrame {
 
             String id = usersTable.getModel().getValueAt(selected, 0).toString();
 
-            int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el usuario?",
+            int answer = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el usuario?, los prestamos y "
+                    + "devoluciones asociadas a el, se eliminaran",
                     "Confirmación", JOptionPane.YES_NO_OPTION);
 
             if (answer == 0) {

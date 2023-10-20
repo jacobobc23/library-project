@@ -33,7 +33,7 @@ public class LoanRepaymentsWindow extends javax.swing.JFrame {
         this.admin = admin;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Devoluciones");
-//        setResizable(false);
+        setResizable(false);
         lblAdminName.setText(admin.getFullName());
         controller = new LoanRepaymentController();
         fillTable();

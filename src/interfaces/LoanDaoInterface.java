@@ -17,4 +17,5 @@ public interface LoanDaoInterface {
     ArrayList<Loan> listUserLoans(User user);
     ArrayList<Loan> listAllLoans();
     Loan selectLoan(int id);
+    
 }

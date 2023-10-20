@@ -29,7 +29,7 @@ public class LoansWindow extends javax.swing.JFrame {
         this.admin = admin;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Préstamos");
-//        setResizable(false);
+        setResizable(false);
         lblAdminName.setText(admin.getFullName());
         controller = new LoanManagementController();
         fillTable();

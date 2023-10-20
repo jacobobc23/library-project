@@ -11,11 +11,11 @@ import java.time.LocalDate;
  * @author jacobobc
  */
 public class LoanRepayment {
-    
+
     private final User user;
     private final Book book;
     private final LocalDate returnDate;
-    
+
     private int id;
 
     public LoanRepayment(User user, Book book) {
@@ -30,7 +30,7 @@ public class LoanRepayment {
         this.returnDate = returnDate;
         this.id = id;
     }
-    
+
     public User getUser() {
         return user;
     }
@@ -46,5 +46,5 @@ public class LoanRepayment {
     public int getId() {
         return id;
     }
-    
+
 }

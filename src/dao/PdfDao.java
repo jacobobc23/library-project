@@ -11,9 +11,12 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import interfaces.PdfDaoInterface;
+import java.awt.Desktop;
 import java.awt.HeadlessException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,11 +30,11 @@ import singleton.Singleton;
  */
 public class PdfDao implements PdfDaoInterface {
 
-    private final Connection connection;
+    private final Connection con;
     private final Document document;
 
     public PdfDao() {
-        connection = Singleton.getINSTANCE().getConnection();
+        con = Singleton.getINSTANCE().getConnection();
         document = new Document();
     }
 
@@ -46,9 +49,9 @@ public class PdfDao implements PdfDaoInterface {
 
             String query = "SELECT users.id, users.fullname, books.title, loans.loan_date, loans.due_date, loans.book_quantity"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn WHERE loans.user_id = ?"
-                    + "AND loans.due_date > ?";
+                    + "AND loans.due_date < ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setString(1, id);
                 ps.setDate(2, java.sql.Date.valueOf((currentDate.toString())));
 
@@ -78,12 +81,14 @@ public class PdfDao implements PdfDaoInterface {
                         table.addCell(rs.getString(3));
                         table.addCell(rs.getString(4));
                         table.addCell(rs.getString(5));
+                        table.addCell(rs.getString(6));
                     } while (rs.next());
                     document.add(table);
 
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
                 }
 
             } catch (DocumentException | SQLException ex) {
@@ -107,9 +112,9 @@ public class PdfDao implements PdfDaoInterface {
 
             String query = "SELECT users.id, users.fullname, books.title,loans.loan_date, loans.due_date, loans.book_quantity"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres "
-                    + "ON books.genre_id = genres.id WHERE loan_date >= ? AND loan_date <= ? AND loans.due_date > ?";
+                    + "ON books.genre_id = genres.id WHERE loan_date >= ? AND loan_date <= ? AND loans.due_date < ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setDate(1, java.sql.Date.valueOf(startDate.toString()));
                 ps.setDate(2, java.sql.Date.valueOf((endDate.toString())));
                 ps.setDate(3, java.sql.Date.valueOf((currentDate.toString())));
@@ -139,6 +144,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -160,9 +167,9 @@ public class PdfDao implements PdfDaoInterface {
 
             String query = "SELECT users.id, users.fullname, books.title, loans.loan_date, loans.due_date, loans.book_quantity"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres"
-                    + " ON books.genre_id = genres.id WHERE loans.due_date > ? ";
+                    + " ON books.genre_id = genres.id WHERE loans.due_date < ? ";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
 
                 ps.setDate(1, java.sql.Date.valueOf(currentDate.toString()));
 
@@ -192,6 +199,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -210,13 +219,13 @@ public class PdfDao implements PdfDaoInterface {
 
             String ruta = System.getProperty("user.home");
 
-            PdfPTable table = createTableUsersDates();
+            PdfPTable table = createTable();
 
             String query = "SELECT users.id, users.fullname, books.isbn, books.author, books.title, genres.name, loans.loan_date, loans.due_date"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres "
                     + "ON books.genre_id = genres.id WHERE loan_date >= ? AND loan_date <= ? AND loans.user_id = ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setDate(1, java.sql.Date.valueOf(startDate.toString()));
                 ps.setDate(2, java.sql.Date.valueOf((endDate.toString())));
                 ps.setString(3, id);
@@ -249,6 +258,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -268,10 +279,10 @@ public class PdfDao implements PdfDaoInterface {
 
             PdfPTable table = createTable();
 
-            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date, loans.due_date, loans.book_quantity"
+            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
@@ -297,6 +308,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -318,7 +331,7 @@ public class PdfDao implements PdfDaoInterface {
             String query = "SELECT users.id, users.fullname, books.title, genres.name, loan_repayments.return_date FROM"
                     + " loan_repayments JOIN users ON loan_repayments.user_id = users.id JOIN books ON loan_repayments.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
@@ -344,6 +357,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
                 System.err.println(ex.toString());
@@ -367,10 +382,10 @@ public class PdfDao implements PdfDaoInterface {
 
             PdfPTable table = createTable();
 
-            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date, loans.due_date, loans.book_quantity"
+            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date"
                     + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id WHERE loan_date >= ? AND loan_date <= ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setDate(1, java.sql.Date.valueOf(startDate.toString()));
                 ps.setDate(2, java.sql.Date.valueOf((endDate.toString())));
                 ResultSet rs = ps.executeQuery();
@@ -398,6 +413,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -422,7 +439,7 @@ public class PdfDao implements PdfDaoInterface {
             String query = "SELECT users.id, users.fullname, books.title, genres.name, loan_repayments.return_date FROM"
                     + " loan_repayments JOIN users ON loan_repayments.user_id = users.id JOIN books ON loan_repayments.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id WHERE return_date >= ? AND return_date <= ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setDate(1, java.sql.Date.valueOf(startDate.toString()));
                 ps.setDate(2, java.sql.Date.valueOf((endDate.toString())));
                 ResultSet rs = ps.executeQuery();
@@ -450,6 +467,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
             } catch (DocumentException | SQLException ex) {
             }
@@ -470,10 +489,10 @@ public class PdfDao implements PdfDaoInterface {
 
             PdfPTable table = createTable();
 
-            String query = "SELECT users.id, users.fullname, books.title, loans.loan_date, loans.due_date, loans.book_quantity"
-                    + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn WHERE loans.user_id = ?";
+            String query = "SELECT users.id, users.fullname, books.title, genres.name, loans.loan_date"
+                    + " FROM loans JOIN users ON loans.user_id = users.id JOIN books ON loans.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id WHERE loans.user_id = ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setString(1, id);
                 ResultSet rs = ps.executeQuery();
 
@@ -507,6 +526,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
 
             } catch (DocumentException | SQLException ex) {
@@ -530,7 +551,7 @@ public class PdfDao implements PdfDaoInterface {
             String query = "SELECT users.id, users.fullname, books.title, genres.name, loan_repayments.return_date FROM"
                     + " loan_repayments JOIN users ON loan_repayments.user_id = users.id JOIN books ON loan_repayments.isbn_book = books.isbn JOIN genres ON books.genre_id = genres.id WHERE loan_repayments.user_id = ?";
 
-            try (PreparedStatement ps = connection.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setString(1, id);
                 ResultSet rs = ps.executeQuery();
 
@@ -564,6 +585,8 @@ public class PdfDao implements PdfDaoInterface {
                     insertAditionalInformation(aditionalInformation);
 
                     document.close();
+                    openFile(ruta, file);
+
                 }
 
             } catch (DocumentException | SQLException ex) {
@@ -572,20 +595,6 @@ public class PdfDao implements PdfDaoInterface {
         } catch (HeadlessException | FileNotFoundException ex) {
         }
         return hasLoans;
-    }
-
-    private PdfPTable createTableDelays() {
-        float[] columnWidths = {7, 15, 15, 15, 15, 7};
-        PdfPTable table = new PdfPTable(columnWidths);
-
-        table.addCell(new Phrase("Id Usuario"));
-        table.addCell(new Phrase("Nombre Usuario"));
-        table.addCell(new Phrase("Nombre Libro"));
-        table.addCell(new Phrase("Fecha préstamo"));
-        table.addCell(new Phrase("Fecha de vencimiento"));
-        table.addCell(new Phrase("Libros prestados"));
-
-        return table;
     }
 
     private PdfPTable createTable() {
@@ -600,19 +609,17 @@ public class PdfDao implements PdfDaoInterface {
 
         return table;
     }
-
-    private PdfPTable createTableUsersDates() {
-        float[] columnWidths = {7, 15, 20, 15, 15, 15, 15, 15};
+    
+    private PdfPTable createTableDelays() {
+        float[] columnWidths = {7, 15, 15, 15, 15, 7};
         PdfPTable table = new PdfPTable(columnWidths);
 
         table.addCell(new Phrase("Id Usuario"));
         table.addCell(new Phrase("Nombre Usuario"));
-        table.addCell(new Phrase("ISBN"));
-        table.addCell(new Phrase("Autor"));
         table.addCell(new Phrase("Nombre Libro"));
-        table.addCell(new Phrase("Categoria"));
-        table.addCell(new Phrase("Fecha prestamo"));
-        table.addCell(new Phrase("Fecha vencimiento"));
+        table.addCell(new Phrase("Categoría"));
+        table.addCell(new Phrase("Fecha de vencimiento"));
+        table.addCell(new Phrase("Libros prestados"));
 
         return table;
     }
@@ -627,7 +634,7 @@ public class PdfDao implements PdfDaoInterface {
 
         Paragraph subtitleAssigment = new Paragraph(subtitle);
         subtitleAssigment.setAlignment(Paragraph.ALIGN_CENTER);
-        subtitleAssigment.setSpacingAfter(10f); // Espacio después del subtítulo
+        subtitleAssigment.setSpacingAfter(10f); 
         try {
             document.add(subtitleAssigment);
         } catch (DocumentException ex) {
@@ -637,11 +644,19 @@ public class PdfDao implements PdfDaoInterface {
     private void insertAditionalInformation(String aditionalInformation) {
         Paragraph additionalText = new Paragraph(aditionalInformation);
         additionalText.setAlignment(Paragraph.ALIGN_LEFT);
-        additionalText.setSpacingBefore(10f); // Espacio antes del texto
+        additionalText.setSpacingBefore(10f); 
         try {
             document.add(additionalText);
         } catch (DocumentException ex) {
 
+        }
+    }
+
+    private void openFile(String ruta, String file) {
+        try {
+            Desktop.getDesktop().open(new File(ruta + "/Desktop/" + file + ".pdf"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

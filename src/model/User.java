@@ -2,6 +2,7 @@ package model;
 
 import enums.Role;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
@@ -66,6 +67,25 @@ public class User {
 
     public ArrayList<Loan> getLoans() {
         return loans;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        User user = (User) obj;
+
+        return Objects.equals(id, user.id)
+                && Objects.equals(fullName, user.fullName)
+                && role == user.role
+                && Objects.equals(mobileNumber, user.mobileNumber)
+                && Objects.equals(username, user.username)
+                && Objects.equals(password, user.password);
     }
 
 }

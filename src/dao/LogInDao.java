@@ -16,16 +16,16 @@ import interfaces.LogInDaoInterface;
  */
 public class LogInDao implements LogInDaoInterface {
 
-    private final Connection connection;
+    private final Connection con;
 
     public LogInDao() {
-        connection = Singleton.getINSTANCE().getConnection();
+        con = Singleton.getINSTANCE().getConnection();
     }
 
     @Override
     public User selectUser(String username, String password) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = con.prepareStatement(query)) {
 
             ResultSet rs;
 

@@ -112,7 +112,7 @@ public class LoanRepaymentDao implements DaoInterface {
     private User getUser(String id) {
         UserDao userDao = new UserDao();
         return (User) userDao.selectEntity(id);
-    }
+}
 
     private Book getBook(String isbn) {
         BookDao bookDao = new BookDao();

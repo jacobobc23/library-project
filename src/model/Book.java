@@ -1,18 +1,20 @@
 package model;
 
+import java.util.Objects;
+
 /**
- * 
+ *
  * @author Jacobo-bc
  */
 public class Book {
-    
+
     private final String isbn;
     private String title;
     private String author;
     private Genre genre;
     private int publicationYear;
     private int copiesNumber;
-    
+
     public Book(String isbn, String title, String author, Genre genre, int publicationYear, int copiesNumber) {
         this.isbn = isbn;
         this.title = title;
@@ -41,7 +43,7 @@ public class Book {
     public void setAuthor(String author) {
         this.author = author;
     }
-    
+
     public Genre getGenre() {
         return genre;
     }
@@ -65,5 +67,24 @@ public class Book {
     public void setCopiesNumber(int copiesNumber) {
         this.copiesNumber = copiesNumber;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Book book = (Book) obj;
+
+        return Objects.equals(isbn, book.getIsbn())
+                && Objects.equals(title, book.getTitle())
+                && Objects.equals(author, book.getAuthor())
+                && genre == book.getGenre()
+                && publicationYear == book.getPublicationYear()
+                && copiesNumber == book.getCopiesNumber();
+    }
+
 }

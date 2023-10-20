@@ -6,7 +6,6 @@ import model.Book;
 import model.Genre;
 
 /**
- * Controlador para gestionar los libros.
  *
  * @author joanp
  */
@@ -21,7 +20,7 @@ public class BookManagementController {
     public ArrayList<Object> listBooks() {
         return bookDao.listEntity();
     }
-    
+
     public ArrayList<Book> listBooksByGenre(int id) {
         return bookDao.listBooksByGenre(id);
     }
@@ -29,7 +28,7 @@ public class BookManagementController {
     public ArrayList<Genre> listAllGenres() {
         return bookDao.listAllGenres();
     }
-    
+
     public Object selectBook(String isbn) {
         return bookDao.selectEntity(isbn);
     }
