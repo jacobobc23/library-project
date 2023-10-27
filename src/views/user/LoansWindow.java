@@ -1,6 +1,7 @@
 package views.user;
 
 import controllers.LoanManagementController;
+import controllers.TransactionController;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -8,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Loan;
+import model.Transaction;
 import model.User;
 import view.logIn.LogInWindow;
 
@@ -19,11 +21,14 @@ public class LoansWindow extends javax.swing.JFrame {
 
     private final User user;
     private final LoanManagementController controller;
+    private final TransactionController controllerT;
 
     private TableRowSorter<DefaultTableModel> sorter;
 
     /**
      * Creates new form LoansWindow
+     *
+     * @param user
      */
     public LoansWindow(User user) {
         initComponents();
@@ -33,6 +38,7 @@ public class LoansWindow extends javax.swing.JFrame {
         lblUserName.setText(user.getFullName());
         setResizable(false);
         controller = new LoanManagementController();
+        controllerT = new TransactionController();
         fillTable();
     }
 
@@ -282,7 +288,7 @@ public class LoansWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTransactionsMouseExited
 
     private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
-        // TODO add your handling code here:
+        new UserTransactionsWindow(user).setVisible(true);
     }//GEN-LAST:event_btnTransactionsActionPerformed
 
     private void btnRepayLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepayLoanActionPerformed
@@ -299,6 +305,8 @@ public class LoansWindow extends javax.swing.JFrame {
                 controller.repayLoan(loan);
                 fillTable();
                 JOptionPane.showMessageDialog(null, "Devolución realizada correctamente");
+                Transaction transaction = new Transaction(user.getId(), "Devolución préstamo");
+                controllerT.insertTransaction(transaction);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un préstamo de la tabla");

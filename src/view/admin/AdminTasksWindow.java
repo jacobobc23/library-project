@@ -40,6 +40,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
         btnUserManagement = new javax.swing.JButton();
         btnLoans = new javax.swing.JButton();
         btnLoanRepayments = new javax.swing.JButton();
+        btnTransactions = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -164,6 +165,27 @@ public class AdminTasksWindow extends javax.swing.JFrame {
             }
         });
 
+        btnTransactions.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnTransactions.setForeground(new java.awt.Color(255, 255, 255));
+        btnTransactions.setText("    TRANSACCIONES");
+        btnTransactions.setBorderPainted(false);
+        btnTransactions.setContentAreaFilled(false);
+        btnTransactions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTransactions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTransactionsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTransactionsMouseExited(evt);
+            }
+        });
+        btnTransactions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransactionsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
         menuBarPanel.setLayout(menuBarPanelLayout);
         menuBarPanelLayout.setHorizontalGroup(
@@ -173,6 +195,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
             .addComponent(btnBooksManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnUserManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnLoanRepayments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuBarPanelLayout.createSequentialGroup()
                 .addGroup(menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuBarPanelLayout.createSequentialGroup()
@@ -183,7 +206,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
                         .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(btnLoanRepayments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,7 +225,9 @@ public class AdminTasksWindow extends javax.swing.JFrame {
                 .addComponent(btnLoans)
                 .addGap(18, 18, 18)
                 .addComponent(btnLoanRepayments)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTransactions)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -305,6 +330,21 @@ public class AdminTasksWindow extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnLoanRepaymentsActionPerformed
 
+    private void btnTransactionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseEntered
+        Color color = new Color(135, 178, 255);
+        btnTransactions.setBackground(color);
+        btnTransactions.setOpaque(true);
+    }//GEN-LAST:event_btnTransactionsMouseEntered
+
+    private void btnTransactionsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseExited
+        btnTransactions.setOpaque(false);
+
+    }//GEN-LAST:event_btnTransactionsMouseExited
+
+    private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
+        new TransactionsWindow(user).setVisible(true);
+    }//GEN-LAST:event_btnTransactionsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -315,6 +355,7 @@ public class AdminTasksWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLoanRepayments;
     private javax.swing.JButton btnLoans;
+    private javax.swing.JButton btnTransactions;
     private javax.swing.JButton btnUserManagement;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblAdminAccount;

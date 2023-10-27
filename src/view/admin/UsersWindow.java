@@ -1,5 +1,6 @@
 package view.admin;
 
+import controllers.TransactionController;
 import controllers.UserManagemetController;
 import exceptions.UserHasLoansException;
 import java.awt.Color;
@@ -10,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import model.Transaction;
 import model.User;
 import view.logIn.LogInWindow;
 
@@ -21,6 +23,7 @@ public class UsersWindow extends javax.swing.JFrame {
 
     private final User admin;
     private final UserManagemetController controller;
+    private final TransactionController controllerT;
 
     private TableRowSorter<DefaultTableModel> sorter;
 
@@ -37,6 +40,7 @@ public class UsersWindow extends javax.swing.JFrame {
         setResizable(false);
         lblAdminName.setText(admin.getFullName());
         controller = new UserManagemetController();
+        controllerT = new TransactionController();
         fillTable();
     }
 
@@ -59,6 +63,7 @@ public class UsersWindow extends javax.swing.JFrame {
         btnLoans = new javax.swing.JButton();
         lblUsers = new javax.swing.JLabel();
         btnLoanRepayments = new javax.swing.JButton();
+        btnTransactions = new javax.swing.JButton();
         usersPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         usersTable = new javax.swing.JTable();
@@ -177,6 +182,27 @@ public class UsersWindow extends javax.swing.JFrame {
             }
         });
 
+        btnTransactions.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnTransactions.setForeground(new java.awt.Color(255, 255, 255));
+        btnTransactions.setText("    TRANSACCIONES");
+        btnTransactions.setBorderPainted(false);
+        btnTransactions.setContentAreaFilled(false);
+        btnTransactions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTransactions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTransactionsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTransactionsMouseExited(evt);
+            }
+        });
+        btnTransactions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransactionsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
         menuBarPanel.setLayout(menuBarPanelLayout);
         menuBarPanelLayout.setHorizontalGroup(
@@ -197,6 +223,7 @@ public class UsersWindow extends javax.swing.JFrame {
             .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblUsers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnLoanRepayments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,6 +242,8 @@ public class UsersWindow extends javax.swing.JFrame {
                 .addComponent(btnLoans)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLoanRepayments)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTransactions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
@@ -399,7 +428,7 @@ public class UsersWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoansActionPerformed
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
-        new UserRegistryWindow(this).setVisible(true);
+        new UserRegistryWindow(this, admin).setVisible(true);
     }//GEN-LAST:event_btnAddUserActionPerformed
 
     private void btnUpdateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateUserActionPerformed
@@ -411,7 +440,7 @@ public class UsersWindow extends javax.swing.JFrame {
             User user = controller.selectUser(ID);
 
             if (user != null) {
-                new UserEditingWindow(user, this).setVisible(true);
+                new UserEditingWindow(admin, user, this).setVisible(true);
             }
 
         } else {
@@ -436,6 +465,8 @@ public class UsersWindow extends javax.swing.JFrame {
 
                     fillTable();
                     JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
+                    Transaction transaction = new Transaction(admin.getId(), "Eliminación usuario");
+                    controllerT.insertTransaction(transaction);
 
                 } catch (UserHasLoansException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -472,6 +503,20 @@ public class UsersWindow extends javax.swing.JFrame {
         new LoanRepaymentsWindow(admin).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoanRepaymentsActionPerformed
+
+    private void btnTransactionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseEntered
+        Color color = new Color(135, 178, 255);
+        btnTransactions.setBackground(color);
+        btnTransactions.setOpaque(true);
+    }//GEN-LAST:event_btnTransactionsMouseEntered
+
+    private void btnTransactionsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseExited
+        btnTransactions.setOpaque(false);
+    }//GEN-LAST:event_btnTransactionsMouseExited
+
+    private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
+        new TransactionsWindow(admin).setVisible(true);
+    }//GEN-LAST:event_btnTransactionsActionPerformed
 
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
@@ -523,6 +568,7 @@ public class UsersWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLoanRepayments;
     private javax.swing.JButton btnLoans;
+    private javax.swing.JButton btnTransactions;
     private javax.swing.JButton btnUpdateUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

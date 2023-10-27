@@ -1,6 +1,7 @@
 package view.admin;
 
 import controllers.GenreManagementController;
+import controllers.TransactionController;
 import exceptions.BookGenreException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Genre;
+import model.Transaction;
+import model.User;
 
 /**
  *
@@ -19,14 +22,17 @@ public class GenreCrudWindow extends javax.swing.JFrame {
 
     private final BooksWindow bw;
     private final GenreManagementController controller;
+    private final TransactionController controllerT;
     private TableRowSorter<DefaultTableModel> sorter;
+    private final User admin;
 
     /**
      * Creates new form GenreCrudWindow
      *
      * @param bw
+     * @param admin
      */
-    public GenreCrudWindow(BooksWindow bw) {
+    public GenreCrudWindow(BooksWindow bw, User admin) {
         initComponents();
         this.bw = bw;
         setLocationRelativeTo(null);
@@ -34,7 +40,9 @@ public class GenreCrudWindow extends javax.swing.JFrame {
         setTitle("Gestión géneros");
         setResizable(false);
         controller = new GenreManagementController();
+        controllerT = new TransactionController();
         fillTable();
+        this.admin = admin;
     }
 
     /**
@@ -209,6 +217,8 @@ public class GenreCrudWindow extends javax.swing.JFrame {
             controller.insertGenre(newGenre);
             JOptionPane.showMessageDialog(null, "Género registrado correctamente");
             fillTable();
+            Transaction transaction = new Transaction(admin.getId(), "Registro de género");
+            controllerT.insertTransaction(transaction);
             bw.setCbxGenre();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Ya existe un género con ese nombre");
@@ -244,6 +254,8 @@ public class GenreCrudWindow extends javax.swing.JFrame {
                 controller.updateGenre(genre);
                 JOptionPane.showMessageDialog(null, "Género editado correctamente");
                 fillTable();
+                Transaction transaction = new Transaction(admin.getId(), "Edición de género");
+                controllerT.insertTransaction(transaction);
                 bw.setCbxGenre();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Ya existe un género con ese nombre");
@@ -269,6 +281,8 @@ public class GenreCrudWindow extends javax.swing.JFrame {
                     controller.deleteGenre(id);
                     fillTable();
                     JOptionPane.showMessageDialog(null, "Género eliminado correctamente");
+                    Transaction transaction = new Transaction(admin.getId(), "Eliminación de género");
+                    controllerT.insertTransaction(transaction);
                     bw.setCbxGenre();
                 } catch (BookGenreException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());

@@ -4,8 +4,6 @@
  */
 package view.admin;
 
-import controllers.PdfGeneratorController;
-import controllers.UserManagemetController;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
@@ -19,9 +17,7 @@ import model.User;
  */
 public class GenerateByDelays extends javax.swing.JFrame {
 
-    private final PdfGeneratorController controller;
-    private final UserManagemetController userManagemetController;
-    private User admin;
+    private final User admin;
 
     /**
      * Creates new form GenerateByDelays
@@ -33,8 +29,6 @@ public class GenerateByDelays extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generar Reporte");
         setResizable(false);
-        controller = new PdfGeneratorController();
-        userManagemetController = new UserManagemetController();
         this.admin = admin;
     }
 
@@ -127,13 +121,13 @@ public class GenerateByDelays extends javax.swing.JFrame {
 
             switch (cbxTypesReport.getSelectedIndex()) {
                 case 1:
-                    GenerateByGeneralDelays view1 = new GenerateByGeneralDelays();
+                    GenerateByGeneralDelays view1 = new GenerateByGeneralDelays(admin);
                     mainDesktop.add(view1);
                     view1.setVisible(true);
 
                     break;
                 case 2:
-                    GenerateByDatesDelays view2 = new GenerateByDatesDelays();
+                    GenerateByDatesDelays view2 = new GenerateByDatesDelays(admin);
                     mainDesktop.add(view2);
                     view2.setVisible(true);
                     break;

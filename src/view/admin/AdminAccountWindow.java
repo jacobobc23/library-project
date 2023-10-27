@@ -1,10 +1,12 @@
 package view.admin;
 
+import controllers.TransactionController;
 import controllers.UserManagemetController;
 import enums.Role;
 import exceptions.MobileNumberAlreadyInUseException;
 import exceptions.UserNameAlreadyInUseException;
 import javax.swing.JOptionPane;
+import model.Transaction;
 import model.User;
 import view.logIn.LogInWindow;
 
@@ -15,6 +17,7 @@ import view.logIn.LogInWindow;
 public class AdminAccountWindow extends javax.swing.JFrame {
 
     private final UserManagemetController controller;
+    private final TransactionController controllerT;
     private final User user;
 
     private boolean passwordVisible = false;
@@ -28,6 +31,7 @@ public class AdminAccountWindow extends javax.swing.JFrame {
         initComponents();
         this.user = user;
         controller = new UserManagemetController();
+        controllerT = new TransactionController();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -460,6 +464,8 @@ public class AdminAccountWindow extends javax.swing.JFrame {
             User adm = new User(user.getId(), user.getFullName(), user.getRole(), mobileNumber, username, pass);
             controller.updateUser(adm);
             JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
+            Transaction transaction = new Transaction(user.getId(), "Actualización de datos");
+            controllerT.insertTransaction(transaction);
         } catch (UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

@@ -1,6 +1,7 @@
 package view.admin;
 
 import controllers.BookManagementController;
+import controllers.TransactionController;
 import exceptions.BookAlreadyRegisteredException;
 import exceptions.TitleAlreadyInUseException;
 import java.time.LocalDate;
@@ -12,6 +13,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import model.Book;
 import model.Genre;
+import model.Transaction;
+import model.User;
 
 /**
  *
@@ -21,20 +24,25 @@ public class BookRegistryWindow extends javax.swing.JFrame {
 
     private final BooksWindow bw;
     private final BookManagementController controller;
+    private final TransactionController controllerT;
+    private final User admin;
 
     /**
      * Creates new form BookRegistryWindow
      *
      * @param bw la ventana principal de la gestión de libros
+     * @param admin
      */
-    public BookRegistryWindow(BooksWindow bw) {
+    public BookRegistryWindow(BooksWindow bw, User admin) {
         initComponents();
         this.bw = bw;
+        this.admin = admin;
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de libro");
         setResizable(false);
         controller = new BookManagementController();
+        controllerT = new TransactionController();
         setCbxPublicationYear();
         setCbxGenre();
         setSpnCopiesNumber();
@@ -357,6 +365,8 @@ public class BookRegistryWindow extends javax.swing.JFrame {
             controller.insertBook(book);
             JOptionPane.showMessageDialog(null, "Libro registrado correctamente");
             bw.fillTable();
+            Transaction transaction = new Transaction(admin.getId(), "Registro de libro");
+            controllerT.insertTransaction(transaction);
             cleanFields();
         } catch (BookAlreadyRegisteredException | TitleAlreadyInUseException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());

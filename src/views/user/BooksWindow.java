@@ -1,6 +1,7 @@
 package views.user;
 
 import controllers.BookManagementController;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
@@ -55,8 +56,8 @@ public class BooksWindow extends javax.swing.JFrame {
         lblUserAccount = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
         btnLoans = new javax.swing.JButton();
-        btnTransactions = new javax.swing.JButton();
         lblBooks = new javax.swing.JLabel();
+        btnTransactions = new javax.swing.JButton();
         booksPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         booksTable = new javax.swing.JTable();
@@ -85,7 +86,7 @@ public class BooksWindow extends javax.swing.JFrame {
         lblUserAccount.setForeground(new java.awt.Color(255, 255, 255));
         lblUserAccount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblUserAccount.setText("Gestionar mi cuenta");
-        lblUserAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblUserAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblUserAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblUserAccount.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -97,7 +98,7 @@ public class BooksWindow extends javax.swing.JFrame {
         btnExit.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("SALIR");
-        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExitActionPerformed(evt);
@@ -109,13 +110,19 @@ public class BooksWindow extends javax.swing.JFrame {
         btnLoans.setText("    PRÉSTAMOS");
         btnLoans.setBorderPainted(false);
         btnLoans.setContentAreaFilled(false);
-        btnLoans.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLoans.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnLoans.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnLoans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoansActionPerformed(evt);
             }
         });
+
+        lblBooks.setBackground(new java.awt.Color(135, 178, 255));
+        lblBooks.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        lblBooks.setForeground(new java.awt.Color(255, 255, 255));
+        lblBooks.setText("        LIBROS");
+        lblBooks.setOpaque(true);
 
         btnTransactions.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         btnTransactions.setForeground(new java.awt.Color(255, 255, 255));
@@ -124,12 +131,19 @@ public class BooksWindow extends javax.swing.JFrame {
         btnTransactions.setContentAreaFilled(false);
         btnTransactions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnTransactions.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-        lblBooks.setBackground(new java.awt.Color(135, 178, 255));
-        lblBooks.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        lblBooks.setForeground(new java.awt.Color(255, 255, 255));
-        lblBooks.setText("        LIBROS");
-        lblBooks.setOpaque(true);
+        btnTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTransactionsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTransactionsMouseExited(evt);
+            }
+        });
+        btnTransactions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransactionsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
         menuBarPanel.setLayout(menuBarPanelLayout);
@@ -138,7 +152,6 @@ public class BooksWindow extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblUserName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnLoans, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(menuBarPanelLayout.createSequentialGroup()
                 .addGroup(menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuBarPanelLayout.createSequentialGroup()
@@ -150,6 +163,7 @@ public class BooksWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(lblBooks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +218,7 @@ public class BooksWindow extends javax.swing.JFrame {
         btnApplyLoan.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         btnApplyLoan.setForeground(new java.awt.Color(255, 255, 255));
         btnApplyLoan.setText("Solicitar préstamo");
-        btnApplyLoan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnApplyLoan.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnApplyLoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnApplyLoanActionPerformed(evt);
@@ -324,6 +338,20 @@ public class BooksWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Seleccione un libro de la tabla.");
         }
     }//GEN-LAST:event_btnApplyLoanActionPerformed
+
+    private void btnTransactionsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseEntered
+        Color color = new Color(135, 178, 255);
+        btnTransactions.setBackground(color);
+        btnTransactions.setOpaque(true);
+    }//GEN-LAST:event_btnTransactionsMouseEntered
+
+    private void btnTransactionsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTransactionsMouseExited
+        btnTransactions.setOpaque(false);
+    }//GEN-LAST:event_btnTransactionsMouseExited
+
+    private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
+        new UserTransactionsWindow(user).setVisible(true);
+    }//GEN-LAST:event_btnTransactionsActionPerformed
 
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();

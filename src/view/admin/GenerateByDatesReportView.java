@@ -5,11 +5,14 @@
 package view.admin;
 
 import controllers.PdfGeneratorController;
+import controllers.TransactionController;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import model.Transaction;
+import model.User;
 
 /**
  *
@@ -18,20 +21,25 @@ import javax.swing.JOptionPane;
 public class GenerateByDatesReportView extends javax.swing.JFrame {
 
     private final PdfGeneratorController controller;
+    private final TransactionController controllerT;
     private final JFrame window;
+    private final User admin;
 
     /**
      * Creates new form GenerateByDatesReportView
      * @param window
+     * @param admin
      */
-    public GenerateByDatesReportView(JFrame window) {
+    public GenerateByDatesReportView(User admin, JFrame window) {
         initComponents();
         controller = new PdfGeneratorController();
+        controllerT = new TransactionController();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generar Reporte");
         setResizable(false);
         this.window = window;
+        this.admin = admin;
     }
 
     /**
@@ -332,6 +340,8 @@ public class GenerateByDatesReportView extends javax.swing.JFrame {
         }
 
         if (success) {
+            Transaction transaction = new Transaction(admin.getId(), "Reporte por fechas");
+            controllerT.insertTransaction(transaction);
             JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
             this.dispose();
         } else {

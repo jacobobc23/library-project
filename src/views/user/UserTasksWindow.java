@@ -15,6 +15,7 @@ public class UserTasksWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form UserTasksWindow
+     * @param user
      */
     public UserTasksWindow(User user) {
         initComponents();
@@ -264,7 +265,7 @@ public class UserTasksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTransactionsMouseExited
 
     private void btnTransactionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactionsActionPerformed
-        // TODO add your handling code here:
+        new UserTransactionsWindow(user).setVisible(true);
     }//GEN-LAST:event_btnTransactionsActionPerformed
 
     /**

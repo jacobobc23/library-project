@@ -1,10 +1,12 @@
 package view.admin;
 
+import controllers.TransactionController;
 import controllers.UserManagemetController;
 import enums.Role;
 import exceptions.MobileNumberAlreadyInUseException;
 import exceptions.UserNameAlreadyInUseException;
 import javax.swing.JOptionPane;
+import model.Transaction;
 import model.User;
 
 /**
@@ -13,20 +15,25 @@ import model.User;
  */
 public class UserEditingWindow extends javax.swing.JFrame {
 
+    private final User admin;
+
     private final User user;
     private final UsersWindow uw;
     private final UserManagemetController controller;
+    private final TransactionController controllerT;
 
     private boolean passwordVisible = false;
 
     /**
      * Creates new form UserEditingWindow
      *
+     * @param admin
      * @param user
      * @param uw
      */
-    public UserEditingWindow(User user, UsersWindow uw) {
+    public UserEditingWindow(User admin, User user, UsersWindow uw) {
         initComponents();
+        this.admin = admin;
         this.user = user;
         this.uw = uw;
         setLocationRelativeTo(null);
@@ -34,6 +41,7 @@ public class UserEditingWindow extends javax.swing.JFrame {
         setResizable(false);
         setTitle(user.getFullName());
         controller = new UserManagemetController();
+        controllerT = new TransactionController();
         showUserInformation();
         hideWarnings();
     }
@@ -435,6 +443,8 @@ public class UserEditingWindow extends javax.swing.JFrame {
             controller.updateUser(usr);
             uw.fillTable();
             JOptionPane.showMessageDialog(null, "Usuario acutalizado ");
+            Transaction transaction = new Transaction(admin.getId(), "Edicición de usuario");
+            controllerT.insertTransaction(transaction);
             this.dispose();
         } catch (UserNameAlreadyInUseException | MobileNumberAlreadyInUseException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());

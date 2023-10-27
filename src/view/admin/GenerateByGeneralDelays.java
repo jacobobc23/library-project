@@ -5,9 +5,12 @@
 package view.admin;
 
 import controllers.PdfGeneratorController;
+import controllers.TransactionController;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import model.Transaction;
+import model.User;
 
 /**
  *
@@ -16,19 +19,24 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class GenerateByGeneralDelays extends javax.swing.JInternalFrame {
 
     private final PdfGeneratorController controller;
+    private final TransactionController controllerT;
+    private final User admin;
 
     /**
      * Creates new form Test
+     * @param admin
      */
-    public GenerateByGeneralDelays() {
+    public GenerateByGeneralDelays(User admin) {
         initComponents();
         setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bui = (BasicInternalFrameUI) this.getUI();
         bui.setNorthPane(null);
         controller = new PdfGeneratorController();
+        controllerT = new TransactionController();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generar Reporte");
         setResizable(false);
+        this.admin = admin;
     }
 
     private boolean hasEmptyFields() {
@@ -299,6 +307,8 @@ public class GenerateByGeneralDelays extends javax.swing.JInternalFrame {
         boolean success = controller.generateGeneralLoansDelaysPDF(title1, subtitle, aditionalInformation, fileName, currentDate);
 
         if (success) {
+            Transaction transaction = new Transaction(admin.getId(), "Reporte retrasos");
+            controllerT.insertTransaction(transaction);
             JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
             this.dispose();
         } else {

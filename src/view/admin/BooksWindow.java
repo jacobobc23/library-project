@@ -1,6 +1,7 @@
 package view.admin;
 
 import controllers.BookManagementController;
+import controllers.TransactionController;
 import exceptions.BookIsLoanedException;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import model.Book;
 import model.Genre;
+import model.Transaction;
 import model.User;
 import view.logIn.LogInWindow;
 
@@ -24,6 +26,7 @@ public class BooksWindow extends javax.swing.JFrame {
 
     private final User admin;
     private final BookManagementController controller;
+    private final TransactionController controllerT;
 
     private TableRowSorter<DefaultTableModel> sorter;
 
@@ -40,6 +43,7 @@ public class BooksWindow extends javax.swing.JFrame {
         setResizable(false);
         lblAdminName.setText(admin.getFullName());
         controller = new BookManagementController();
+        controllerT = new TransactionController();
         fillTable();
         setCbxGenre();
     }
@@ -63,6 +67,7 @@ public class BooksWindow extends javax.swing.JFrame {
         btnLoans = new javax.swing.JButton();
         lblBooks = new javax.swing.JLabel();
         btnLoanRepayments = new javax.swing.JButton();
+        btnTransactions1 = new javax.swing.JButton();
         booksPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         booksTable = new javax.swing.JTable();
@@ -183,6 +188,19 @@ public class BooksWindow extends javax.swing.JFrame {
             }
         });
 
+        btnTransactions1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        btnTransactions1.setForeground(new java.awt.Color(255, 255, 255));
+        btnTransactions1.setText("    TRANSACCIONES");
+        btnTransactions1.setBorderPainted(false);
+        btnTransactions1.setContentAreaFilled(false);
+        btnTransactions1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnTransactions1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnTransactions1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransactions1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuBarPanelLayout = new javax.swing.GroupLayout(menuBarPanel);
         menuBarPanel.setLayout(menuBarPanelLayout);
         menuBarPanelLayout.setHorizontalGroup(
@@ -203,6 +221,7 @@ public class BooksWindow extends javax.swing.JFrame {
                     .addComponent(btnLoans, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLoanRepayments, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(btnTransactions1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuBarPanelLayout.setVerticalGroup(
             menuBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,6 +240,8 @@ public class BooksWindow extends javax.swing.JFrame {
                 .addComponent(btnLoans)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnLoanRepayments)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTransactions1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
@@ -391,7 +412,7 @@ public class BooksWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBookActionPerformed
-        new BookRegistryWindow(this).setVisible(true);
+        new BookRegistryWindow(this, admin).setVisible(true);
     }//GEN-LAST:event_btnAddBookActionPerformed
 
     private void btnUpdateBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBookActionPerformed
@@ -403,7 +424,7 @@ public class BooksWindow extends javax.swing.JFrame {
             Object book = controller.selectBook(isbn);
 
             if (book != null) {
-                new BookEdtingWindow((Book) book, this).setVisible(true);
+                new BookEdtingWindow((Book) book, this, admin).setVisible(true);
             }
 
         } else {
@@ -426,6 +447,8 @@ public class BooksWindow extends javax.swing.JFrame {
                     controller.deleteBook(isbn);
                     fillTable();
                     JOptionPane.showMessageDialog(null, "Libro eliminado correctamente");
+                    Transaction transaction = new Transaction(admin.getId(), "Eliminación libro");
+                    controllerT.insertTransaction(transaction);
                 } catch (BookIsLoanedException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
@@ -494,7 +517,7 @@ public class BooksWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxGenreItemStateChanged
 
     private void lblGenresManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGenresManagementMouseClicked
-        new GenreCrudWindow(this).setVisible(true);
+        new GenreCrudWindow(this, admin).setVisible(true);
     }//GEN-LAST:event_lblGenresManagementMouseClicked
 
     private void btnLoanRepaymentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsActionPerformed
@@ -531,6 +554,10 @@ public class BooksWindow extends javax.swing.JFrame {
     private void btnLoanRepaymentsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoanRepaymentsMouseExited
         btnLoanRepayments.setOpaque(false);
     }//GEN-LAST:event_btnLoanRepaymentsMouseExited
+
+    private void btnTransactions1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransactions1ActionPerformed
+        new TransactionsWindow(admin).setVisible(true);
+    }//GEN-LAST:event_btnTransactions1ActionPerformed
 
     public final void fillTable() {
         DefaultTableModel model = new DefaultTableModel();
@@ -602,6 +629,7 @@ public class BooksWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLoanRepayments;
     private javax.swing.JButton btnLoans;
+    private javax.swing.JButton btnTransactions1;
     private javax.swing.JButton btnUpdateBook;
     private javax.swing.JButton btnUsersManagement;
     private javax.swing.JComboBox<String> cbxGenre;

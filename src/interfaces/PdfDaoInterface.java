@@ -12,26 +12,26 @@ import java.time.LocalDate;
  */
 public interface PdfDaoInterface {
 
+    boolean generateGeneralLoansPDF(String title, String subtitle, String aditionalInformation, String fileName);
+    
+    boolean generatePDFLoansByUser(String id, String fileName, String title, String subtitle,
+            String aditionalInformation);
+
+    boolean generatePDFLoansByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
+            String aditionalInformation);
+
+    boolean generatePDFLoansByUserAndDates(String id, LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle, String aditionalInformation);
+    
+    boolean generateGeneralLoansDelaysPDF(String title, String subtitle, String aditionalInformation, String fileName, LocalDate currentDate);
+
     boolean generatePDFLoansDelaysByUser(String id, String fileName, String title, String subtitle, String aditionalInformation, LocalDate currentDate);
 
     boolean generatePDFLoansDelaysByDates(LocalDate startDate, LocalDate endDate, LocalDate currentDate, String fileName, String title, String subtitle,
             String aditionalInformation);
 
-    boolean generateGeneralLoansDelaysPDF(String title, String subtitle, String aditionalInformation, String fileName, LocalDate currentDate);
-
-    boolean generatePDFLoansByUserAndDates(String id, LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle, String aditionalInformation);
-
-    boolean generateGeneralLoansPDF(String title, String subtitle, String aditionalInformation, String fileName);
-
     boolean generateGeneralLoanRepaymentPDF(String title, String subtitle, String aditionalInformation, String fileName);
 
-    boolean generatePDFLoansByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
-            String aditionalInformation);
-
     boolean generatePDFLoanRepaymentsByDates(LocalDate startDate, LocalDate endDate, String fileName, String title, String subtitle,
-            String aditionalInformation);
-
-    boolean generatePDFLoansByUser(String id, String fileName, String title, String subtitle,
             String aditionalInformation);
 
     boolean generatePDFLoanRepaymentsByUser(String id, String fileName, String title, String subtitle,

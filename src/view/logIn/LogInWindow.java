@@ -1,10 +1,12 @@
 package view.logIn;
 
 import controllers.LogInController;
+import controllers.TransactionController;
 import enums.Role;
 import exceptions.CredentialsException;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import model.Transaction;
 import model.User;
 import view.admin.AdminTasksWindow;
 import views.user.SignUpWindow;
@@ -17,6 +19,7 @@ import views.user.UserTasksWindow;
 public class LogInWindow extends javax.swing.JFrame {
 
     private final LogInController controller;
+    private final TransactionController controllerT;
 
     private boolean passwordVisible = false;
 
@@ -29,6 +32,7 @@ public class LogInWindow extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Inicio de Sesión");
         controller = new LogInController();
+        controllerT = new TransactionController();
     }
 
     /**
@@ -249,8 +253,9 @@ public class LogInWindow extends javax.swing.JFrame {
 
         try {
             User user = controller.selectUser(username, password);
+            Transaction transaction = new Transaction(user.getId(), "Ingreso al sistema");
+            controllerT.insertTransaction(transaction);
             openAppropriateWindow(user);
-
         } catch (CredentialsException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }

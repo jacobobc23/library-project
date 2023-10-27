@@ -5,13 +5,14 @@
 package view.admin;
 
 import controllers.PdfGeneratorController;
+import controllers.TransactionController;
 import controllers.UserManagemetController;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import model.Transaction;
 import model.User;
 
 /**
@@ -21,6 +22,7 @@ import model.User;
 public class GenerateByUserDelays extends javax.swing.JInternalFrame {
 
     private final PdfGeneratorController controller;
+    private final TransactionController controllerT;
     private final UserManagemetController userManagemetController;
     private final User admin;
 
@@ -36,6 +38,7 @@ public class GenerateByUserDelays extends javax.swing.JInternalFrame {
         bui.setNorthPane(null);
         setTitle("Generar Reporte");
         controller = new PdfGeneratorController();
+        controllerT = new TransactionController();
         userManagemetController = new UserManagemetController();
         this.admin = admin;
         fillTable();
@@ -399,6 +402,8 @@ public class GenerateByUserDelays extends javax.swing.JInternalFrame {
 
         if (success) {
             JOptionPane.showMessageDialog(null, "Reporte Creado, revise su escritorio");
+            Transaction transaction = new Transaction(admin.getId(), "Reporte retraso por usuario");
+            controllerT.insertTransaction(transaction);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron prestamos retrasados para el día: " + currentDate + " del "

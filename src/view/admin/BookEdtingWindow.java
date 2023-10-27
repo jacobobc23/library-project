@@ -1,6 +1,7 @@
 package view.admin;
 
 import controllers.BookManagementController;
+import controllers.TransactionController;
 import exceptions.TitleAlreadyInUseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import model.Book;
 import model.Genre;
+import model.Transaction;
+import model.User;
 
 /**
  *
@@ -19,21 +22,26 @@ public class BookEdtingWindow extends javax.swing.JFrame {
     private final Book book;
     private final BooksWindow bw;
     private final BookManagementController controller;
-
+    private final TransactionController controllerT;
+    private final User admin;
+    
     /**
      *
      * @param book el libro que se desea editar.
      * @param bw la ventana de los libros.
+     * @param admin
      */
-    public BookEdtingWindow(Book book, BooksWindow bw) {
+    public BookEdtingWindow(Book book, BooksWindow bw, User admin) {
         initComponents();
         this.book = book;
         this.bw = bw;
+        this.admin = admin;
         setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // Cierra la ventana sin cerrar el programa
         setResizable(false);
         setTitle(book.getTitle());
         controller = new BookManagementController();
+        controllerT = new TransactionController();
         setCbxGenre();
         showBookInformation();
         setSpnCopiesNumber();
@@ -345,6 +353,8 @@ public class BookEdtingWindow extends javax.swing.JFrame {
             controller.updateBook(updatedBook);
             bw.fillTable();
             JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
+            Transaction transaction = new Transaction(admin.getId(), "Actualización de datos libro");
+            controllerT.insertTransaction(transaction);
             this.dispose();
         } catch (TitleAlreadyInUseException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());

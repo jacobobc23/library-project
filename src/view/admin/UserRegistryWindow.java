@@ -1,11 +1,13 @@
 package view.admin;
 
+import controllers.TransactionController;
 import controllers.UserManagemetController;
 import enums.Role;
 import exceptions.MobileNumberAlreadyInUseException;
 import exceptions.UserAlreadyRegisteredException;
 import exceptions.UserNameAlreadyInUseException;
 import javax.swing.JOptionPane;
+import model.Transaction;
 import model.User;
 
 /**
@@ -16,15 +18,18 @@ public class UserRegistryWindow extends javax.swing.JFrame {
 
     private final UsersWindow uw;
     private final UserManagemetController controller;
+    private final TransactionController controllerT;
 
     private boolean passwordVisible = false;
+    private final User admin;
 
     /**
      * Creates new form UserRegistryWindow
      *
      * @param uw
+     * @param admin
      */
-    public UserRegistryWindow(UsersWindow uw) {
+    public UserRegistryWindow(UsersWindow uw, User admin) {
         initComponents();
         this.uw = uw;
         setLocationRelativeTo(null);
@@ -32,8 +37,10 @@ public class UserRegistryWindow extends javax.swing.JFrame {
         setTitle("Registro de usuario");
         setResizable(false);
         controller = new UserManagemetController();
+        controllerT = new TransactionController();
         setCbxRole();
         hideWarnings();
+        this.admin = admin;
     }
 
     /**
@@ -428,6 +435,8 @@ public class UserRegistryWindow extends javax.swing.JFrame {
             User user = new User(id, fullname, role, mobilenumber, username, password);
             controller.insertUser(user);
             JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
+            Transaction transaction = new Transaction(admin.getId(), "Registro de usuario");
+            controllerT.insertTransaction(transaction);
             uw.fillTable();
             cleanFields();
             this.dispose();

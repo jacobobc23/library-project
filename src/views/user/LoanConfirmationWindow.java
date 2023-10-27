@@ -2,6 +2,7 @@ package views.user;
 
 import controllers.BookManagementController;
 import controllers.LoanManagementController;
+import controllers.TransactionController;
 import exceptions.InsufficientCopiesException;
 import exceptions.LoanPastDueException;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 import model.Book;
 import model.Genre;
 import model.Loan;
+import model.Transaction;
 import model.User;
 
 /**
@@ -25,9 +27,12 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
     private final Book book;
     private final LoanManagementController controller;
     private final BookManagementController controllerbook;
-
+    private final TransactionController controllerT;
+    
     /**
      * Creates new form LoanConfirmationWindow
+     * @param user
+     * @param book
      */
     public LoanConfirmationWindow(User user, Book book) {
         initComponents();
@@ -40,6 +45,7 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
         this.book = book;
         controller = new LoanManagementController();
         controllerbook = new BookManagementController();
+        controllerT = new TransactionController();
         setCbxPublicationYear();
         setCbxGenre();
         showBookInformation();
@@ -379,6 +385,8 @@ public class LoanConfirmationWindow extends javax.swing.JFrame {
                 Loan loan = new Loan(user, book, bookQuantity, loanDate, dueDate);
                 controller.applyLoan(loan);
                 JOptionPane.showMessageDialog(null, "Préstamo realizado correctamente");
+                Transaction transaction = new Transaction(user.getId(), "Solicitud préstamo");
+                controllerT.insertTransaction(transaction);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Cantidad inválida");
