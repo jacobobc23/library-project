@@ -609,7 +609,7 @@ public class PdfDao implements PdfDaoInterface {
 
         return table;
     }
-    
+
     private PdfPTable createTableDelays() {
         float[] columnWidths = {7, 15, 15, 15, 15, 7};
         PdfPTable table = new PdfPTable(columnWidths);
@@ -634,7 +634,7 @@ public class PdfDao implements PdfDaoInterface {
 
         Paragraph subtitleAssigment = new Paragraph(subtitle);
         subtitleAssigment.setAlignment(Paragraph.ALIGN_CENTER);
-        subtitleAssigment.setSpacingAfter(10f); 
+        subtitleAssigment.setSpacingAfter(10f);
         try {
             document.add(subtitleAssigment);
         } catch (DocumentException ex) {
@@ -644,7 +644,7 @@ public class PdfDao implements PdfDaoInterface {
     private void insertAditionalInformation(String aditionalInformation) {
         Paragraph additionalText = new Paragraph(aditionalInformation);
         additionalText.setAlignment(Paragraph.ALIGN_LEFT);
-        additionalText.setSpacingBefore(10f); 
+        additionalText.setSpacingBefore(10f);
         try {
             document.add(additionalText);
         } catch (DocumentException ex) {

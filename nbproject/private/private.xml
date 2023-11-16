@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jacob/Documentos/01_universidad/04_semestre/01_diseñoDeSoftware/01_corte/02_library-project/src/dao/PdfDao.java</file>
-            <file>file:/C:/Users/jacob/Documentos/01_universidad/04_semestre/01_diseñoDeSoftware/01_corte/02_library-project/src/dao/LoanRepaymentDao.java</file>
+            <file>file:/C:/Users/jacob/Documentos/01_universidad/04_semestre/01_diseñoDeSoftware/01_corte/02_library-project/src/view/admin/TransactionsWindow.java</file>
+            <file>file:/C:/Users/jacob/Documentos/01_universidad/04_semestre/01_diseñoDeSoftware/01_corte/02_library-project/src/views/user/LoansWindow.java</file>
+            <file>file:/C:/Users/jacob/Documentos/01_universidad/04_semestre/01_diseñoDeSoftware/01_corte/02_library-project/src/controllers/PdfTransactionsController.java</file>
+            <file>file:/C:/Users/jacob/Documentos/01_universidad/04_semestre/01_diseñoDeSoftware/01_corte/02_library-project/src/dao/TransactionsPdfDao.java</file>
         </group>
     </open-files>
 </project-private>
